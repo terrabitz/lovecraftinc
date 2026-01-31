@@ -1,10 +1,10 @@
 ---
+import { getCollection } from 'astro:content';
 import Card from '../components/Card.astro';
 import Table from '../components/Table.astro';
 import ContentLayout from '../layouts/ContentLayout.astro';
 
-const employeeFiles = import.meta.glob('../content/employees/*.md', { eager: true });
-const employees = Object.values(employeeFiles);
+const employees = await getCollection('employees');
 ---
 
 <ContentLayout title="Eidolon Capital Intranet - Employees">
@@ -13,24 +13,24 @@ const employees = Object.values(employeeFiles);
 
   <div class="grid">
     {employees.map((employee) => (
-      <Card title={employee.frontmatter.name}>
+      <Card title={employee.data.name}>
         <Table>
           <tbody>
             <tr>
               <td><strong>Position:</strong></td>
-              <td>{employee.frontmatter.position}</td>
+              <td>{employee.data.position}</td>
             </tr>
             <tr>
               <td><strong>Department:</strong></td>
-              <td>{employee.frontmatter.department}</td>
+              <td>{employee.data.department}</td>
             </tr>
             <tr>
               <td><strong>ID:</strong></td>
-              <td>{employee.frontmatter.employeeId}</td>
+              <td>{employee.data.employeeId}</td>
             </tr>
           </tbody>
         </Table>
-        <a href={`/employees/${employee.frontmatter.employeeId.toLowerCase()}`} slot="bottom">
+        <a href={`/employees/${employee.data.employeeId.toLowerCase()}`} slot="bottom">
           <button>View Profile</button>
         </a>
       </Card>

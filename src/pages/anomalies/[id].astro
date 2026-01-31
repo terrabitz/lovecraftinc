@@ -1,44 +1,44 @@
 ---
+import { getCollection } from 'astro:content';
 import Table from '../../components/Table.astro';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 
 export async function getStaticPaths() {
-  const anomalyFiles = import.meta.glob('../../content/anomalies/*.md', { eager: true });
-  const anomalies = Object.values(anomalyFiles);
+  const anomalies = await getCollection('anomalies');
 
   return anomalies.map((anomaly) => ({
-    params: { id: anomaly.frontmatter.anomalyId.toLowerCase() },
+    params: { id: anomaly.data.anomalyId.toLowerCase() },
     props: { anomaly }
   }));
 }
 
 const { anomaly } = Astro.props;
-const { Content, frontmatter } = anomaly;
+const { Content } = await anomaly.render();
 ---
 
-<ContentLayout title={`Eidolon Capital Intranet - Anomaly - ${frontmatter.title}`}>
-  <h2>{frontmatter.title}</h2>
+<ContentLayout title={`Eidolon Capital Intranet - Anomaly - ${anomaly.data.title}`}>
+  <h2>{anomaly.data.title}</h2>
 
   <Table>
     <tr>
       <td><strong>Anomaly ID:</strong></td>
-      <td>{frontmatter.anomalyId}</td>
+      <td>{anomaly.data.anomalyId}</td>
     </tr>
     <tr>
       <td><strong>Classification:</strong></td>
-      <td>{frontmatter.classification}</td>
+      <td>{anomaly.data.classification}</td>
     </tr>
     <tr>
       <td><strong>Status:</strong></td>
-      <td>{frontmatter.status}</td>
+      <td>{anomaly.data.status}</td>
     </tr>
     <tr>
       <td><strong>Discovery Date:</strong></td>
-      <td>{frontmatter.discoveryDate}</td>
+      <td>{anomaly.data.discoveryDate}</td>
     </tr>
     <tr>
       <td><strong>Location:</strong></td>
-      <td>{frontmatter.location}</td>
+      <td>{anomaly.data.location}</td>
     </tr>
   </Table>
 

@@ -81,9 +81,39 @@
 - Import global styles in layouts: `import '../styles/global.css'`
 - Never import CSS multiple times across components
 
-### Content Imports
-- Use `Astro.glob()` for dynamic imports: `import.meta.glob('../content/**/*.md')`
-- Import components using relative paths: `import Component from '../components/Component.astro'`
+### Content Collections
+- **Always use Content Collections API** for markdown content in `src/content/`
+- Define schemas in `src/content.config.ts` using Zod for type safety
+- Use `getCollection()` to fetch content: `const posts = await getCollection('posts')`
+- Access frontmatter via `.data` property: `entry.data.title`
+- Render content with `await entry.render()` to get `Content` component
+- Never use `import.meta.glob()` or `Astro.glob()` for content collections
+
+Example:
+```astro
+---
+import { getCollection } from 'astro:content';
+
+// List page
+const posts = await getCollection('posts');
+---
+{posts.map((post) => (
+  <h2>{post.data.title}</h2>
+))}
+
+// Detail page
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({
+    params: { id: post.slug },
+    props: { post }
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+<Content />
+```
 
 ## TypeScript
 
@@ -116,10 +146,11 @@
 
 ## Content Collections
 
-- Define schemas in `src/content/config.ts`
+- Define schemas in `src/content.config.ts` with Zod validation
 - Store markdown content in `src/content/[collection-name]/`
-- Use frontmatter for metadata
-- Access via `getCollection()` or `Astro.glob()`
+- Always use `getCollection()` API for type-safe content access
+- Access frontmatter via `.data` property, not `.frontmatter`
+- Render markdown with `await entry.render()` to get the `Content` component
 
 ## General Guidelines
 

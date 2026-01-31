@@ -1,44 +1,44 @@
 ---
+import { getCollection } from 'astro:content';
 import Table from '../../components/Table.astro';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 
 export async function getStaticPaths() {
-  const organizationFiles = import.meta.glob('../../content/organizations/*.md', { eager: true });
-  const organizations = Object.values(organizationFiles);
+  const organizations = await getCollection('organizations');
 
   return organizations.map((org) => ({
-    params: { id: org.frontmatter.orgId.toLowerCase() },
+    params: { id: org.data.orgId.toLowerCase() },
     props: { organization: org }
   }));
 }
 
 const { organization } = Astro.props;
-const { Content, frontmatter } = organization;
+const { Content } = await organization.render();
 ---
 
-<ContentLayout title={`Eidolon Capital Intranet - Organization - ${frontmatter.name}`}>
-  <h2>{frontmatter.name}</h2>
+<ContentLayout title={`Eidolon Capital Intranet - Organization - ${organization.data.name}`}>
+  <h2>{organization.data.name}</h2>
 
   <Table>
     <tr>
       <td><strong>Organization ID:</strong></td>
-      <td>{frontmatter.orgId}</td>
+      <td>{organization.data.orgId}</td>
     </tr>
     <tr>
       <td><strong>Type:</strong></td>
-      <td>{frontmatter.type}</td>
+      <td>{organization.data.type}</td>
     </tr>
     <tr>
       <td><strong>Relationship:</strong></td>
-      <td>{frontmatter.relationship}</td>
+      <td>{organization.data.relationship}</td>
     </tr>
     <tr>
       <td><strong>Established:</strong></td>
-      <td>{frontmatter.established}</td>
+      <td>{organization.data.established}</td>
     </tr>
     <tr>
       <td><strong>Location:</strong></td>
-      <td>{frontmatter.location}</td>
+      <td>{organization.data.location}</td>
     </tr>
   </Table>
 

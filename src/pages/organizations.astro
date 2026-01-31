@@ -1,10 +1,10 @@
 ---
+import { getCollection } from 'astro:content';
 import Card from '../components/Card.astro';
 import Table from '../components/Table.astro';
 import ContentLayout from '../layouts/ContentLayout.astro';
 
-const organizationFiles = import.meta.glob('../content/organizations/*.md', { eager: true });
-const organizations = Object.values(organizationFiles);
+const organizations = await getCollection('organizations');
 ---
 
 <ContentLayout title="Eidolon Capital Intranet - Organizations">
@@ -14,32 +14,32 @@ const organizations = Object.values(organizationFiles);
 
   <div class="grid">
     {organizations.map((org) => (
-      <Card title={org.frontmatter.name}>
+      <Card title={org.data.name}>
         <Table>
           <tbody>
             <tr>
               <td><strong>Organization ID:</strong></td>
-              <td>{org.frontmatter.orgId}</td>
+              <td>{org.data.orgId}</td>
             </tr>
             <tr>
               <td><strong>Type:</strong></td>
-              <td>{org.frontmatter.type}</td>
+              <td>{org.data.type}</td>
             </tr>
             <tr>
               <td><strong>Relationship:</strong></td>
-              <td>{org.frontmatter.relationship}</td>
+              <td>{org.data.relationship}</td>
             </tr>
             <tr>
               <td><strong>Established:</strong></td>
-              <td>{org.frontmatter.established}</td>
+              <td>{org.data.established}</td>
             </tr>
             <tr>
               <td><strong>Location:</strong></td>
-              <td>{org.frontmatter.location}</td>
+              <td>{org.data.location}</td>
             </tr>
           </tbody>
         </Table>
-        <a href={`/organizations/${org.frontmatter.orgId.toLowerCase()}`} slot="bottom">
+        <a href={`/organizations/${org.data.orgId.toLowerCase()}`} slot="bottom">
           <button>View Profile</button>
         </a>
       </Card>

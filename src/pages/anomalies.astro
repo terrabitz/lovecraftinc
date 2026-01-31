@@ -1,10 +1,10 @@
 ---
+import { getCollection } from 'astro:content';
 import Card from '../components/Card.astro';
 import Table from '../components/Table.astro';
 import ContentLayout from '../layouts/ContentLayout.astro';
 
-const anomalyFiles = import.meta.glob('../content/anomalies/*.md', { eager: true });
-const anomalies = Object.values(anomalyFiles);
+const anomalies = await getCollection('anomalies');
 ---
 
 <ContentLayout title="Eidolon Capital Intranet - Anomalies">
@@ -13,32 +13,32 @@ const anomalies = Object.values(anomalyFiles);
 
   <div class="grid">
     {anomalies.map((anomaly) => (
-      <Card title={anomaly.frontmatter.title}>
+      <Card title={anomaly.data.title}>
         <Table>
           <tbody>
             <tr>
               <td><strong>Anomaly ID:</strong></td>
-              <td>{anomaly.frontmatter.anomalyId}</td>
+              <td>{anomaly.data.anomalyId}</td>
             </tr>
             <tr>
               <td><strong>Classification:</strong></td>
-              <td>{anomaly.frontmatter.classification}</td>
+              <td>{anomaly.data.classification}</td>
             </tr>
             <tr>
               <td><strong>Status:</strong></td>
-              <td>{anomaly.frontmatter.status}</td>
+              <td>{anomaly.data.status}</td>
             </tr>
             <tr>
               <td><strong>Discovery Date:</strong></td>
-              <td>{anomaly.frontmatter.discoveryDate}</td>
+              <td>{anomaly.data.discoveryDate}</td>
             </tr>
             <tr>
               <td><strong>Location:</strong></td>
-              <td>{anomaly.frontmatter.location}</td>
+              <td>{anomaly.data.location}</td>
             </tr>
           </tbody>
         </Table>
-        <a href={`/anomalies/${anomaly.frontmatter.anomalyId.toLowerCase()}`} slot="bottom">
+        <a href={`/anomalies/${anomaly.data.anomalyId.toLowerCase()}`} slot="bottom">
           <button>View Full Report</button>
         </a>
       </Card>

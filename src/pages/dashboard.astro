@@ -1,14 +1,12 @@
 ---
+import { getCollection } from 'astro:content';
 import Card from "../components/Card.astro";
 import Table from "../components/Table.astro";
 import ContentLayout from "../layouts/ContentLayout.astro";
 
-const employeeFiles = import.meta.glob("../content/employees/*.md", { eager: true });
-const employees = Object.values(employeeFiles);
-const anomalyFiles = import.meta.glob("../content/anomalies/*.md", { eager: true });
-const anomalies = Object.values(anomalyFiles);
-const organizationFiles = import.meta.glob("../content/organizations/*.md", { eager: true });
-const organizations = Object.values(organizationFiles);
+const employees = await getCollection('employees');
+const anomalies = await getCollection('anomalies');
+const organizations = await getCollection('organizations');
 ---
 
 <ContentLayout title="Eidolon Capital Intranet">

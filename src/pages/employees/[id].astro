@@ -1,40 +1,40 @@
 ---
+import { getCollection } from 'astro:content';
 import Table from '../../components/Table.astro';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 
 export async function getStaticPaths() {
-  const employeeFiles = import.meta.glob('../../content/employees/*.md', { eager: true });
-  const employees = Object.values(employeeFiles);
+  const employees = await getCollection('employees');
 
   return employees.map((employee) => ({
-    params: { id: employee.frontmatter.employeeId.toLowerCase() },
+    params: { id: employee.data.employeeId.toLowerCase() },
     props: { employee }
   }));
 }
 
 const { employee } = Astro.props;
-const { Content, frontmatter } = employee;
+const { Content } = await employee.render();
 ---
 
-<ContentLayout title={`Eidolon Capital Intranet - Employee - ${frontmatter.name}`}>
-  <h2>{frontmatter.name}</h2>
+<ContentLayout title={`Eidolon Capital Intranet - Employee - ${employee.data.name}`}>
+  <h2>{employee.data.name}</h2>
 
   <Table>
     <tr>
       <td><strong>Employee ID:</strong></td>
-      <td>{frontmatter.employeeId}</td>
+      <td>{employee.data.employeeId}</td>
     </tr>
     <tr>
       <td><strong>Position:</strong></td>
-      <td>{frontmatter.position}</td>
+      <td>{employee.data.position}</td>
     </tr>
     <tr>
       <td><strong>Department:</strong></td>
-      <td>{frontmatter.department}</td>
+      <td>{employee.data.department}</td>
     </tr>
     <tr>
       <td><strong>Clearance Level:</strong></td>
-      <td>{frontmatter.clearanceLevel}</td>
+      <td>{employee.data.clearanceLevel}</td>
     </tr>
   </Table>
 

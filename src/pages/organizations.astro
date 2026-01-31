@@ -47,8 +47,8 @@ const organizations = await Astro.glob('../content/organizations/*.md');
           </tr>
         </table>
         <br>
-        <a href={`/organizations/${org.frontmatter.orgId.toLowerCase()}`} class="button">
-          View Full Profile
+        <a href={`/organizations/${org.frontmatter.orgId.toLowerCase()}`}>
+          <button>View Profile</button>
         </a>
       </div>
     ))}

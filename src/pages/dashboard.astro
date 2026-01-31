@@ -1,9 +1,9 @@
 ---
-import ContentLayout from '../layouts/ContentLayout.astro';
+import ContentLayout from "../layouts/ContentLayout.astro";
 
-const employees = await Astro.glob('../content/employees/*.md');
-const anomalies = await Astro.glob('../content/anomalies/*.md');
-const organizations = await Astro.glob('../content/organizations/*.md');
+const employees = await Astro.glob("../content/employees/*.md");
+const anomalies = await Astro.glob("../content/anomalies/*.md");
+const organizations = await Astro.glob("../content/organizations/*.md");
 ---
 
 <ContentLayout title="Dashboard - Eidolon Capital Intranet">
@@ -16,13 +16,10 @@ const organizations = await Astro.glob('../content/organizations/*.md');
   <div class="status-field-border">
     <h2>Welcome to the Eidolon Capital Intranet</h2>
     <p>
-      Welcome to the internal information system of Eidolon Capital.
-      This portal provides access to critical organizational data, employee records,
-      anomaly reports, and partner organization profiles.
+      Welcome to the internal information system of Eidolon Capital. This portal provides access to critical
+      organizational data, employee records, anomaly reports, and partner organization profiles.
     </p>
-    <p>
-      Please use the navigation links above to access different sections of the intranet.
-    </p>
+    <p>Please use the navigation links above to access different sections of the intranet.</p>
   </div>
 
   <h2>Quick Access</h2>
@@ -30,23 +27,45 @@ const organizations = await Astro.glob('../content/organizations/*.md');
     <div class="card">
       <h3>Employee Directory</h3>
       <p>Access employee profiles, contact information, and organizational assignments.</p>
-      <a href="/employees" class="button">View Employees</a>
+      <a href="/employees">
+        <button>View Employees</button>
+      </a>
     </div>
 
     <div class="card">
       <h3>Anomaly Reports</h3>
       <p>Review documented anomalous events and phenomena requiring investigation.</p>
-      <a href="/anomalies" class="button">View Anomalies</a>
+      <a href="/anomalies">
+        <button>View Anomalies</button>
+      </a>
     </div>
 
     <div class="card">
       <h3>Organizations</h3>
       <p>Access profiles of partner organizations and affiliated entities.</p>
-      <a href="/organizations" class="button">View Organizations</a>
+      <a href="/organizations">
+        <button>View Organizations</button>
+      </a>
+    </div>
+
+    <div class="card">
+      <h3>Anomaly Reports</h3>
+      <p>Review documented anomalous events and phenomena requiring investigation.</p>
+      <a href="/anomalies">
+        <button>View Anomalies</button>
+      </a>
+    </div>
+
+    <div class="card">
+      <h3>Organizations</h3>
+      <p>Access profiles of partner organizations and affiliated entities.</p>
+      <a href="/organizations">
+        <button>View Organizations</button>
+      </a>
     </div>
   </div>
 
-  <hr>
+  <hr />
 
   <div class="sun-field">
     <h3>System Information</h3>
@@ -69,7 +88,7 @@ const organizations = await Astro.glob('../content/organizations/*.md');
       </tr>
       <tr>
         <td>Last Update</td>
-        <td>2026-01-31</td>
+        <td>1995-04-28</td>
       </tr>
     </table>
   </div>

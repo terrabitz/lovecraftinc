@@ -47,8 +47,8 @@ const employees = await Astro.glob('../content/employees/*.md');
           </tr>
         </table>
         <br>
-        <a href={`/employees/${employee.frontmatter.employeeId.toLowerCase()}`} class="button">
-          View Profile
+        <a href={`/employees/${employee.frontmatter.employeeId.toLowerCase()}`}>
+          <button>View Profile</button>
         </a>
       </div>
     ))}

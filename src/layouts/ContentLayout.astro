@@ -1,21 +1,30 @@
 ---
-import MainLayout from './MainLayout.astro';
+import MainLayout from "./MainLayout.astro";
 
 const { title = "Eidolon Capital Intranet" } = Astro.props;
 const pathname = Astro.url.pathname;
 ---
 
 <MainLayout title={title}>
-  <menu role="tablist">
-    <li role="tab" aria-selected={pathname.startsWith('/dashboard')}><a href="/dashboard">Dashboard</a></li>
-    <li role="tab" aria-selected={pathname.startsWith('/employees')}><a href="/employees">Employees</a></li>
-    <li role="tab" aria-selected={pathname.startsWith('/anomalies')}><a href="/anomalies">Anomalies</a></li>
-    <li role="tab" aria-selected={pathname.startsWith('/organizations')}><a href="/organizations">Organizations</a></li>
-  </menu>
-  <slot />
-  <div class="status-bar">
-    <div class="status-bar-field">Eidolon Capital Intranet Portal v1.0</div>
-    <div class="status-bar-field">System Status: OPERATIONAL</div>
+  <div class="window">
+    <div class="title-bar">
+      <div class="title-bar-text">{title}</div>
+    </div>
+    <div class="window-body">
+      <menu role="tablist">
+        <li role="tab" aria-selected={pathname.startsWith("/dashboard")}><a href="/dashboard">Dashboard</a></li>
+        <li role="tab" aria-selected={pathname.startsWith("/employees")}><a href="/employees">Employees</a></li>
+        <li role="tab" aria-selected={pathname.startsWith("/anomalies")}><a href="/anomalies">Anomalies</a></li>
+        <li role="tab" aria-selected={pathname.startsWith("/organizations")}>
+          <a href="/organizations">Organizations</a>
+        </li>
+      </menu>
+      <slot />
+      <div class="status-bar">
+        <div class="status-bar-field">Eidolon Capital Intranet Portal v1.0</div>
+        <div class="status-bar-field">System Status: OPERATIONAL</div>
+      </div>
+    </div>
   </div>
 </MainLayout>
 
@@ -30,7 +39,11 @@ const pathname = Astro.url.pathname;
 
   .card {
     background: silver;
-    box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;
+    box-shadow:
+      inset -1px -1px #0a0a0a,
+      inset 1px 1px #dfdfdf,
+      inset -2px -2px grey,
+      inset 2px 2px #fff;
     padding: 12px;
     margin: 0;
   }

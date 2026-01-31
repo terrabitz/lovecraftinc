@@ -1,30 +1,31 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
+import MainLayout from "../layouts/MainLayout.astro";
 ---
 
 <MainLayout title="Eidolon Capital - Secure Login">
-  <h3 class="window-header">Authorized Access Only</h3>
-  <div class="status-field-border warning-box">
-    <strong>⚠️ WARNING</strong><br>
-    <p>
-      All access to the Eidolon Capital Corporate Intranet is strictly controlled
-      and monitored.
-    </p>
-    <p>
-      All unauthorized access will be prosecuted under EID-ORD-6998 and
-      result in immediate termination,
-    </p>
-  </div>
+  <div class="window">
+    <div class="title-bar">
+      <div class="title-bar-text">Eidolon Capital - Secure Login</div>
+    </div>
+    <div class="window-body">
+      <h3 class="window-header">Authorized Access Only</h3>
+      <div class="status-field-border warning-box">
+        <strong>⚠️ WARNING</strong><br />
+        <p>All access to the Eidolon Capital Corporate Intranet is strictly controlled and monitored.</p>
+        <p>All unauthorized access will be prosecuted under EID-ORD-6998 and result in immediate termination,</p>
+      </div>
 
-  <button type="button" class="login-button" id="loginButton">Login</button>
+      <button type="button" class="login-button" id="loginButton">Login</button>
 
-  <div class="progress-indicator segmented progress-container hidden" id="progressBar">
-    <span class="progress-indicator-bar" id="progressBarFill"></span>
-  </div>
+      <div class="progress-indicator segmented progress-container hidden" id="progressBar">
+        <span class="progress-indicator-bar" id="progressBarFill"></span>
+      </div>
 
-  <div class="status-bar">
-    <div class="status-bar-field">Eidolon Capital Security Gateway</div>
-    <div class="status-bar-field">v1.65.267</div>
+      <div class="status-bar">
+        <div class="status-bar-field">Eidolon Capital Security Gateway</div>
+        <div class="status-bar-field">v1.65.267</div>
+      </div>
+    </div>
   </div>
 </MainLayout>
 
@@ -57,15 +58,15 @@ import MainLayout from '../layouts/MainLayout.astro';
 </style>
 
 <script>
-  const loginButton = document.getElementById('loginButton') as HTMLButtonElement;
-  const progressBar = document.getElementById('progressBar') as HTMLDivElement;
-  const progressBarFill = document.getElementById('progressBarFill') as HTMLSpanElement;
+  const loginButton = document.getElementById("loginButton") as HTMLButtonElement;
+  const progressBar = document.getElementById("progressBar") as HTMLDivElement;
+  const progressBarFill = document.getElementById("progressBarFill") as HTMLSpanElement;
 
-  loginButton.addEventListener('click', () => {
+  loginButton.addEventListener("click", () => {
     // Disable button and show progress bar
     loginButton.disabled = true;
-    loginButton.innerText = "Logging In"
-    progressBar.classList.remove('hidden');
+    loginButton.innerText = "Logging In";
+    progressBar.classList.remove("hidden");
 
     // Animate progress bar over 1.5 seconds
     const duration = 1500;
@@ -80,7 +81,7 @@ import MainLayout from '../layouts/MainLayout.astro';
       if (elapsed < duration) {
         requestAnimationFrame(animate);
       } else {
-        window.location.href = '/dashboard';
+        window.location.href = "/dashboard";
       }
     };
 

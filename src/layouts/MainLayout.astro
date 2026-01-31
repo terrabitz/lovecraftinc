@@ -13,13 +13,6 @@ const { title = "Eidolon Capital Intranet" } = Astro.props;
   <title>{title}</title>
 </head>
 <body>
-  <div class="window">
-    <div class="title-bar">
-      <div class="title-bar-text">{title}</div>
-    </div>
-    <div class="window-body">
-      <slot />
-    </div>
-  </div>
+  <slot />
 </body>
 </html>

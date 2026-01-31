@@ -1,4 +1,5 @@
 ---
+import Card from '../components/Card.astro';
 import Table from '../components/Table.astro';
 import ContentLayout from '../layouts/ContentLayout.astro';
 
@@ -12,8 +13,7 @@ const employees = Object.values(employeeFiles);
 
   <div class="grid">
     {employees.map((employee) => (
-      <div class="card">
-        <h3>{employee.frontmatter.name}</h3>
+      <Card title={employee.frontmatter.name}>
         <Table>
           <tbody>
             <tr>
@@ -30,11 +30,10 @@ const employees = Object.values(employeeFiles);
             </tr>
           </tbody>
         </Table>
-        <br>
-        <a href={`/employees/${employee.frontmatter.employeeId.toLowerCase()}`}>
+        <a href={`/employees/${employee.frontmatter.employeeId.toLowerCase()}`} slot="bottom">
           <button>View Profile</button>
         </a>
-      </div>
+      </Card>
     ))}
   </div>
 </ContentLayout>

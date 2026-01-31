@@ -1,4 +1,5 @@
 ---
+import Card from "../components/Card.astro";
 import Table from "../components/Table.astro";
 import ContentLayout from "../layouts/ContentLayout.astro";
 
@@ -22,29 +23,26 @@ const organizations = Object.values(organizationFiles);
 
   <h2>Quick Access</h2>
   <div class="grid">
-    <div class="card">
-      <h3>Employee Directory</h3>
+    <Card title="Employee Directory">
       <p>Access employee profiles, contact information, and organizational assignments.</p>
-      <a href="/employees">
+      <a href="/employees" slot="bottom">
         <button>View Employees</button>
       </a>
-    </div>
+    </Card>
 
-    <div class="card">
-      <h3>Anomaly Reports</h3>
+    <Card title="Anomaly Reports">
       <p>Review documented anomalous events and phenomena requiring investigation.</p>
-      <a href="/anomalies">
+      <a href="/anomalies" slot="bottom">
         <button>View Anomalies</button>
       </a>
-    </div>
+    </Card>
 
-    <div class="card">
-      <h3>Organizations</h3>
+    <Card title="Organizations">
       <p>Access profiles of partner organizations and affiliated entities.</p>
-      <a href="/organizations">
+      <a href="/organizations" slot="bottom">
         <button>View Organizations</button>
       </a>
-    </div>
+    </Card>
   </div>
 
   <hr />

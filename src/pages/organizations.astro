@@ -1,4 +1,5 @@
 ---
+import Card from '../components/Card.astro';
 import Table from '../components/Table.astro';
 import ContentLayout from '../layouts/ContentLayout.astro';
 
@@ -13,8 +14,7 @@ const organizations = Object.values(organizationFiles);
 
   <div class="grid">
     {organizations.map((org) => (
-      <div class="card">
-        <h3>{org.frontmatter.name}</h3>
+      <Card title={org.frontmatter.name}>
         <Table>
           <tbody>
             <tr>
@@ -39,11 +39,10 @@ const organizations = Object.values(organizationFiles);
             </tr>
           </tbody>
         </Table>
-        <br>
-        <a href={`/organizations/${org.frontmatter.orgId.toLowerCase()}`}>
+        <a href={`/organizations/${org.frontmatter.orgId.toLowerCase()}`} slot="bottom">
           <button>View Profile</button>
         </a>
-      </div>
+      </Card>
     ))}
   </div>
 

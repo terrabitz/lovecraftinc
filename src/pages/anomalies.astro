@@ -1,4 +1,5 @@
 ---
+import Card from '../components/Card.astro';
 import Table from '../components/Table.astro';
 import ContentLayout from '../layouts/ContentLayout.astro';
 
@@ -12,8 +13,7 @@ const anomalies = Object.values(anomalyFiles);
 
   <div class="grid">
     {anomalies.map((anomaly) => (
-      <div class="card">
-        <h3>{anomaly.frontmatter.title}</h3>
+      <Card title={anomaly.frontmatter.title}>
         <Table>
           <tbody>
             <tr>
@@ -38,11 +38,10 @@ const anomalies = Object.values(anomalyFiles);
             </tr>
           </tbody>
         </Table>
-        <br>
-        <a href={`/anomalies/${anomaly.frontmatter.anomalyId.toLowerCase()}`}>
+        <a href={`/anomalies/${anomaly.frontmatter.anomalyId.toLowerCase()}`} slot="bottom">
           <button>View Full Report</button>
         </a>
-      </div>
+      </Card>
     ))}
   </div>
 

@@ -6,11 +6,11 @@ const pathname = Astro.url.pathname;
 ---
 
 <MainLayout title={title}>
-  <div class="window">
+  <div class="window flex flex-col">
     <div class="title-bar">
       <div class="title-bar-text">{title}</div>
     </div>
-    <div class="window-body">
+    <div class="window-body flex-grow">
       <menu role="tablist">
         <li role="tab" aria-selected={pathname.startsWith("/dashboard")}><a href="/dashboard">Dashboard</a></li>
         <li role="tab" aria-selected={pathname.startsWith("/employees")}><a href="/employees">Employees</a></li>
@@ -20,10 +20,10 @@ const pathname = Astro.url.pathname;
         </li>
       </menu>
       <slot />
-      <div class="status-bar">
-        <div class="status-bar-field">Eidolon Capital Intranet Portal v1.0</div>
-        <div class="status-bar-field">System Status: OPERATIONAL</div>
-      </div>
+    </div>
+    <div class="status-bar mt-auto">
+      <div class="status-bar-field">Eidolon Capital Intranet Portal v1.0</div>
+      <div class="status-bar-field">System Status: OPERATIONAL</div>
     </div>
   </div>
 </MainLayout>

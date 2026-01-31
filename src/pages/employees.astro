@@ -9,7 +9,6 @@ const employees = await getCollection('employees');
 
 <ContentLayout title="Eidolon Capital Intranet - Employees">
   <h1>Employee Directory</h1>
-  <h2>Active Personnel ({employees.length})</h2>
 
   <div class="grid">
     {employees.map((employee) => (

@@ -10,8 +10,6 @@ const organizations = await getCollection('organizations');
 <ContentLayout title="Eidolon Capital Intranet - Organizations">
   <h1>Partner Organizations</h1>
 
-  <h2>Partner Organizations ({organizations.length})</h2>
-
   <div class="grid">
     {organizations.map((org) => (
       <Card title={org.data.name}>

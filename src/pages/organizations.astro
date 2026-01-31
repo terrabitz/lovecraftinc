@@ -1,10 +1,10 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
+import ContentLayout from '../layouts/ContentLayout.astro';
 
 const organizations = await Astro.glob('../content/organizations/*.md');
 ---
 
-<MainLayout title="Organizations - Eidolon Capital Intranet">
+<ContentLayout title="Organizations - Eidolon Capital Intranet">
   <h1>Partner Organizations</h1>
 
   <div class="info-box">
@@ -13,7 +13,7 @@ const organizations = await Astro.glob('../content/organizations/*.md');
 
   <div class="sun-field">
     <p>
-      This section provides information about organizations with which Eidolon Capital 
+      This section provides information about organizations with which Eidolon Capital
       maintains formal partnerships, research collaborations, or information sharing agreements.
     </p>
   </div>
@@ -65,4 +65,4 @@ const organizations = await Astro.glob('../content/organizations/*.md');
       <li><strong>Advisory:</strong> Consultation on specific topics or incidents</li>
     </ul>
   </div>
-</MainLayout>
+</ContentLayout>

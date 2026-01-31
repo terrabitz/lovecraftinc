@@ -1,0 +1,44 @@
+---
+import MainLayout from './MainLayout.astro';
+
+const { title = "Eidolon Capital Intranet" } = Astro.props;
+---
+
+<MainLayout title={title}>
+  <nav>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/employees">Employees</a>
+    <a href="/anomalies">Anomalies</a>
+    <a href="/organizations">Organizations</a>
+  </nav>
+  <slot />
+  <div class="status-bar">
+    <div class="status-bar-field">Eidolon Capital Intranet Portal v1.0</div>
+    <div class="status-bar-field">System Status: OPERATIONAL</div>
+  </div>
+</MainLayout>
+
+<style>
+  /* Custom styles for card-based layout using 98.css components */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 12px;
+    margin: 12px 0;
+  }
+
+  .card {
+    background: silver;
+    box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;
+    padding: 12px;
+    margin: 0;
+  }
+
+  .info-box {
+    background: #ffffe1;
+    border: 1px solid #000000;
+    padding: 8px;
+    margin: 8px 0;
+    font-size: 11px;
+  }
+</style>

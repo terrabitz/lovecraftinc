@@ -1,10 +1,10 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
+import ContentLayout from '../layouts/ContentLayout.astro';
 
 const employees = await Astro.glob('../content/employees/*.md');
 ---
 
-<MainLayout title="Employee Directory - Eidolon Capital Intranet">
+<ContentLayout title="Employee Directory - Eidolon Capital Intranet">
   <h1>Employee Directory</h1>
 
   <div class="info-box">
@@ -13,7 +13,7 @@ const employees = await Astro.glob('../content/employees/*.md');
 
   <div class="sun-field">
     <p>
-      This directory contains profiles of all active Eidolon Capital personnel. 
+      This directory contains profiles of all active Eidolon Capital personnel.
       Select an employee to view their full profile, clearance level, and current assignments.
     </p>
   </div>
@@ -66,4 +66,4 @@ const employees = await Astro.glob('../content/employees/*.md');
       <li><strong>Level 1:</strong> Temporary Personnel - Minimal access</li>
     </ul>
   </div>
-</MainLayout>
+</ContentLayout>

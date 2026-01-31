@@ -1,12 +1,12 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
+import ContentLayout from '../layouts/ContentLayout.astro';
 
 const employees = await Astro.glob('../content/employees/*.md');
 const anomalies = await Astro.glob('../content/anomalies/*.md');
 const organizations = await Astro.glob('../content/organizations/*.md');
 ---
 
-<MainLayout title="Dashboard - Eidolon Capital Intranet">
+<ContentLayout title="Dashboard - Eidolon Capital Intranet">
   <h1>Eidolon Capital Intranet Portal</h1>
 
   <div class="info-box">
@@ -73,4 +73,4 @@ const organizations = await Astro.glob('../content/organizations/*.md');
       </tr>
     </table>
   </div>
-</MainLayout>
+</ContentLayout>

@@ -1,50 +1,34 @@
 ---
-import '98.css';
-import '../styles/global.css';
+import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eidolon Capital - Login</title>
-</head>
-<body>
-  <div class="window login-window">
-    <div class="title-bar">
-      <div class="title-bar-text">Eidolon Capital - Secure Login</div>
-    </div>
-    <div class="window-body">
-      <h2 class="window-header" style="">Authorized Access Only</h2>
-      <div class="status-field-border warning-box">
-        <strong>⚠️ WARNING</strong><br>
-        <p>
-          All access to the Eidolon Capital Corporate Intranet is strictly controlled
-          and monitored.
-        </p>
-        <p>
-          All unauthorized access will be prosecuted under EID-ORD-6998 and
-          result in immediate termination,
-        </p>
-      </div>
-
-      <a href="/dashboard">
-        <button type="button" class="login-button">Login</button>
-      </a>
-    </div>
-
-    <div class="status-bar">
-      <div class="status-bar-field">Eidolon Capital Security Gateway</div>
-      <div class="status-bar-field">v1.65.267</div>
-    </div>
+<MainLayout title="Eidolon Capital - Secure Login">
+  <h2 class="window-header">Authorized Access Only</h2>
+  <div class="status-field-border warning-box">
+    <strong>⚠️ WARNING</strong><br>
+    <p>
+      All access to the Eidolon Capital Corporate Intranet is strictly controlled
+      and monitored.
+    </p>
+    <p>
+      All unauthorized access will be prosecuted under EID-ORD-6998 and
+      result in immediate termination,
+    </p>
   </div>
-</body>
-</html>
+
+  <a href="/dashboard">
+    <button type="button" class="login-button">Login</button>
+  </a>
+
+  <div class="status-bar">
+    <div class="status-bar-field">Eidolon Capital Security Gateway</div>
+    <div class="status-bar-field">v1.65.267</div>
+  </div>
+</MainLayout>
 
 <style>
   .login-window {
-    width: 400px;
+    width: 300px;
     margin: 0 auto;
   }
   .warning-box {

@@ -1,10 +1,10 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
+import ContentLayout from '../layouts/ContentLayout.astro';
 
 const anomalies = await Astro.glob('../content/anomalies/*.md');
 ---
 
-<MainLayout title="Anomaly Reports - Eidolon Capital Intranet">
+<ContentLayout title="Anomaly Reports - Eidolon Capital Intranet">
   <h1>Anomaly Reports</h1>
 
   <div class="info-box">
@@ -13,8 +13,8 @@ const anomalies = await Astro.glob('../content/anomalies/*.md');
 
   <div class="sun-field">
     <p>
-      This section contains reports on documented anomalous phenomena currently under 
-      investigation or containment by Eidolon Capital. All information is classified and 
+      This section contains reports on documented anomalous phenomena currently under
+      investigation or containment by Eidolon Capital. All information is classified and
       must not be shared outside authorized channels.
     </p>
   </div>
@@ -66,4 +66,4 @@ const anomalies = await Astro.glob('../content/anomalies/*.md');
       <li><strong>Class-D:</strong> Neutralized or resolved</li>
     </ul>
   </div>
-</MainLayout>
+</ContentLayout>

@@ -44,7 +44,7 @@ The Arkham Historical Society is a non-profit organization dedicated to preservi
 
 ## Partnership Agreement
 
-Information sharing agreement established in 1993. The society provides historical context and research support while Lovecraft Inc. offers preservation funding and occasional consultation on historical mysteries.
+Information sharing agreement established in 1993. The society provides historical context and research support while Eidolon Capital offers preservation funding and occasional consultation on historical mysteries.
 
 ## Security Clearance
 

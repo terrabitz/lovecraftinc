@@ -4,7 +4,7 @@ position: "Field Operative"
 department: "Field Operations"
 employeeId: "EMP-002"
 clearanceLevel: "Level 4"
-email: "m.chen@lovecraftinc.local"
+email: "m.chen@eidoloncapital.local"
 ---
 
 ## Employee Profile
@@ -14,7 +14,7 @@ email: "m.chen@lovecraftinc.local"
 **Department:** Field Operations  
 **Employee ID:** EMP-002  
 **Clearance Level:** Level 4  
-**Email:** m.chen@lovecraftinc.local
+**Email:** m.chen@eidoloncapital.local
 
 ## Background
 

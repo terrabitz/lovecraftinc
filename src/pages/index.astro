@@ -1,76 +1,98 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
-
-const employees = await Astro.glob('../content/employees/*.md');
-const anomalies = await Astro.glob('../content/anomalies/*.md');
-const organizations = await Astro.glob('../content/organizations/*.md');
 ---
 
-<MainLayout title="Dashboard - Lovecraft Inc. Intranet">
-  <h1>🏢 Lovecraft Inc. Intranet Portal</h1>
-  
-  <div class="info-box">
-    <strong>⚠️ CONFIDENTIAL SYSTEM</strong> - Authorized Personnel Only
-  </div>
-
-  <div class="sun-field">
-    <h2>Welcome to the Lovecraft Inc. Intranet</h2>
-    <p>
-      Welcome to the internal information system of Lovecraft Incorporated. 
-      This portal provides access to critical organizational data, employee records, 
-      anomaly reports, and partner organization profiles.
-    </p>
-    <p>
-      Please use the navigation links above to access different sections of the intranet.
-    </p>
-  </div>
-
-  <h2>Quick Access</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>👥 Employee Directory</h3>
-      <p>Access employee profiles, contact information, and organizational assignments.</p>
-      <a href="/employees" class="button">View Employees</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eidolon Capital - Login</title>
+  <link rel="stylesheet" href="/styles/98.css">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .login-window {
+      width: 400px;
+      margin: 0 auto;
+    }
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .form-group label {
+      min-width: auto;
+    }
+    .form-group input {
+      width: 100%;
+    }
+    .warning-box {
+      background: #ffffe1;
+      border: 2px solid #000000;
+      padding: 12px;
+      margin: 12px 0;
+      font-size: 11px;
+      text-align: center;
+    }
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="window login-window">
+    <div class="title-bar">
+      <div class="title-bar-text">Eidolon Capital - Secure Login</div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize" disabled>_</button>
+        <button aria-label="Maximize" disabled>□</button>
+        <button aria-label="Close" disabled>×</button>
+      </div>
     </div>
+    <div class="window-body">
+      <h2 style="text-align: center; margin: 8px 0 16px;">Authorized Access Only</h2>
+      
+      <div class="sun-field">
+        <form class="login-form">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter username">
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter password">
+          </div>
+          
+          <div class="button-group">
+            <a href="/dashboard" class="button">Login</a>
+            <button type="button">Cancel</button>
+          </div>
+        </form>
+      </div>
 
-    <div class="card">
-      <h3>📊 Anomaly Reports</h3>
-      <p>Review documented anomalous events and phenomena requiring investigation.</p>
-      <a href="/anomalies" class="button">View Anomalies</a>
-    </div>
+      <div class="warning-box">
+        <strong>⚠️ WARNING</strong><br>
+        All unauthorized access will be prosecuted under EID-ORD-6998
+      </div>
 
-    <div class="card">
-      <h3>🏛️ Organizations</h3>
-      <p>Access profiles of partner organizations and affiliated entities.</p>
-      <a href="/organizations" class="button">View Organizations</a>
+      <div class="status-bar">
+        <div class="status-bar-field">Eidolon Capital Security Gateway</div>
+        <div class="status-bar-field">v1.0</div>
+      </div>
     </div>
   </div>
-
-  <hr>
-
-  <div class="sun-field">
-    <h3>System Information</h3>
-    <table>
-      <tr>
-        <th>Property</th>
-        <th>Value</th>
-      </tr>
-      <tr>
-        <td>Total Employees</td>
-        <td>{employees.length}</td>
-      </tr>
-      <tr>
-        <td>Active Anomalies</td>
-        <td>{anomalies.length}</td>
-      </tr>
-      <tr>
-        <td>Partner Organizations</td>
-        <td>{organizations.length}</td>
-      </tr>
-      <tr>
-        <td>Last Update</td>
-        <td>2026-01-31</td>
-      </tr>
-    </table>
-  </div>
-</MainLayout>
+</body>
+</html>

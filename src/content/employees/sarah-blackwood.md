@@ -4,7 +4,7 @@ position: "Archivist"
 department: "Documentation & Records"
 employeeId: "EMP-003"
 clearanceLevel: "Level 3"
-email: "s.blackwood@lovecraftinc.local"
+email: "s.blackwood@eidoloncapital.local"
 ---
 
 ## Employee Profile
@@ -14,7 +14,7 @@ email: "s.blackwood@lovecraftinc.local"
 **Department:** Documentation & Records  
 **Employee ID:** EMP-003  
 **Clearance Level:** Level 3  
-**Email:** s.blackwood@lovecraftinc.local
+**Email:** s.blackwood@eidoloncapital.local
 
 ## Background
 

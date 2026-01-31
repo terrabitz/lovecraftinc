@@ -1,5 +1,5 @@
 ---
-const { title = "Lovecraft Inc. Intranet" } = Astro.props;
+const { title = "Eidolon Capital Intranet" } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -22,14 +22,14 @@ const { title = "Lovecraft Inc. Intranet" } = Astro.props;
     </div>
     <div class="window-body">
       <nav>
-        <a href="/">Dashboard</a>
+        <a href="/dashboard">Dashboard</a>
         <a href="/employees">Employees</a>
         <a href="/anomalies">Anomalies</a>
         <a href="/organizations">Organizations</a>
       </nav>
       <slot />
       <div class="status-bar">
-        <div class="status-bar-field">Lovecraft Inc. Intranet Portal v1.0</div>
+        <div class="status-bar-field">Eidolon Capital Intranet Portal v1.0</div>
         <div class="status-bar-field">System Status: OPERATIONAL</div>
       </div>
     </div>

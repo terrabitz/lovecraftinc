@@ -18,7 +18,7 @@ location: "Arkham, Massachusetts"
 
 ## Overview
 
-Miskatonic University is one of the oldest and most prestigious institutions of higher learning in New England. Known for its extensive library and occult collection, the university has been a valuable research partner to Lovecraft Inc. since our founding.
+Miskatonic University is one of the oldest and most prestigious institutions of higher learning in New England. Known for its extensive library and occult collection, the university has been a valuable research partner to Eidolon Capital since our founding.
 
 ## Areas of Collaboration
 
@@ -44,7 +44,7 @@ Miskatonic University is one of the oldest and most prestigious institutions of 
 
 ## Partnership Agreement
 
-Current partnership agreement signed in 1992, renewable annually. Lovecraft Inc. provides funding for specific research projects in exchange for priority access to findings and resources.
+Current partnership agreement signed in 1992, renewable annually. Eidolon Capital provides funding for specific research projects in exchange for priority access to findings and resources.
 
 ## Security Clearance
 

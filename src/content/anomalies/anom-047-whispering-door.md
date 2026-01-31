@@ -27,7 +27,7 @@ ANOM-047 refers to a wooden door located in the basement of an abandoned textile
 ## Investigation History
 
 - **March 15, 1995:** Initial discovery by local urban explorers
-- **March 18, 1995:** Site secured by Lovecraft Inc. field team
+- **March 18, 1995:** Site secured by Eidolon Capital field team
 - **April 2, 1995:** First analysis attempt - inconclusive results
 - **May 10, 1995:** Door relocated itself 50 meters from original position
 - **June 1, 1995:** Dr. Harrow recommended Class-B classification

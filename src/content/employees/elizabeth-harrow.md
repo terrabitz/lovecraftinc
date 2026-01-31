@@ -4,7 +4,7 @@ position: "Chief Research Officer"
 department: "Research & Development"
 employeeId: "EMP-001"
 clearanceLevel: "Level 5"
-email: "e.harrow@lovecraftinc.local"
+email: "e.harrow@eidoloncapital.local"
 ---
 
 ## Employee Profile
@@ -14,11 +14,11 @@ email: "e.harrow@lovecraftinc.local"
 **Department:** Research & Development  
 **Employee ID:** EMP-001  
 **Clearance Level:** Level 5  
-**Email:** e.harrow@lovecraftinc.local
+**Email:** e.harrow@eidoloncapital.local
 
 ## Background
 
-Dr. Harrow joined Lovecraft Inc. in 1994 with extensive experience in theoretical physics and anomalous phenomena research. She holds a Ph.D. from Miskatonic University and has authored numerous classified papers on reality manipulation.
+Dr. Harrow joined Eidolon Capital in 1994 with extensive experience in theoretical physics and anomalous phenomena research. She holds a Ph.D. from Miskatonic University and has authored numerous classified papers on reality manipulation.
 
 ## Areas of Expertise
 

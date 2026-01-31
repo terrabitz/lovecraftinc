@@ -27,7 +27,7 @@ ANOM-112 is a localized temporal anomaly occurring in a 5-meter radius area near
 ## Investigation History
 
 - **November 23, 1994:** Fishermen reported "hearing voices from another time"
-- **November 25, 1994:** Lovecraft Inc. deployed investigation team
+- **November 25, 1994:** Eidolon Capital deployed investigation team
 - **December 1, 1994:** Temporal nature of anomaly confirmed through radiometric testing
 - **January 15, 1995:** Containment field established
 - **February 2, 1995:** Upgraded to Class-A following unexpected temporal surge

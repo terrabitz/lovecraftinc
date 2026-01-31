@@ -1,7 +1,7 @@
 {
-  "name": "lovecraftinc",
+  "name": "eidolon-capital",
   "version": "1.0.0",
-  "description": "Lovecraft Inc. - A 90s Intranet Portal",
+  "description": "Eidolon Capital - A 90s Intranet Portal",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
@@ -9,7 +9,7 @@
     "build": "astro build",
     "preview": "astro preview"
   },
-  "keywords": ["astro", "lovecraft", "intranet"],
+  "keywords": ["astro", "eidolon", "intranet"],
   "author": "",
   "license": "ISC",
   "dependencies": {

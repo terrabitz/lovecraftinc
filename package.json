@@ -9,11 +9,16 @@
     "build": "astro build",
     "preview": "astro preview"
   },
-  "keywords": ["astro", "eidolon", "intranet"],
+  "keywords": [
+    "astro",
+    "eidolon",
+    "intranet"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@astrojs/markdown-remark": "^6.3.10",
+    "98.css": "^0.1.21",
     "astro": "^5.17.1"
   }
 }

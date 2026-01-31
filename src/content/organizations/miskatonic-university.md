@@ -1,5 +1,5 @@
 ---
-orgId: "ORG-001"
+orgId: "EID-ORG-001"
 name: "Miskatonic University"
 type: "Academic Institution"
 relationship: "Research Partner"

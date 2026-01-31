@@ -1,5 +1,5 @@
 ---
-orgId: "ORG-002"
+orgId: "EID-ORG-002"
 name: "The Arkham Historical Society"
 type: "Historical Organization"
 relationship: "Information Sharing Agreement"

@@ -1,5 +1,6 @@
+
 ---
-anomalyId: "ANOM-047"
+anomalyId: "EID-047"
 title: "The Whispering Door"
 classification: "Class-B"
 status: "Under Investigation"
@@ -9,7 +10,7 @@ location: "Arkham, Massachusetts"
 
 ## Description
 
-ANOM-047 refers to a wooden door located in the basement of an abandoned textile mill in Arkham. The door exhibits several anomalous properties:
+EID-047 refers to a wooden door located in the basement of an abandoned textile mill in Arkham. The door exhibits several anomalous properties:
 
 1. The door produces audible whispers in an unknown language when approached
 2. The door's location within the building changes unpredictably

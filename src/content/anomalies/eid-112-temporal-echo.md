@@ -1,5 +1,5 @@
 ---
-anomalyId: "ANOM-112"
+anomalyId: "EID-112"
 title: "Temporal Echo Chamber"
 classification: "Class-A"
 status: "Contained"
@@ -9,7 +9,7 @@ location: "Innsmouth Harbor"
 
 ## Description
 
-ANOM-112 is a localized temporal anomaly occurring in a 5-meter radius area near Pier 7 of Innsmouth Harbor. The anomaly manifests as follows:
+EID-112 is a localized temporal anomaly occurring in a 5-meter radius area near Pier 7 of Innsmouth Harbor. The anomaly manifests as follows:
 
 1. Objects entering the zone experience time dilation effects
 2. Sounds from the past (dated between 1920-1928) can be heard within the zone

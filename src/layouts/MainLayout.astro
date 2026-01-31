@@ -11,30 +11,6 @@ const { title = "Eidolon Capital Intranet" } = Astro.props;
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
-  <style>
-    /* Custom styles for card-based layout using 98.css components */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 12px;
-      margin: 12px 0;
-    }
-
-    .card {
-      background: silver;
-      box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;
-      padding: 12px;
-      margin: 0;
-    }
-
-    .info-box {
-      background: #ffffe1;
-      border: 1px solid #000000;
-      padding: 8px;
-      margin: 8px 0;
-      font-size: 11px;
-    }
-  </style>
 </head>
 <body>
   <div class="window">
@@ -62,3 +38,28 @@ const { title = "Eidolon Capital Intranet" } = Astro.props;
   </div>
 </body>
 </html>
+
+<style>
+  /* Custom styles for card-based layout using 98.css components */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 12px;
+    margin: 12px 0;
+  }
+
+  .card {
+    background: silver;
+    box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;
+    padding: 12px;
+    margin: 0;
+  }
+
+  .info-box {
+    background: #ffffe1;
+    border: 1px solid #000000;
+    padding: 8px;
+    margin: 8px 0;
+    font-size: 11px;
+  }
+</style>

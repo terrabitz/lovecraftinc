@@ -7,17 +7,6 @@ const organizations = await Astro.glob('../content/organizations/*.md');
 <ContentLayout title="Organizations - Eidolon Capital Intranet">
   <h1>Partner Organizations</h1>
 
-  <div class="info-box">
-    <strong>External Relations</strong> - Partnership Information
-  </div>
-
-  <div class="sun-field">
-    <p>
-      This section provides information about organizations with which Eidolon Capital
-      maintains formal partnerships, research collaborations, or information sharing agreements.
-    </p>
-  </div>
-
   <h2>Partner Organizations ({organizations.length})</h2>
 
   <div class="grid">
@@ -55,14 +44,4 @@ const organizations = await Astro.glob('../content/organizations/*.md');
   </div>
 
   <hr>
-
-  <div class="sun-field">
-    <h3>Partnership Types</h3>
-    <ul>
-      <li><strong>Research Partner:</strong> Active collaboration on research projects</li>
-      <li><strong>Information Sharing:</strong> Exchange of relevant data and findings</li>
-      <li><strong>Resource Access:</strong> Access to specialized facilities or materials</li>
-      <li><strong>Advisory:</strong> Consultation on specific topics or incidents</li>
-    </ul>
-  </div>
 </ContentLayout>

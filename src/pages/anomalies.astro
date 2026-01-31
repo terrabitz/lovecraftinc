@@ -6,19 +6,6 @@ const anomalies = await Astro.glob('../content/anomalies/*.md');
 
 <ContentLayout title="Anomaly Reports - Eidolon Capital Intranet">
   <h1>Anomaly Reports</h1>
-
-  <div class="info-box">
-    <strong>⚠️ CLASSIFIED INFORMATION</strong> - Level 3 Clearance Required
-  </div>
-
-  <div class="sun-field">
-    <p>
-      This section contains reports on documented anomalous phenomena currently under
-      investigation or containment by Eidolon Capital. All information is classified and
-      must not be shared outside authorized channels.
-    </p>
-  </div>
-
   <h2>Active Anomalies ({anomalies.length})</h2>
 
   <div class="grid">
@@ -56,14 +43,4 @@ const anomalies = await Astro.glob('../content/anomalies/*.md');
   </div>
 
   <hr>
-
-  <div class="sun-field">
-    <h3>Classification System</h3>
-    <ul>
-      <li><strong>Class-A:</strong> Highly dangerous, contained with strict protocols</li>
-      <li><strong>Class-B:</strong> Moderate risk, under active investigation</li>
-      <li><strong>Class-C:</strong> Low risk, monitoring only</li>
-      <li><strong>Class-D:</strong> Neutralized or resolved</li>
-    </ul>
-  </div>
 </ContentLayout>

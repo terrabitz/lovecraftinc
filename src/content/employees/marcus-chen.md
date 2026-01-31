@@ -2,19 +2,17 @@
 name: "Marcus Chen"
 position: "Field Operative"
 department: "Field Operations"
-employeeId: "EMP-002"
+employeeId: "EID-EMP-002"
 clearanceLevel: "Level 4"
-email: "m.chen@eidoloncapital.local"
 ---
 
 ## Employee Profile
 
-**Name:** Marcus Chen  
-**Position:** Field Operative  
-**Department:** Field Operations  
-**Employee ID:** EMP-002  
-**Clearance Level:** Level 4  
-**Email:** m.chen@eidoloncapital.local
+**Name:** Marcus Chen
+**Position:** Field Operative
+**Department:** Field Operations
+**Employee ID:** EID-EMP-002
+**Clearance Level:** Level 4
 
 ## Background
 

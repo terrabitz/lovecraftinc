@@ -2,19 +2,17 @@
 name: "Sarah Blackwood"
 position: "Archivist"
 department: "Documentation & Records"
-employeeId: "EMP-003"
+employeeId: "EID-EMP-003"
 clearanceLevel: "Level 3"
-email: "s.blackwood@eidoloncapital.local"
 ---
 
 ## Employee Profile
 
-**Name:** Sarah Blackwood  
-**Position:** Archivist  
-**Department:** Documentation & Records  
-**Employee ID:** EMP-003  
-**Clearance Level:** Level 3  
-**Email:** s.blackwood@eidoloncapital.local
+**Name:** Sarah Blackwood
+**Position:** Archivist
+**Department:** Documentation & Records
+**Employee ID:** EID-EMP-003
+**Clearance Level:** Level 3
 
 ## Background
 

@@ -16,12 +16,7 @@ const { Content, frontmatter } = employee;
 
 <ContentLayout title={`${frontmatter.name} - Employee Profile`}>
   <h1>Employee Profile</h1>
-
-  <div class="info-box">
-    <strong>Personnel File:</strong> {frontmatter.employeeId}
-  </div>
-
-  <div class="sun-field">
+  <div class="field-border">
     <article>
       <Content />
     </article>

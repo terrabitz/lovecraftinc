@@ -16,12 +16,7 @@ const { Content, frontmatter } = anomaly;
 
 <ContentLayout title={`${frontmatter.title} - Anomaly Report`}>
   <h1>Anomaly Report</h1>
-
-  <div class="info-box">
-    <strong>⚠️ CLASSIFIED:</strong> {frontmatter.anomalyId} - {frontmatter.classification}
-  </div>
-
-  <div class="sun-field">
+  <div class="field-border">
     <article>
       <Content />
     </article>

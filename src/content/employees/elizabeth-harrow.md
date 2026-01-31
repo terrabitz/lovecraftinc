@@ -2,19 +2,17 @@
 name: "Dr. Elizabeth Harrow"
 position: "Chief Research Officer"
 department: "Research & Development"
-employeeId: "EMP-001"
+employeeId: "EID-EMP-001"
 clearanceLevel: "Level 5"
-email: "e.harrow@eidoloncapital.local"
 ---
 
 ## Employee Profile
 
-**Name:** Dr. Elizabeth Harrow  
-**Position:** Chief Research Officer  
-**Department:** Research & Development  
-**Employee ID:** EMP-001  
-**Clearance Level:** Level 5  
-**Email:** e.harrow@eidoloncapital.local
+**Name:** Dr. Elizabeth Harrow
+**Position:** Chief Research Officer
+**Department:** Research & Development
+**Employee ID:** EID-EMP-001
+**Clearance Level:** Level 5
 
 ## Background
 

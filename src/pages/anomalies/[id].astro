@@ -7,7 +7,7 @@ export async function getStaticPaths() {
   const anomalies = await getCollection('anomalies');
 
   return anomalies.map((anomaly) => ({
-    params: { id: anomaly.data.anomalyId.toLowerCase() },
+    params: { id: anomaly.data.anomalyId.toUpperCase() },
     props: { anomaly }
   }));
 }

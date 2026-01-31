@@ -7,7 +7,7 @@ export async function getStaticPaths() {
   const organizations = await getCollection('organizations');
 
   return organizations.map((org) => ({
-    params: { id: org.data.orgId.toLowerCase() },
+    params: { id: org.data.orgId.toUpperCase() },
     props: { organization: org }
   }));
 }

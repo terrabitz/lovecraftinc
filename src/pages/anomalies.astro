@@ -38,7 +38,7 @@ const anomalies = await getCollection('anomalies');
             </tr>
           </tbody>
         </Table>
-        <a href={`/anomalies/${anomaly.data.anomalyId.toLowerCase()}`} slot="bottom">
+        <a href={`/anomalies/${anomaly.data.anomalyId.toUpperCase()}`} slot="bottom">
           <button>View Full Report</button>
         </a>
       </Card>

@@ -30,7 +30,7 @@ const employees = await getCollection('employees');
             </tr>
           </tbody>
         </Table>
-        <a href={`/employees/${employee.data.employeeId.toLowerCase()}`} slot="bottom">
+        <a href={`/employees/${employee.data.employeeId.toUpperCase()}`} slot="bottom">
           <button>View Profile</button>
         </a>
       </Card>

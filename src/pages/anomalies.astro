@@ -1,4 +1,5 @@
 ---
+import Table from '../components/Table.astro';
 import ContentLayout from '../layouts/ContentLayout.astro';
 
 const anomalies = await Astro.glob('../content/anomalies/*.md');
@@ -12,28 +13,30 @@ const anomalies = await Astro.glob('../content/anomalies/*.md');
     {anomalies.map((anomaly) => (
       <div class="card">
         <h3>{anomaly.frontmatter.title}</h3>
-        <table>
-          <tr>
-            <td><strong>Anomaly ID:</strong></td>
-            <td>{anomaly.frontmatter.anomalyId}</td>
-          </tr>
-          <tr>
-            <td><strong>Classification:</strong></td>
-            <td>{anomaly.frontmatter.classification}</td>
-          </tr>
-          <tr>
-            <td><strong>Status:</strong></td>
-            <td>{anomaly.frontmatter.status}</td>
-          </tr>
-          <tr>
-            <td><strong>Discovery Date:</strong></td>
-            <td>{anomaly.frontmatter.discoveryDate}</td>
-          </tr>
-          <tr>
-            <td><strong>Location:</strong></td>
-            <td>{anomaly.frontmatter.location}</td>
-          </tr>
-        </table>
+        <Table>
+          <tbody>
+            <tr>
+              <td><strong>Anomaly ID:</strong></td>
+              <td>{anomaly.frontmatter.anomalyId}</td>
+            </tr>
+            <tr>
+              <td><strong>Classification:</strong></td>
+              <td>{anomaly.frontmatter.classification}</td>
+            </tr>
+            <tr>
+              <td><strong>Status:</strong></td>
+              <td>{anomaly.frontmatter.status}</td>
+            </tr>
+            <tr>
+              <td><strong>Discovery Date:</strong></td>
+              <td>{anomaly.frontmatter.discoveryDate}</td>
+            </tr>
+            <tr>
+              <td><strong>Location:</strong></td>
+              <td>{anomaly.frontmatter.location}</td>
+            </tr>
+          </tbody>
+        </Table>
         <br>
         <a href={`/anomalies/${anomaly.frontmatter.anomalyId.toLowerCase()}`}>
           <button>View Full Report</button>

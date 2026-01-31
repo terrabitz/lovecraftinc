@@ -1,4 +1,5 @@
 ---
+import Table from '../../components/Table.astro';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 
 export async function getStaticPaths() {
@@ -17,7 +18,7 @@ const { Content, frontmatter } = anomaly;
 <ContentLayout title={`${frontmatter.title} - Anomaly Report`}>
   <h2>{frontmatter.title}</h2>
 
-  <table>
+  <Table>
     <tr>
       <td><strong>Anomaly ID:</strong></td>
       <td>{frontmatter.anomalyId}</td>
@@ -38,7 +39,7 @@ const { Content, frontmatter } = anomaly;
       <td><strong>Location:</strong></td>
       <td>{frontmatter.location}</td>
     </tr>
-  </table>
+  </Table>
 
   <hr>
 

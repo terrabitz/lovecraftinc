@@ -1,4 +1,5 @@
 ---
+import Table from '../components/Table.astro';
 import ContentLayout from '../layouts/ContentLayout.astro';
 
 const employees = await Astro.glob('../content/employees/*.md');
@@ -12,24 +13,22 @@ const employees = await Astro.glob('../content/employees/*.md');
     {employees.map((employee) => (
       <div class="card">
         <h3>{employee.frontmatter.name}</h3>
-        <div class="sunken-panel">
-          <table>
-            <tbody>
-              <tr>
-                <td><strong>Position:</strong></td>
-                <td>{employee.frontmatter.position}</td>
-              </tr>
-              <tr>
-                <td><strong>Department:</strong></td>
-                <td>{employee.frontmatter.department}</td>
-              </tr>
-              <tr>
-                <td><strong>ID:</strong></td>
-                <td>{employee.frontmatter.employeeId}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <Table>
+          <tbody>
+            <tr>
+              <td><strong>Position:</strong></td>
+              <td>{employee.frontmatter.position}</td>
+            </tr>
+            <tr>
+              <td><strong>Department:</strong></td>
+              <td>{employee.frontmatter.department}</td>
+            </tr>
+            <tr>
+              <td><strong>ID:</strong></td>
+              <td>{employee.frontmatter.employeeId}</td>
+            </tr>
+          </tbody>
+        </Table>
         <br>
         <a href={`/employees/${employee.frontmatter.employeeId.toLowerCase()}`}>
           <button>View Profile</button>

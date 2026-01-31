@@ -55,4 +55,17 @@ const pathname = Astro.url.pathname;
     margin: 8px 0;
     font-size: 11px;
   }
+
+  .window {
+    width: 100%;
+    min-height: 80vh;
+  }
+
+  @media (min-width: 768px) {
+    .window {
+      width: 70%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+  }
 </style>

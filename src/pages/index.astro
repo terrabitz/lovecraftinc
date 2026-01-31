@@ -1,5 +1,9 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+
+const employees = await Astro.glob('../content/employees/*.md');
+const anomalies = await Astro.glob('../content/anomalies/*.md');
+const organizations = await Astro.glob('../content/organizations/*.md');
 ---
 
 <MainLayout title="Dashboard - Lovecraft Inc. Intranet">
@@ -53,15 +57,15 @@ import MainLayout from '../layouts/MainLayout.astro';
       </tr>
       <tr>
         <td>Total Employees</td>
-        <td>3</td>
+        <td>{employees.length}</td>
       </tr>
       <tr>
         <td>Active Anomalies</td>
-        <td>2</td>
+        <td>{anomalies.length}</td>
       </tr>
       <tr>
         <td>Partner Organizations</td>
-        <td>2</td>
+        <td>{organizations.length}</td>
       </tr>
       <tr>
         <td>Last Update</td>

@@ -3,7 +3,7 @@ import MainLayout from '../layouts/MainLayout.astro';
 ---
 
 <MainLayout title="Eidolon Capital - Secure Login">
-  <h2 class="window-header">Authorized Access Only</h2>
+  <h3 class="window-header">Authorized Access Only</h3>
   <div class="status-field-border warning-box">
     <strong>⚠️ WARNING</strong><br>
     <p>
@@ -27,6 +27,9 @@ import MainLayout from '../layouts/MainLayout.astro';
 </MainLayout>
 
 <style>
+  .window-header {
+    text-align: center;
+  }
   .login-window {
     width: 300px;
     margin: 0 auto;
@@ -39,7 +42,7 @@ import MainLayout from '../layouts/MainLayout.astro';
     font-size: 20px;
     width: 70%;
     height: 40px;
-    margin: 0 auto;
+    margin: 20px auto 30px auto;
     display: block;
   }
 </style>

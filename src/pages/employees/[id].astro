@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import Table from '../../components/Table.astro';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 }
 
 const { employee } = Astro.props;
-const { Content } = await employee.render();
+const { Content } = await render(employee);
 ---
 
 <ContentLayout title={`Eidolon Capital Intranet - Employee - ${employee.data.name}`}>

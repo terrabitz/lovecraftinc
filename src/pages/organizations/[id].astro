@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import Table from '../../components/Table.astro';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 }
 
 const { organization } = Astro.props;
-const { Content } = await organization.render();
+const { Content } = await render(organization);
 ---
 
 <ContentLayout title={`Eidolon Capital Intranet - Organization - ${organization.data.name}`}>

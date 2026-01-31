@@ -1,7 +1,8 @@
+import { glob } from 'astro/loaders';
 import { defineCollection, z } from 'astro:content';
 
 const employees = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/employees' }),
   schema: z.object({
     name: z.string(),
     position: z.string(),
@@ -12,7 +13,7 @@ const employees = defineCollection({
 });
 
 const anomalies = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/anomalies' }),
   schema: z.object({
     anomalyId: z.string(),
     title: z.string(),
@@ -24,7 +25,7 @@ const anomalies = defineCollection({
 });
 
 const organizations = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/organizations' }),
   schema: z.object({
     orgId: z.string(),
     name: z.string(),

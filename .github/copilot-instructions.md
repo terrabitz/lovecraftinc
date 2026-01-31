@@ -82,19 +82,33 @@
 - Never import CSS multiple times across components
 
 ### Content Collections
-- **Always use Content Collections API** for markdown content in `src/content/`
+- **Always use Content Collections API with Content Layer loaders** for markdown content in `src/content/`
 - Define schemas in `src/content.config.ts` using Zod for type safety
+- Use the `glob()` loader to load content from the file system
 - Use `getCollection()` to fetch content: `const posts = await getCollection('posts')`
 - Access frontmatter via `.data` property: `entry.data.title`
-- Render content with `await entry.render()` to get `Content` component
+- Render content with `await render(entry)` using the `render()` function from `astro:content`
 - Never use `import.meta.glob()` or `Astro.glob()` for content collections
 
 Example:
 ```astro
 ---
-import { getCollection } from 'astro:content';
+// Content config (src/content.config.ts)
+import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
+
+const posts = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),
+  schema: z.object({
+    title: z.string(),
+    date: z.string(),
+  }),
+});
+
+export const collections = { posts };
 
 // List page
+import { getCollection } from 'astro:content';
 const posts = await getCollection('posts');
 ---
 {posts.map((post) => (
@@ -102,6 +116,8 @@ const posts = await getCollection('posts');
 ))}
 
 // Detail page
+import { getCollection, render } from 'astro:content';
+
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
   return posts.map((post) => ({
@@ -111,7 +127,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+const { Content } = await render(post);
 <Content />
 ```
 
@@ -146,11 +162,12 @@ const { Content } = await post.render();
 
 ## Content Collections
 
-- Define schemas in `src/content.config.ts` with Zod validation
+- Define collections in `src/content.config.ts` with Zod validation
+- Use the Content Layer API with the `glob()` loader for file-based content
 - Store markdown content in `src/content/[collection-name]/`
 - Always use `getCollection()` API for type-safe content access
 - Access frontmatter via `.data` property, not `.frontmatter`
-- Render markdown with `await entry.render()` to get the `Content` component
+- Render markdown with `await render(entry)` using the `render()` function from `astro:content`
 
 ## General Guidelines
 

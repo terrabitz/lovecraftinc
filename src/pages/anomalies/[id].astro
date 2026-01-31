@@ -1,0 +1,33 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+export async function getStaticPaths() {
+  const anomalies = await Astro.glob('../../content/anomalies/*.md');
+  
+  return anomalies.map((anomaly) => ({
+    params: { id: anomaly.frontmatter.anomalyId.toLowerCase() },
+    props: { anomaly }
+  }));
+}
+
+const { anomaly } = Astro.props;
+const { Content, frontmatter } = anomaly;
+---
+
+<MainLayout title={`${frontmatter.title} - Anomaly Report`}>
+  <h1>Anomaly Report</h1>
+  
+  <div class="info-box">
+    <strong>⚠️ CLASSIFIED:</strong> {frontmatter.anomalyId} - {frontmatter.classification}
+  </div>
+
+  <div class="sun-field">
+    <article>
+      <Content />
+    </article>
+  </div>
+
+  <hr>
+
+  <a href="/anomalies" class="button">← Back to Reports</a>
+</MainLayout>

@@ -1,0 +1,38 @@
+---
+const { title = "Lovecraft Inc. Intranet" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <link rel="stylesheet" href="/styles/98.css">
+</head>
+<body>
+  <div class="window">
+    <div class="title-bar">
+      <div class="title-bar-text">{title}</div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize">_</button>
+        <button aria-label="Maximize">□</button>
+        <button aria-label="Close">×</button>
+      </div>
+    </div>
+    <div class="window-body">
+      <nav>
+        <a href="/">Dashboard</a>
+        <a href="/employees">Employees</a>
+        <a href="/anomalies">Anomalies</a>
+        <a href="/organizations">Organizations</a>
+      </nav>
+      <slot />
+      <div class="status-bar">
+        <div class="status-bar-field">Lovecraft Inc. Intranet Portal v1.0</div>
+        <div class="status-bar-field">System Status: OPERATIONAL</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

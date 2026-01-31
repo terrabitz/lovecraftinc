@@ -1,0 +1,19 @@
+{
+  "name": "lovecraftinc",
+  "version": "1.0.0",
+  "description": "Lovecraft Inc. - A 90s Intranet Portal",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "keywords": ["astro", "lovecraft", "intranet"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@astrojs/markdown-remark": "^6.3.10",
+    "astro": "^5.17.1"
+  }
+}

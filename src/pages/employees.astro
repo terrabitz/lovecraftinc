@@ -1,0 +1,70 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { getCollection } from 'astro:content';
+
+const employees = await Astro.glob('../content/employees/*.md');
+---
+
+<MainLayout title="Employee Directory - Lovecraft Inc. Intranet">
+  <h1>👥 Employee Directory</h1>
+
+  <div class="info-box">
+    <strong>📋 Personnel Records</strong> - Authorized Access Only
+  </div>
+
+  <div class="sun-field">
+    <p>
+      This directory contains profiles of all active Lovecraft Inc. personnel. 
+      Select an employee to view their full profile, clearance level, and current assignments.
+    </p>
+  </div>
+
+  <h2>Active Personnel ({employees.length})</h2>
+
+  <div class="grid">
+    {employees.map((employee) => (
+      <div class="card">
+        <h3>{employee.frontmatter.name}</h3>
+        <table>
+          <tr>
+            <td><strong>Position:</strong></td>
+            <td>{employee.frontmatter.position}</td>
+          </tr>
+          <tr>
+            <td><strong>Department:</strong></td>
+            <td>{employee.frontmatter.department}</td>
+          </tr>
+          <tr>
+            <td><strong>ID:</strong></td>
+            <td>{employee.frontmatter.employeeId}</td>
+          </tr>
+          <tr>
+            <td><strong>Clearance:</strong></td>
+            <td>{employee.frontmatter.clearanceLevel}</td>
+          </tr>
+          <tr>
+            <td><strong>Email:</strong></td>
+            <td>{employee.frontmatter.email}</td>
+          </tr>
+        </table>
+        <br>
+        <a href={`/employees/${employee.frontmatter.employeeId.toLowerCase()}`} class="button">
+          View Profile
+        </a>
+      </div>
+    ))}
+  </div>
+
+  <hr>
+
+  <div class="sun-field">
+    <h3>Clearance Levels</h3>
+    <ul>
+      <li><strong>Level 5:</strong> Senior Leadership - Full access to all materials</li>
+      <li><strong>Level 4:</strong> Field Operations - Access to operational data</li>
+      <li><strong>Level 3:</strong> Support Staff - Access to general records</li>
+      <li><strong>Level 2:</strong> Consultants - Limited access</li>
+      <li><strong>Level 1:</strong> Temporary Personnel - Minimal access</li>
+    </ul>
+  </div>
+</MainLayout>

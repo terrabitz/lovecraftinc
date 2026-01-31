@@ -1,0 +1,212 @@
+/* 98.css-inspired stylesheet for Lovecraft Inc. Intranet */
+
+:root {
+  --surface: #c0c0c0;
+  --button-face: #c0c0c0;
+  --button-highlight: #ffffff;
+  --button-shadow: #808080;
+  --window-frame: #0a0a0a;
+  --dialog-blue: #000080;
+  --dialog-blue-light: #1084d0;
+  --dialog-gray: #808080;
+  --text-color: #000000;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "MS Sans Serif", Tahoma, sans-serif;
+  font-size: 11px;
+  background: #008080;
+  color: var(--text-color);
+  margin: 0;
+  padding: 20px;
+}
+
+.window {
+  background: var(--surface);
+  border: 1px solid var(--window-frame);
+  box-shadow: 
+    inset 1px 1px 0 1px var(--button-highlight),
+    1px 1px 0 1px var(--window-frame);
+  padding: 2px;
+  margin: 20px auto;
+  max-width: 1200px;
+}
+
+.title-bar {
+  background: linear-gradient(90deg, #000080, #1084d0);
+  padding: 3px 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+}
+
+.title-bar-text {
+  font-size: 11px;
+  letter-spacing: 0;
+}
+
+.title-bar-controls button {
+  min-width: 16px;
+  min-height: 14px;
+  padding: 0;
+  margin-left: 2px;
+}
+
+.window-body {
+  margin: 8px;
+  min-height: 400px;
+}
+
+button, .button {
+  background: var(--surface);
+  border: none;
+  box-shadow: 
+    inset -1px -1px var(--button-shadow),
+    inset 1px 1px var(--button-highlight),
+    inset -2px -2px var(--dialog-gray),
+    inset 2px 2px var(--button-face);
+  padding: 4px 12px;
+  font-family: "MS Sans Serif", Tahoma, sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text-color);
+  display: inline-block;
+  margin: 2px;
+}
+
+button:active, .button:active {
+  box-shadow: 
+    inset 1px 1px var(--button-shadow),
+    inset -1px -1px var(--button-highlight),
+    inset 2px 2px var(--dialog-gray),
+    inset -2px -2px var(--button-face);
+  padding: 5px 11px 3px 13px;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.field-row > * + * {
+  margin-left: 8px;
+}
+
+label {
+  display: inline-block;
+  min-width: 100px;
+}
+
+input[type="text"], textarea, select {
+  padding: 3px 4px;
+  border: none;
+  box-shadow: inset -1px -1px #ffffff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+  background-color: #ffffff;
+  font-family: "MS Sans Serif", Tahoma, sans-serif;
+  font-size: 11px;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--button-shadow);
+  border-bottom: 1px solid var(--button-highlight);
+  margin: 12px 0;
+}
+
+h1, h2, h3 {
+  font-weight: bold;
+  margin: 8px 0;
+}
+
+h1 { font-size: 16px; }
+h2 { font-size: 14px; }
+h3 { font-size: 12px; }
+
+.status-bar {
+  background: var(--surface);
+  border-top: 1px solid var(--button-highlight);
+  margin: 0 -8px -8px;
+  padding: 2px 4px;
+  display: flex;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.status-bar-field {
+  box-shadow: inset -1px -1px #ffffff, inset 1px 1px #808080;
+  padding: 2px 4px;
+  flex: 1;
+}
+
+nav {
+  margin-bottom: 16px;
+}
+
+nav a {
+  color: #0000ee;
+  text-decoration: underline;
+  margin-right: 12px;
+}
+
+nav a:visited {
+  color: #551a8b;
+}
+
+.card {
+  background: var(--surface);
+  border: 2px groove var(--button-face);
+  padding: 12px;
+  margin: 12px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--button-shadow);
+}
+
+th, td {
+  border: 1px solid var(--button-shadow);
+  padding: 4px 8px;
+  text-align: left;
+}
+
+th {
+  background: var(--surface);
+  font-weight: bold;
+}
+
+ul, ol {
+  margin: 8px 0;
+  padding-left: 24px;
+}
+
+.sun-field {
+  box-shadow: inset -1px -1px #ffffff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+  background: #ffffff;
+  padding: 12px;
+  margin: 12px 0;
+}
+
+.info-box {
+  background: #ffffe1;
+  border: 1px solid #000000;
+  padding: 8px;
+  margin: 8px 0;
+  font-size: 11px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+  margin: 12px 0;
+}

@@ -1,0 +1,33 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+export async function getStaticPaths() {
+  const employees = await Astro.glob('../../content/employees/*.md');
+  
+  return employees.map((employee) => ({
+    params: { id: employee.frontmatter.employeeId.toLowerCase() },
+    props: { employee }
+  }));
+}
+
+const { employee } = Astro.props;
+const { Content, frontmatter } = employee;
+---
+
+<MainLayout title={`${frontmatter.name} - Employee Profile`}>
+  <h1>Employee Profile</h1>
+  
+  <div class="info-box">
+    <strong>📋 Personnel File:</strong> {frontmatter.employeeId}
+  </div>
+
+  <div class="sun-field">
+    <article>
+      <Content />
+    </article>
+  </div>
+
+  <hr>
+
+  <a href="/employees" class="button">← Back to Directory</a>
+</MainLayout>

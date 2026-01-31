@@ -1,0 +1,33 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+export async function getStaticPaths() {
+  const organizations = await Astro.glob('../../content/organizations/*.md');
+  
+  return organizations.map((org) => ({
+    params: { id: org.frontmatter.orgId.toLowerCase() },
+    props: { organization: org }
+  }));
+}
+
+const { organization } = Astro.props;
+const { Content, frontmatter } = organization;
+---
+
+<MainLayout title={`${frontmatter.name} - Organization Profile`}>
+  <h1>Organization Profile</h1>
+  
+  <div class="info-box">
+    <strong>🏛️ Partner Organization:</strong> {frontmatter.orgId}
+  </div>
+
+  <div class="sun-field">
+    <article>
+      <Content />
+    </article>
+  </div>
+
+  <hr>
+
+  <a href="/organizations" class="button">← Back to Organizations</a>
+</MainLayout>

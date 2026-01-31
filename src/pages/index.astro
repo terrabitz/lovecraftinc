@@ -1,0 +1,72 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Dashboard - Lovecraft Inc. Intranet">
+  <h1>🏢 Lovecraft Inc. Intranet Portal</h1>
+  
+  <div class="info-box">
+    <strong>⚠️ CONFIDENTIAL SYSTEM</strong> - Authorized Personnel Only
+  </div>
+
+  <div class="sun-field">
+    <h2>Welcome to the Lovecraft Inc. Intranet</h2>
+    <p>
+      Welcome to the internal information system of Lovecraft Incorporated. 
+      This portal provides access to critical organizational data, employee records, 
+      anomaly reports, and partner organization profiles.
+    </p>
+    <p>
+      Please use the navigation links above to access different sections of the intranet.
+    </p>
+  </div>
+
+  <h2>Quick Access</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>👥 Employee Directory</h3>
+      <p>Access employee profiles, contact information, and organizational assignments.</p>
+      <a href="/employees" class="button">View Employees</a>
+    </div>
+
+    <div class="card">
+      <h3>📊 Anomaly Reports</h3>
+      <p>Review documented anomalous events and phenomena requiring investigation.</p>
+      <a href="/anomalies" class="button">View Anomalies</a>
+    </div>
+
+    <div class="card">
+      <h3>🏛️ Organizations</h3>
+      <p>Access profiles of partner organizations and affiliated entities.</p>
+      <a href="/organizations" class="button">View Organizations</a>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="sun-field">
+    <h3>System Information</h3>
+    <table>
+      <tr>
+        <th>Property</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td>Total Employees</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>Active Anomalies</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>Partner Organizations</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>Last Update</td>
+        <td>2026-01-31</td>
+      </tr>
+    </table>
+  </div>
+</MainLayout>

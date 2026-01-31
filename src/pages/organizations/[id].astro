@@ -3,7 +3,8 @@ import Table from '../../components/Table.astro';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 
 export async function getStaticPaths() {
-  const organizations = await Astro.glob('../../content/organizations/*.md');
+  const organizationFiles = import.meta.glob('../../content/organizations/*.md', { eager: true });
+  const organizations = Object.values(organizationFiles);
 
   return organizations.map((org) => ({
     params: { id: org.frontmatter.orgId.toLowerCase() },

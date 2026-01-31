@@ -2,9 +2,12 @@
 import Table from "../components/Table.astro";
 import ContentLayout from "../layouts/ContentLayout.astro";
 
-const employees = await Astro.glob("../content/employees/*.md");
-const anomalies = await Astro.glob("../content/anomalies/*.md");
-const organizations = await Astro.glob("../content/organizations/*.md");
+const employeeFiles = import.meta.glob("../content/employees/*.md", { eager: true });
+const employees = Object.values(employeeFiles);
+const anomalyFiles = import.meta.glob("../content/anomalies/*.md", { eager: true });
+const anomalies = Object.values(anomalyFiles);
+const organizationFiles = import.meta.glob("../content/organizations/*.md", { eager: true });
+const organizations = Object.values(organizationFiles);
 ---
 
 <ContentLayout title="Eidolon Capital Intranet">

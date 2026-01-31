@@ -2,7 +2,8 @@
 import Table from '../components/Table.astro';
 import ContentLayout from '../layouts/ContentLayout.astro';
 
-const employees = await Astro.glob('../content/employees/*.md');
+const employeeFiles = import.meta.glob('../content/employees/*.md', { eager: true });
+const employees = Object.values(employeeFiles);
 ---
 
 <ContentLayout title="Eidolon Capital Intranet - Employees">

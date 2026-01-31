@@ -82,7 +82,7 @@
 - Never import CSS multiple times across components
 
 ### Content Imports
-- Use `Astro.glob()` for dynamic imports: `await Astro.glob('../content/**/*.md')`
+- Use `Astro.glob()` for dynamic imports: `import.meta.glob('../content/**/*.md')`
 - Import components using relative paths: `import Component from '../components/Component.astro'`
 
 ## TypeScript

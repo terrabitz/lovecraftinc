@@ -3,7 +3,8 @@ import Table from '../../components/Table.astro';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 
 export async function getStaticPaths() {
-  const employees = await Astro.glob('../../content/employees/*.md');
+  const employeeFiles = import.meta.glob('../../content/employees/*.md', { eager: true });
+  const employees = Object.values(employeeFiles);
 
   return employees.map((employee) => ({
     params: { id: employee.frontmatter.employeeId.toLowerCase() },

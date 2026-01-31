@@ -2,7 +2,8 @@
 import Table from '../components/Table.astro';
 import ContentLayout from '../layouts/ContentLayout.astro';
 
-const anomalies = await Astro.glob('../content/anomalies/*.md');
+const anomalyFiles = import.meta.glob('../content/anomalies/*.md', { eager: true });
+const anomalies = Object.values(anomalyFiles);
 ---
 
 <ContentLayout title="Eidolon Capital Intranet - Anomalies">

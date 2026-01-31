@@ -7,12 +7,7 @@ const organizations = await Astro.glob("../content/organizations/*.md");
 ---
 
 <ContentLayout title="Dashboard - Eidolon Capital Intranet">
-  <h1>Eidolon Capital Intranet Portal</h1>
-
-  <div class="info-box">
-    <strong>⚠️ CONFIDENTIAL SYSTEM</strong> - Authorized Personnel Only
-  </div>
-
+  <h2>Eidolon Capital Intranet Portal</h2>
   <div class="status-field-border">
     <h2>Welcome to the Eidolon Capital Intranet</h2>
     <p>
@@ -47,49 +42,42 @@ const organizations = await Astro.glob("../content/organizations/*.md");
         <button>View Organizations</button>
       </a>
     </div>
-
-    <div class="card">
-      <h3>Anomaly Reports</h3>
-      <p>Review documented anomalous events and phenomena requiring investigation.</p>
-      <a href="/anomalies">
-        <button>View Anomalies</button>
-      </a>
-    </div>
-
-    <div class="card">
-      <h3>Organizations</h3>
-      <p>Access profiles of partner organizations and affiliated entities.</p>
-      <a href="/organizations">
-        <button>View Organizations</button>
-      </a>
-    </div>
   </div>
 
   <hr />
 
-  <div class="sun-field">
-    <h3>System Information</h3>
+  <div class="sunken-panel system-info-table">
     <table>
-      <tr>
-        <th>Property</th>
-        <th>Value</th>
-      </tr>
-      <tr>
-        <td>Total Employees</td>
-        <td>{employees.length}</td>
-      </tr>
-      <tr>
-        <td>Active Anomalies</td>
-        <td>{anomalies.length}</td>
-      </tr>
-      <tr>
-        <td>Partner Organizations</td>
-        <td>{organizations.length}</td>
-      </tr>
-      <tr>
-        <td>Last Update</td>
-        <td>1995-04-28</td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Total Employees</td>
+          <td>{employees.length}</td>
+        </tr>
+        <tr>
+          <td>Active Anomalies</td>
+          <td>{anomalies.length}</td>
+        </tr>
+        <tr>
+          <td>Partner Organizations</td>
+          <td>{organizations.length}</td>
+        </tr>
+        <tr>
+          <td>Last Update</td>
+          <td>1995-04-28</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </ContentLayout>
+
+<style>
+  .system-info-table{
+    width: 200px;
+  }
+</style>

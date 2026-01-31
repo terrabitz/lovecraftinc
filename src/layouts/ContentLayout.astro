@@ -28,7 +28,7 @@ const pathname = Astro.url.pathname;
   </div>
 </MainLayout>
 
-<style>
+<style is:global>
   /* Custom styles for card-based layout using 98.css components */
   .grid {
     display: grid;
@@ -55,7 +55,9 @@ const pathname = Astro.url.pathname;
     margin: 8px 0;
     font-size: 11px;
   }
+</style>
 
+<style>
   .window {
     width: 100%;
     min-height: 80vh;

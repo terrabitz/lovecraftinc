@@ -1,0 +1,26 @@
+{
+  "name": "eidolon-capital",
+  "version": "1.0.0",
+  "description": "Eidolon Capital - A 90s Intranet Portal",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "keywords": [
+    "astro",
+    "eidolon",
+    "intranet"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@astrojs/markdown-remark": "^6.3.10",
+    "@tailwindcss/vite": "^4.1.18",
+    "98.css": "^0.1.21",
+    "astro": "^5.17.1",
+    "tailwindcss": "^4.1.18"
+  }
+}

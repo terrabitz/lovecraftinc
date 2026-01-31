@@ -1,0 +1,31 @@
+---
+interface Props {
+  title: string;
+  class?: string;
+}
+
+const { title, class: className } = Astro.props;
+---
+
+<div class:list={["card", "flex", "flex-col", className]}>
+  <h3>{title}</h3>
+  <div class="flex-grow">
+    <slot />
+  </div>
+  <div class="mt-2">
+    <slot name="bottom" />
+  </div>
+</div>
+
+<style>
+  .card {
+    background: silver;
+    box-shadow:
+      inset -1px -1px #0a0a0a,
+      inset 1px 1px #dfdfdf,
+      inset -2px -2px grey,
+      inset 2px 2px #fff;
+    padding: 12px;
+    margin: 0;
+  }
+</style>

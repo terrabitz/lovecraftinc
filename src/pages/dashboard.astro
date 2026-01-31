@@ -1,0 +1,80 @@
+---
+import { getCollection } from 'astro:content';
+import Card from "../components/Card.astro";
+import Table from "../components/Table.astro";
+import ContentLayout from "../layouts/ContentLayout.astro";
+
+const employees = await getCollection('employees');
+const anomalies = await getCollection('anomalies');
+const organizations = await getCollection('organizations');
+---
+
+<ContentLayout title="Eidolon Capital Intranet">
+  <div class="field-border mt-4 !p-3">
+    <h2>Welcome to the Eidolon Capital Intranet</h2>
+    <p>
+      Welcome to the internal information system of Eidolon Capital. This portal provides access to critical
+      organizational data, employee records, anomaly reports, and partner organization profiles.
+    </p>
+    <p>Please use the navigation links above to access different sections of the intranet.</p>
+  </div>
+
+  <h2 class="mt-3">Quick Access</h2>
+  <div class="grid">
+    <Card title="Employee Directory">
+      <p>Access employee profiles, contact information, and organizational assignments.</p>
+      <a href="/employees" slot="bottom">
+        <button>View Employees</button>
+      </a>
+    </Card>
+
+    <Card title="Anomaly Reports">
+      <p>Review documented anomalous events and phenomena requiring investigation.</p>
+      <a href="/anomalies" slot="bottom">
+        <button>View Anomalies</button>
+      </a>
+    </Card>
+
+    <Card title="Organizations">
+      <p>Access profiles of partner organizations and affiliated entities.</p>
+      <a href="/organizations" slot="bottom">
+        <button>View Organizations</button>
+      </a>
+    </Card>
+  </div>
+
+  <hr class="mt-4"/>
+
+  <Table class="mt-3">
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Total Employees</td>
+        <td>{employees.length}</td>
+      </tr>
+      <tr>
+        <td>Active Anomalies</td>
+        <td>{anomalies.length}</td>
+      </tr>
+      <tr>
+        <td>Partner Organizations</td>
+        <td>{organizations.length}</td>
+      </tr>
+      <tr>
+        <td>Last Update</td>
+        <td>1995-04-28</td>
+      </tr>
+    </tbody>
+  </Table>
+</ContentLayout>
+
+<style>
+  .system-info-table{
+    width: 200px;
+  }
+</style>

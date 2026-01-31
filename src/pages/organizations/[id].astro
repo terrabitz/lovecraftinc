@@ -1,0 +1,58 @@
+---
+import { getCollection, render } from 'astro:content';
+import Table from '../../components/Table.astro';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+
+export async function getStaticPaths() {
+  const organizations = await getCollection('organizations');
+
+  return organizations.map((org) => ({
+    params: { id: org.data.orgId.toUpperCase() },
+    props: { organization: org }
+  }));
+}
+
+const { organization } = Astro.props;
+const { Content } = await render(organization);
+---
+
+<ContentLayout title={`Eidolon Capital Intranet - Organization - ${organization.data.name}`}>
+  <h2>{organization.data.name}</h2>
+
+  <Table>
+    <tr>
+      <td><strong>Organization ID:</strong></td>
+      <td>{organization.data.orgId}</td>
+    </tr>
+    <tr>
+      <td><strong>Type:</strong></td>
+      <td>{organization.data.type}</td>
+    </tr>
+    <tr>
+      <td><strong>Relationship:</strong></td>
+      <td>{organization.data.relationship}</td>
+    </tr>
+    <tr>
+      <td><strong>Established:</strong></td>
+      <td>{organization.data.established}</td>
+    </tr>
+    <tr>
+      <td><strong>Location:</strong></td>
+      <td>{organization.data.location}</td>
+    </tr>
+  </Table>
+
+  <hr class="mt-1">
+
+  <div class="field-border mt-2">
+    <article>
+      <Content />
+    </article>
+  </div>
+
+  <hr>
+
+  <a href="/organizations">
+    <button class="mt-2">← Back to Organizations</button>
+  </a>
+</ContentLayout>

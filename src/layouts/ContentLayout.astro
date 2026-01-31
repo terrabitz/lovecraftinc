@@ -1,0 +1,65 @@
+---
+import MainLayout from "./MainLayout.astro";
+
+const { title = "Eidolon Capital Intranet" } = Astro.props;
+const pathname = Astro.url.pathname;
+---
+
+<MainLayout title={title}>
+  <div class="window flex flex-col">
+    <div class="title-bar">
+      <div class="title-bar-text">{title}</div>
+    </div>
+    <div class="window-body flex-grow">
+      <menu role="tablist">
+        <li role="tab" aria-selected={pathname.startsWith("/dashboard")}><a href="/dashboard">Dashboard</a></li>
+        <li role="tab" aria-selected={pathname.startsWith("/employees")}><a href="/employees">Employees</a></li>
+        <li role="tab" aria-selected={pathname.startsWith("/anomalies")}><a href="/anomalies">Anomalies</a></li>
+        <li role="tab" aria-selected={pathname.startsWith("/organizations")}>
+          <a href="/organizations">Organizations</a>
+        </li>
+      </menu>
+      <slot />
+    </div>
+    <div class="status-bar mt-auto">
+      <div class="status-bar-field">Eidolon Capital Intranet Portal v1.0</div>
+      <div class="status-bar-field">System Status: OPERATIONAL</div>
+    </div>
+  </div>
+</MainLayout>
+
+<style is:global>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 12px;
+    margin: 12px 0;
+  }
+
+  .info-box {
+    background: #ffffe1;
+    border: 1px solid #000000;
+    padding: 8px;
+    margin: 8px 0;
+    font-size: 11px;
+  }
+
+  article {
+    padding: 20px;
+  }
+</style>
+
+<style>
+  .window {
+    width: 100%;
+    min-height: 80vh;
+  }
+
+  @media (min-width: 768px) {
+    .window {
+      width: 70%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+  }
+</style>

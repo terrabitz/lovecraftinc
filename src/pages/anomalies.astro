@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import Card from '../components/Card.astro';
+import Table from '../components/Table.astro';
+import ContentLayout from '../layouts/ContentLayout.astro';
+
+const anomalies = await getCollection('anomalies');
+---
+
+<ContentLayout title="Eidolon Capital Intranet - Anomalies">
+  <h1>Anomaly Reports</h1>
+
+  <div class="grid">
+    {anomalies.map((anomaly) => (
+      <Card title={anomaly.data.title}>
+        <Table>
+          <tbody>
+            <tr>
+              <td><strong>Anomaly ID:</strong></td>
+              <td>{anomaly.data.anomalyId}</td>
+            </tr>
+            <tr>
+              <td><strong>Classification:</strong></td>
+              <td>{anomaly.data.classification}</td>
+            </tr>
+            <tr>
+              <td><strong>Status:</strong></td>
+              <td>{anomaly.data.status}</td>
+            </tr>
+            <tr>
+              <td><strong>Discovery Date:</strong></td>
+              <td>{anomaly.data.discoveryDate}</td>
+            </tr>
+            <tr>
+              <td><strong>Location:</strong></td>
+              <td>{anomaly.data.location}</td>
+            </tr>
+          </tbody>
+        </Table>
+        <a href={`/anomalies/${anomaly.data.anomalyId.toUpperCase()}`} slot="bottom">
+          <button>View Full Report</button>
+        </a>
+      </Card>
+    ))}
+  </div>
+
+  <hr>
+</ContentLayout>

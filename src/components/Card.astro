@@ -1,12 +1,13 @@
 ---
 interface Props {
   title: string;
+  class?: string;
 }
 
-const { title } = Astro.props;
+const { title, class: className } = Astro.props;
 ---
 
-<div class="card flex flex-col">
+<div class:list={["card", "flex", "flex-col", className]}>
   <h3>{title}</h3>
   <div class="flex-grow">
     <slot />

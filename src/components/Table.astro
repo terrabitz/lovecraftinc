@@ -1,7 +1,12 @@
 ---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
 ---
 
-<div class="sunken-panel">
+<div class:list={["sunken-panel", className]}>
   <table>
     <slot />
   </table>

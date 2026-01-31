@@ -3,14 +3,20 @@
 :root {
   --bg-color: #515151;
   --font-family: 'MS Sans Serif', sans-serif;
+  --base-font-size: 14px;
 }
 
 body {
   background-color: var(--bg-color);
   font-family: var(--font-family);
+  font-size: var(--base-font-size);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px;
   min-height: 100vh;
+}
+
+button, table, .window{
+  font-size: var(--base-font-size)
 }

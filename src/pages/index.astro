@@ -75,16 +75,11 @@ import MainLayout from '../layouts/MainLayout.astro';
       const elapsed = Date.now() - startTime;
       const progress = Math.min((elapsed / duration) * 100, 100);
 
-      // Add some randomness to make it feel more authentic
-      const jitter = Math.random() * 5;
-      const displayProgress = Math.min(progress + jitter, 100);
-
-      progressBarFill.style.width = `${displayProgress}%`;
+      progressBarFill.style.width = `${progress}%`;
 
       if (elapsed < duration) {
         requestAnimationFrame(animate);
       } else {
-        // Navigate after 2 seconds
         window.location.href = '/dashboard';
       }
     };

@@ -1,9 +1,9 @@
 ---
-import MainLayout from '../../layouts/MainLayout.astro';
+import ContentLayout from '../../layouts/ContentLayout.astro';
 
 export async function getStaticPaths() {
   const employees = await Astro.glob('../../content/employees/*.md');
-  
+
   return employees.map((employee) => ({
     params: { id: employee.frontmatter.employeeId.toLowerCase() },
     props: { employee }
@@ -14,9 +14,9 @@ const { employee } = Astro.props;
 const { Content, frontmatter } = employee;
 ---
 
-<MainLayout title={`${frontmatter.name} - Employee Profile`}>
+<ContentLayout title={`${frontmatter.name} - Employee Profile`} activeTab="employees">
   <h1>Employee Profile</h1>
-  
+
   <div class="info-box">
     <strong>Personnel File:</strong> {frontmatter.employeeId}
   </div>
@@ -30,4 +30,4 @@ const { Content, frontmatter } = employee;
   <hr>
 
   <a href="/employees" class="button">← Back to Directory</a>
-</MainLayout>
+</ContentLayout>

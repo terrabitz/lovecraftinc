@@ -1,9 +1,9 @@
 ---
-import MainLayout from '../../layouts/MainLayout.astro';
+import ContentLayout from '../../layouts/ContentLayout.astro';
 
 export async function getStaticPaths() {
   const organizations = await Astro.glob('../../content/organizations/*.md');
-  
+
   return organizations.map((org) => ({
     params: { id: org.frontmatter.orgId.toLowerCase() },
     props: { organization: org }
@@ -14,9 +14,9 @@ const { organization } = Astro.props;
 const { Content, frontmatter } = organization;
 ---
 
-<MainLayout title={`${frontmatter.name} - Organization Profile`}>
+<ContentLayout title={`${frontmatter.name} - Organization Profile`} activeTab="organizations">
   <h1>Organization Profile</h1>
-  
+
   <div class="info-box">
     <strong>Partner Organization:</strong> {frontmatter.orgId}
   </div>
@@ -30,4 +30,4 @@ const { Content, frontmatter } = organization;
   <hr>
 
   <a href="/organizations" class="button">← Back to Organizations</a>
-</MainLayout>
+</ContentLayout>

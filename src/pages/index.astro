@@ -16,9 +16,11 @@ import MainLayout from '../layouts/MainLayout.astro';
     </p>
   </div>
 
-  <a href="/dashboard">
-    <button type="button" class="login-button">Login</button>
-  </a>
+  <button type="button" class="login-button" id="loginButton">Login</button>
+
+  <div class="progress-indicator segmented progress-container hidden" id="progressBar">
+    <span class="progress-indicator-bar" id="progressBarFill"></span>
+  </div>
 
   <div class="status-bar">
     <div class="status-bar-field">Eidolon Capital Security Gateway</div>
@@ -45,4 +47,48 @@ import MainLayout from '../layouts/MainLayout.astro';
     margin: 20px auto 30px auto;
     display: block;
   }
+  .progress-container {
+    margin: 10px auto;
+    width: 70%;
+  }
+  .hidden {
+    display: none;
+  }
 </style>
+
+<script>
+  const loginButton = document.getElementById('loginButton') as HTMLButtonElement;
+  const progressBar = document.getElementById('progressBar') as HTMLDivElement;
+  const progressBarFill = document.getElementById('progressBarFill') as HTMLSpanElement;
+
+  loginButton.addEventListener('click', () => {
+    // Disable button and show progress bar
+    loginButton.disabled = true;
+    loginButton.innerText = "Logging In"
+    progressBar.classList.remove('hidden');
+
+    // Animate progress bar over 1.5 seconds
+    const duration = 1500;
+    const startTime = Date.now();
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min((elapsed / duration) * 100, 100);
+
+      // Add some randomness to make it feel more authentic
+      const jitter = Math.random() * 5;
+      const displayProgress = Math.min(progress + jitter, 100);
+
+      progressBarFill.style.width = `${displayProgress}%`;
+
+      if (elapsed < duration) {
+        requestAnimationFrame(animate);
+      } else {
+        // Navigate after 2 seconds
+        window.location.href = '/dashboard';
+      }
+    };
+
+    requestAnimationFrame(animate);
+  });
+</script>

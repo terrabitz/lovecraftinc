@@ -1,5 +1,6 @@
 ---
 import '98.css';
+import '../styles/global.css';
 ---
 
 <!DOCTYPE html>
@@ -19,35 +20,16 @@ import '98.css';
       width: 400px;
       margin: 0 auto;
     }
-    .login-form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .form-group label {
-      min-width: auto;
-    }
-    .form-group input {
-      width: 100%;
-    }
     .warning-box {
-      background: #ffffe1;
-      border: 2px solid #000000;
-      padding: 12px;
-      margin: 12px 0;
-      font-size: 11px;
-      text-align: center;
+      padding: 10px;
+      margin-bottom: 10px;
     }
-    .button-group {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 8px;
+    .login-button {
+      font-size: 20px;
+      width: 70%;
+      height: 40px;
+      margin: 0 auto;
+      display: block;
     }
   </style>
 </head>
@@ -55,43 +37,29 @@ import '98.css';
   <div class="window login-window">
     <div class="title-bar">
       <div class="title-bar-text">Eidolon Capital - Secure Login</div>
-      <div class="title-bar-controls">
-        <button aria-label="Minimize" disabled>_</button>
-        <button aria-label="Maximize" disabled>□</button>
-        <button aria-label="Close" disabled>×</button>
-      </div>
     </div>
     <div class="window-body">
-      <h2 style="text-align: center; margin: 8px 0 16px;">Authorized Access Only</h2>
-      
-      <div class="sun-field">
-        <form class="login-form">
-          <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" placeholder="Enter username">
-          </div>
-          
-          <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Enter password">
-          </div>
-          
-          <div class="button-group">
-            <a href="/dashboard" class="button">Login</a>
-            <button type="button">Cancel</button>
-          </div>
-        </form>
-      </div>
-
-      <div class="warning-box">
+      <h2 class="window-header" style="">Authorized Access Only</h2>
+      <div class="status-field-border warning-box">
         <strong>⚠️ WARNING</strong><br>
-        All unauthorized access will be prosecuted under EID-ORD-6998
+        <p>
+          All access to the Eidolon Capital Corporate Intranet is strictly controlled
+          and monitored.
+        </p>
+        <p>
+          All unauthorized access will be prosecuted under EID-ORD-6998 and
+          result in immediate termination,
+        </p>
       </div>
 
-      <div class="status-bar">
-        <div class="status-bar-field">Eidolon Capital Security Gateway</div>
-        <div class="status-bar-field">v1.0</div>
-      </div>
+      <a href="/dashboard">
+        <button type="button" class="login-button">Login</button>
+      </a>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-bar-field">Eidolon Capital Security Gateway</div>
+      <div class="status-bar-field">v1.65.267</div>
     </div>
   </div>
 </body>

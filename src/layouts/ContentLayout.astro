@@ -1,15 +1,16 @@
 ---
 import MainLayout from './MainLayout.astro';
 
-const { title = "Eidolon Capital Intranet", activeTab } = Astro.props;
+const { title = "Eidolon Capital Intranet" } = Astro.props;
+const pathname = Astro.url.pathname;
 ---
 
 <MainLayout title={title}>
   <menu role="tablist">
-    <li role="tab" aria-selected={activeTab === 'dashboard'}><a href="/dashboard">Dashboard</a></li>
-    <li role="tab" aria-selected={activeTab === 'employees'}><a href="/employees">Employees</a></li>
-    <li role="tab" aria-selected={activeTab === 'anomalies'}><a href="/anomalies">Anomalies</a></li>
-    <li role="tab" aria-selected={activeTab === 'organizations'}><a href="/organizations">Organizations</a></li>
+    <li role="tab" aria-selected={pathname.startsWith('/dashboard')}><a href="/dashboard">Dashboard</a></li>
+    <li role="tab" aria-selected={pathname.startsWith('/employees')}><a href="/employees">Employees</a></li>
+    <li role="tab" aria-selected={pathname.startsWith('/anomalies')}><a href="/anomalies">Anomalies</a></li>
+    <li role="tab" aria-selected={pathname.startsWith('/organizations')}><a href="/organizations">Organizations</a></li>
   </menu>
   <slot />
   <div class="status-bar">

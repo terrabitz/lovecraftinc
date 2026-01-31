@@ -16,6 +16,28 @@ const { Content, frontmatter } = employee;
 
 <ContentLayout title={`${frontmatter.name} - Employee Profile`}>
   <h2>{frontmatter.name}</h2>
+
+  <table>
+    <tr>
+      <td><strong>Employee ID:</strong></td>
+      <td>{frontmatter.employeeId}</td>
+    </tr>
+    <tr>
+      <td><strong>Position:</strong></td>
+      <td>{frontmatter.position}</td>
+    </tr>
+    <tr>
+      <td><strong>Department:</strong></td>
+      <td>{frontmatter.department}</td>
+    </tr>
+    <tr>
+      <td><strong>Clearance Level:</strong></td>
+      <td>{frontmatter.clearanceLevel}</td>
+    </tr>
+  </table>
+
+  <hr>
+
   <div class="field-border">
     <article>
       <Content />

@@ -16,6 +16,32 @@ const { Content, frontmatter } = anomaly;
 
 <ContentLayout title={`${frontmatter.title} - Anomaly Report`}>
   <h2>{frontmatter.title}</h2>
+
+  <table>
+    <tr>
+      <td><strong>Anomaly ID:</strong></td>
+      <td>{frontmatter.anomalyId}</td>
+    </tr>
+    <tr>
+      <td><strong>Classification:</strong></td>
+      <td>{frontmatter.classification}</td>
+    </tr>
+    <tr>
+      <td><strong>Status:</strong></td>
+      <td>{frontmatter.status}</td>
+    </tr>
+    <tr>
+      <td><strong>Discovery Date:</strong></td>
+      <td>{frontmatter.discoveryDate}</td>
+    </tr>
+    <tr>
+      <td><strong>Location:</strong></td>
+      <td>{frontmatter.location}</td>
+    </tr>
+  </table>
+
+  <hr>
+
   <div class="field-border">
     <article>
       <Content />

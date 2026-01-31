@@ -6,14 +6,6 @@ employeeId: "EID-EMP-001"
 clearanceLevel: "Level 5"
 ---
 
-## Employee Profile
-
-**Name:** Dr. Elizabeth Harrow
-**Position:** Chief Research Officer
-**Department:** Research & Development
-**Employee ID:** EID-EMP-001
-**Clearance Level:** Level 5
-
 ## Background
 
 Dr. Harrow joined Eidolon Capital in 1994 with extensive experience in theoretical physics and anomalous phenomena research. She holds a Ph.D. from Miskatonic University and has authored numerous classified papers on reality manipulation.

@@ -6,14 +6,6 @@ employeeId: "EID-EMP-003"
 clearanceLevel: "Level 3"
 ---
 
-## Employee Profile
-
-**Name:** Sarah Blackwood
-**Position:** Archivist
-**Department:** Documentation & Records
-**Employee ID:** EID-EMP-003
-**Clearance Level:** Level 3
-
 ## Background
 
 Sarah Blackwood joined the organization in 1995 as a junior archivist and has since become our primary custodian of historical records and classified documents. She holds a Master's degree in Library Science from Arkham University.

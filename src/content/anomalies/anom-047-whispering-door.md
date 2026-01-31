@@ -7,14 +7,6 @@ discoveryDate: "1995-03-15"
 location: "Arkham, Massachusetts"
 ---
 
-## Anomaly Report: ANOM-047
-
-**Classification:** Class-B  
-**Status:** Under Investigation  
-**Discovery Date:** March 15, 1995  
-**Location:** Arkham, Massachusetts  
-**Lead Investigator:** Marcus Chen
-
 ## Description
 
 ANOM-047 refers to a wooden door located in the basement of an abandoned textile mill in Arkham. The door exhibits several anomalous properties:

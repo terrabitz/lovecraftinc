@@ -7,15 +7,6 @@ established: "1690"
 location: "Arkham, Massachusetts"
 ---
 
-## Organization Profile: Miskatonic University
-
-**Organization ID:** ORG-001  
-**Name:** Miskatonic University  
-**Type:** Academic Institution  
-**Relationship:** Research Partner  
-**Established:** 1690  
-**Location:** Arkham, Massachusetts
-
 ## Overview
 
 Miskatonic University is one of the oldest and most prestigious institutions of higher learning in New England. Known for its extensive library and occult collection, the university has been a valuable research partner to Eidolon Capital since our founding.

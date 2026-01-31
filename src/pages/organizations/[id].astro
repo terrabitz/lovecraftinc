@@ -16,6 +16,32 @@ const { Content, frontmatter } = organization;
 
 <ContentLayout title={`${frontmatter.name} - Organization Profile`}>
   <h2>{frontmatter.name}</h2>
+
+  <table>
+    <tr>
+      <td><strong>Organization ID:</strong></td>
+      <td>{frontmatter.orgId}</td>
+    </tr>
+    <tr>
+      <td><strong>Type:</strong></td>
+      <td>{frontmatter.type}</td>
+    </tr>
+    <tr>
+      <td><strong>Relationship:</strong></td>
+      <td>{frontmatter.relationship}</td>
+    </tr>
+    <tr>
+      <td><strong>Established:</strong></td>
+      <td>{frontmatter.established}</td>
+    </tr>
+    <tr>
+      <td><strong>Location:</strong></td>
+      <td>{frontmatter.location}</td>
+    </tr>
+  </table>
+
+  <hr>
+
   <div class="field-border">
     <article>
       <Content />

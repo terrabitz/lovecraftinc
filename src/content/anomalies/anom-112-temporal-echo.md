@@ -7,14 +7,6 @@ discoveryDate: "1994-11-23"
 location: "Innsmouth Harbor"
 ---
 
-## Anomaly Report: ANOM-112
-
-**Classification:** Class-A  
-**Status:** Contained  
-**Discovery Date:** November 23, 1994  
-**Location:** Innsmouth Harbor  
-**Lead Investigator:** Dr. Elizabeth Harrow
-
 ## Description
 
 ANOM-112 is a localized temporal anomaly occurring in a 5-meter radius area near Pier 7 of Innsmouth Harbor. The anomaly manifests as follows:

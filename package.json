@@ -4,10 +4,11 @@
   "description": "Eidolon Capital - A 90s Intranet Portal",
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --host",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "wrangler:dev": "npm run build && wrangler dev --ip 0.0.0.0"
   },
   "keywords": [
     "astro",
@@ -24,7 +25,6 @@
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
-    "@astrojs/cloudflare": "^12.6.5",
     "wrangler": "^4.61.1"
   }
 }

@@ -2,11 +2,14 @@ import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 
-import cloudflare from '@astrojs/cloudflare';
-
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://lovecraftinc.example.com',
+  site: 'https://eidolon.hackandsla.sh',
+  output: 'static',
+  trailingSlash: 'never',
+  build: {
+    format: 'file'
+  },
 
   markdown: {
     shikiConfig: {
@@ -17,6 +20,4 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-
-  adapter: cloudflare(),
 });

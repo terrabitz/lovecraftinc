@@ -9,3 +9,5 @@ clearanceLevel: Level 5
 # Overview
 
 Dr. Christie Haverford is a long-time researcher of the ████████ division. She has contributed numerous publications on her field research.
+
+She has written numerous articles about  ████████-class anomalies.

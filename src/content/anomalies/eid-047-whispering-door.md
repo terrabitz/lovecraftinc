@@ -1,11 +1,10 @@
-
 ---
-anomalyId: "EID-047"
-title: "The Whispering Door"
-classification: "Class-B"
-status: "Under Investigation"
-discoveryDate: "1995-03-15"
-location: "Arkham, Massachusetts"
+anomalyId: EID-047
+title: The Whispering Door
+classification: Class-B
+status: Under Investigation
+discoveryDate: '1995-03-16'
+location: 'Arkham, Massachusetts'
 ---
 
 ## Description
@@ -19,11 +18,11 @@ EID-047 refers to a wooden door located in the basement of an abandoned textile 
 
 ## Investigation History
 
-- **March 15, 1995:** Initial discovery by local urban explorers
-- **March 18, 1995:** Site secured by Eidolon Capital field team
-- **April 2, 1995:** First analysis attempt - inconclusive results
-- **May 10, 1995:** Door relocated itself 50 meters from original position
-- **June 1, 1995:** Dr. Harrow recommended Class-B classification
+* **March 15, 1995:** Initial discovery by local urban explorers
+* **March 18, 1995:** Site secured by Eidolon Capital field team
+* **April 2, 1995:** First analysis attempt - inconclusive results
+* **May 10, 1995:** Door relocated itself 50 meters from original position
+* **June 1, 1995:** Dr. Harrow recommended Class-B classification
 
 ## Current Status
 
@@ -31,10 +30,10 @@ The anomaly remains contained within the secured building. Regular monitoring is
 
 ## Safety Protocols
 
-- Minimum distance of 3 meters must be maintained
-- Audio dampening equipment required for all interactions
-- Maximum exposure time: 15 minutes per person per day
-- No lone personnel allowed within containment area
+* Minimum distance of 3 meters must be maintained
+* Audio dampening equipment required for all interactions
+* Maximum exposure time: 15 minutes per person per day
+* No lone personnel allowed within containment area
 
 ## Notes
 

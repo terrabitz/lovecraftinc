@@ -1,6 +1,7 @@
 ---
-import { getCollection, render } from 'astro:content';
-import Table from '../../components/Table.astro';
+import { getCollection } from 'astro:content';
+import client from '../../../tina/__generated__/client';
+import AnomalyPage from '../../../tina/pages/AnomalyPage';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 
 export async function getStaticPaths() {
@@ -8,46 +9,23 @@ export async function getStaticPaths() {
 
   return anomalies.map((anomaly) => ({
     params: { id: anomaly.data.anomalyId.toUpperCase() },
-    props: { anomaly }
+    props: {
+      anomaly,
+      getTinaProps: async () =>
+        client.queries.anomaly({
+          relativePath: anomaly.data.tinaInfo.relativePath,
+        }),
+    },
   }));
 }
 
-const { anomaly } = Astro.props;
-const { Content } = await render(anomaly);
+const { getTinaProps, anomaly } = Astro.props;
+const tinaProps = await getTinaProps();
 ---
 
 <ContentLayout title={`Eidolon Capital Intranet - Anomaly - ${anomaly.data.title}`}>
-  <h2>{anomaly.data.title}</h2>
-
-  <Table>
-    <tr>
-      <td><strong>Anomaly ID:</strong></td>
-      <td>{anomaly.data.anomalyId}</td>
-    </tr>
-    <tr>
-      <td><strong>Classification:</strong></td>
-      <td>{anomaly.data.classification}</td>
-    </tr>
-    <tr>
-      <td><strong>Status:</strong></td>
-      <td>{anomaly.data.status}</td>
-    </tr>
-    <tr>
-      <td><strong>Discovery Date:</strong></td>
-      <td>{anomaly.data.discoveryDate}</td>
-    </tr>
-    <tr>
-      <td><strong>Location:</strong></td>
-      <td>{anomaly.data.location}</td>
-    </tr>
-  </Table>
-
-  <hr class="mt-1">
-
-  <div class="field-border mt-2">
-    <article>
-      <Content />
-    </article>
+  <div class="window">
+    <AnomalyPage {...tinaProps} client:tina />
   </div>
 
   <hr>

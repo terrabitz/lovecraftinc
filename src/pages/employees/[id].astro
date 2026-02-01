@@ -1,6 +1,7 @@
 ---
-import { getCollection, render } from 'astro:content';
-import Table from '../../components/Table.astro';
+import { getCollection } from 'astro:content';
+import client from '../../../tina/__generated__/client';
+import EmployeePage from '../../../tina/pages/EmployeePage';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 
 export async function getStaticPaths() {
@@ -8,42 +9,23 @@ export async function getStaticPaths() {
 
   return employees.map((employee) => ({
     params: { id: employee.data.employeeId.toUpperCase() },
-    props: { employee }
+    props: {
+      employee,
+      getTinaProps: async () =>
+        client.queries.employee({
+          relativePath: employee.data.tinaInfo.relativePath,
+        }),
+    },
   }));
 }
 
-const { employee } = Astro.props;
-const { Content } = await render(employee);
+const { getTinaProps, employee } = Astro.props;
+const tinaProps = await getTinaProps();
 ---
 
 <ContentLayout title={`Eidolon Capital Intranet - Employee - ${employee.data.name}`}>
-  <h2>{employee.data.name}</h2>
-
-  <Table>
-    <tr>
-      <td><strong>Employee ID:</strong></td>
-      <td>{employee.data.employeeId}</td>
-    </tr>
-    <tr>
-      <td><strong>Position:</strong></td>
-      <td>{employee.data.position}</td>
-    </tr>
-    <tr>
-      <td><strong>Department:</strong></td>
-      <td>{employee.data.department}</td>
-    </tr>
-    <tr>
-      <td><strong>Clearance Level:</strong></td>
-      <td>{employee.data.clearanceLevel}</td>
-    </tr>
-  </Table>
-
-  <hr class="mt-1">
-
-  <div class="field-border mt-2">
-    <article>
-      <Content />
-    </article>
+  <div class="window">
+    <EmployeePage {...tinaProps} client:tina />
   </div>
 
   <hr>

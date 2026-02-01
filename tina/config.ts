@@ -32,6 +32,11 @@ export default defineConfig({
         name: "employee",
         label: "Employees",
         path: "src/content/employees",
+        ui: {
+          router({ document }) {
+            return `/employees/${(document as any).employeeId}`;
+          },
+        },
         fields: [
           {
             type: "string",
@@ -76,6 +81,11 @@ export default defineConfig({
         name: "anomaly",
         label: "Anomalies",
         path: "src/content/anomalies",
+        ui: {
+          router({ document }) {
+            return `/anomalies/${(document as any).anomalyId}`;
+          },
+        },
         fields: [
           {
             type: "string",
@@ -126,6 +136,11 @@ export default defineConfig({
         name: "organization",
         label: "Organizations",
         path: "src/content/organizations",
+        ui: {
+          router({ document }) {
+            return `/organizations/${(document as any).orgId}`;
+          },
+        },
         fields: [
           {
             type: "string",

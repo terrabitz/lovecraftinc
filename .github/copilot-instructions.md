@@ -169,6 +169,27 @@ const { Content } = await render(post);
 - Access frontmatter via `.data` property, not `.frontmatter`
 - Render markdown with `await render(entry)` using the `render()` function from `astro:content`
 
+## Content Schema Management
+
+**This project uses dual content schemas that must be kept in sync:**
+
+1. **Astro Content Collections** (`src/content.config.ts`)
+   - Source of truth for content structure
+   - Defines Zod schemas for type safety and validation
+   - Used by Astro build process and content queries
+
+2. **TinaCMS Schema** (`tina/config.ts`)
+   - Provides the CMS editing interface
+   - Must match the Astro schema exactly
+   - Maps to the same content paths in `src/content/`
+
+**When modifying content schemas:**
+- Always update both `src/content.config.ts` AND `tina/config.ts`
+- Ensure field names, types, and required flags match between both configs
+- Keep collection paths consistent (TinaCMS uses `src/content/[name]`, Astro uses same)
+- After schema changes, run `tinacms dev` to regenerate TinaCMS types
+- All content markdown files include both frontmatter (for Astro) and a `body` field (rich-text for TinaCMS)
+
 ## General Guidelines
 
 - Astro components are rendered at build time by default (SSG)

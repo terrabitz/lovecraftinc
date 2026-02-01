@@ -29,15 +29,139 @@ export default defineConfig({
   schema: {
     collections: [
       {
-        name: "post",
-        label: "Posts",
-        path: "content/posts",
+        name: "employee",
+        label: "Employees",
+        path: "src/content/employees",
         fields: [
+          {
+            type: "string",
+            name: "name",
+            label: "Name",
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: "string",
+            name: "position",
+            label: "Position",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "department",
+            label: "Department",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "employeeId",
+            label: "Employee ID",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "clearanceLevel",
+            label: "Clearance Level",
+            required: true,
+          },
+          {
+            type: "rich-text",
+            name: "body",
+            label: "Body",
+            isBody: true,
+          },
+        ],
+      },
+      {
+        name: "anomaly",
+        label: "Anomalies",
+        path: "src/content/anomalies",
+        fields: [
+          {
+            type: "string",
+            name: "anomalyId",
+            label: "Anomaly ID",
+            required: true,
+          },
           {
             type: "string",
             name: "title",
             label: "Title",
             isTitle: true,
+            required: true,
+          },
+          {
+            type: "string",
+            name: "classification",
+            label: "Classification",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "status",
+            label: "Status",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "discoveryDate",
+            label: "Discovery Date",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "location",
+            label: "Location",
+            required: true,
+          },
+          {
+            type: "rich-text",
+            name: "body",
+            label: "Body",
+            isBody: true,
+          },
+        ],
+      },
+      {
+        name: "organization",
+        label: "Organizations",
+        path: "src/content/organizations",
+        fields: [
+          {
+            type: "string",
+            name: "orgId",
+            label: "Organization ID",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "name",
+            label: "Name",
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: "string",
+            name: "type",
+            label: "Type",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "relationship",
+            label: "Relationship",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "established",
+            label: "Established",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "location",
+            label: "Location",
             required: true,
           },
           {

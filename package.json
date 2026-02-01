@@ -4,7 +4,7 @@
   "description": "Eidolon Capital - A 90s Intranet Portal",
   "type": "module",
   "scripts": {
-    "dev": "tinacms dev -c \"astro dev\"",
+    "dev": "tinacms dev -c \"astro dev --host\"",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview"

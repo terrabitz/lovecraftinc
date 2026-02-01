@@ -18,6 +18,7 @@ export default defineConfig({
   build: {
     outputFolder: "admin",
     publicFolder: "public",
+    host: true, // Listen on all network interfaces
   },
   media: {
     tina: {

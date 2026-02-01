@@ -7,7 +7,8 @@
     "dev": "astro dev --host",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "wrangler:dev": "npm run build && wrangler dev --ip 0.0.0.0"
   },
   "keywords": [
     "astro",

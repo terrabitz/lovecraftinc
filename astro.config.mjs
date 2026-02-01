@@ -6,6 +6,10 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://eidolon.hackandsla.sh',
   output: 'static',
+  trailingSlash: 'never',
+  build: {
+    format: 'file'
+  },
 
   markdown: {
     shikiConfig: {

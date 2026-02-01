@@ -1,10 +1,10 @@
 ---
-anomalyId: "EID-112"
-title: "Temporal Echo Chamber"
-classification: "Class-A"
-status: "Contained"
-discoveryDate: "1994-11-23"
-location: "Innsmouth Harbor"
+anomalyId: EID-112
+title: Temporal Echo Chamber
+classification: Class-A
+status: Uncontained
+discoveryDate: '1994-11-23'
+location: Innsmouth Harbor
 ---
 
 ## Description
@@ -18,11 +18,12 @@ EID-112 is a localized temporal anomaly occurring in a 5-meter radius area near 
 
 ## Investigation History
 
-- **November 23, 1994:** Fishermen reported "hearing voices from another time"
-- **November 25, 1994:** Eidolon Capital deployed investigation team
-- **December 1, 1994:** Temporal nature of anomaly confirmed through radiometric testing
-- **January 15, 1995:** Containment field established
-- **February 2, 1995:** Upgraded to Class-A following unexpected temporal surge
+* **November 23, 1994:** Fishermen reported "hearing voices from another time"
+* **November 25, 1994:** Eidolon Capital deployed investigation team
+* **December 1, 1994:** Temporal nature of anomaly confirmed through radiometric testing
+* **January 15, 1995:** Containment field established
+* **February 2, 1995:** Upgraded to Class-A following unexpected temporal surge
+* **April 3, 1995**: Containment breach event. See EID-EV-7678 by [Dr. Haverford's](/employees/EID-EMP-0984) for details
 
 ## Current Status
 
@@ -30,11 +31,11 @@ The anomaly is contained within a specialized temporal dampening field. The area
 
 ## Safety Protocols
 
-- No unauthorized entry permitted
-- Maximum exposure time: 5 minutes for Level 4+ personnel
-- All equipment must be pre-approved by Dr. Harrow
-- Temporal monitoring devices must be worn at all times
-- Emergency extraction procedures must be reviewed before entry
+* No unauthorized entry permitted
+* Maximum exposure time: 5 minutes for Level 4+ personnel
+* All equipment must be pre-approved by Dr. Harrow
+* Temporal monitoring devices must be worn at all times
+* Emergency extraction procedures must be reviewed before entry
 
 ## Research Notes
 

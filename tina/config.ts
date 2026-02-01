@@ -35,7 +35,12 @@ export default defineConfig({
         path: "src/content/employees",
         ui: {
           router({ document }) {
-            return `/employees/${(document as any).employeeId}`;
+            return `/employees/${document._sys.filename}`;
+          },
+          filename: {
+            slugify: (values) => {
+              return values.employeeId;
+            },
           },
         },
         fields: [
@@ -84,7 +89,12 @@ export default defineConfig({
         path: "src/content/anomalies",
         ui: {
           router({ document }) {
-            return `/anomalies/${(document as any).anomalyId}`;
+            return `/anomalies/${document._sys.filename}`;
+          },
+          filename: {
+            slugify: (values) => {
+              return values.anomalyId;
+            },
           },
         },
         fields: [
@@ -139,7 +149,12 @@ export default defineConfig({
         path: "src/content/organizations",
         ui: {
           router({ document }) {
-            return `/organizations/${(document as any).orgId}`;
+            return `/organizations/${document._sys.filename}`;
+          },
+          filename: {
+            slugify: (values) => {
+              return values.orgId;
+            },
           },
         },
         fields: [

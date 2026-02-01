@@ -22,5 +22,9 @@
     "98.css": "^0.1.21",
     "astro": "^5.17.1",
     "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@astrojs/cloudflare": "^12.6.5",
+    "wrangler": "^4.61.1"
   }
 }

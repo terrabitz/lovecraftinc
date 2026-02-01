@@ -4,7 +4,7 @@
   "description": "Eidolon Capital - A 90s Intranet Portal",
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "tinacms dev -c \"astro dev\"",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview"
@@ -21,10 +21,13 @@
     "@tailwindcss/vite": "^4.1.18",
     "98.css": "^0.1.21",
     "astro": "^5.17.1",
-    "tailwindcss": "^4.1.18"
+    "tailwindcss": "^4.1.18",
+    "tinacms": "^3.3.2"
   },
   "devDependencies": {
     "@astrojs/cloudflare": "^12.6.5",
+    "@tinacms/cli": "^2.1.2",
+    "@types/node": "^25.1.0",
     "wrangler": "^4.61.1"
   }
 }

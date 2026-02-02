@@ -6,6 +6,10 @@ import type { RemarkArticleLinksConfig, ArticleInfo } from './types.js';
 
 let cachedArticles: Map<string, ArticleInfo> | null = null;
 
+export function clearArticleCache(): void {
+  cachedArticles = null;
+}
+
 function getCurrentPageId(
   frontmatter: Record<string, unknown> | undefined
 ): string | null {

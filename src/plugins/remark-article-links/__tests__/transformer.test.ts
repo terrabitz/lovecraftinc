@@ -5,22 +5,16 @@ import type { ArticleTypeConfig, ArticleInfo, TextNode } from '../types.js';
 const testArticleTypes: ArticleTypeConfig[] = [
   {
     pattern: /EID-EMP-\d{3}/,
-    idField: 'employeeId',
-    titleField: 'name',
     urlPrefix: '/employees',
     contentPath: 'employees',
   },
   {
     pattern: /EID-ORG-\d{3}/,
-    idField: 'orgId',
-    titleField: 'name',
     urlPrefix: '/organizations',
     contentPath: 'organizations',
   },
   {
     pattern: /EID-\d{3}/,
-    idField: 'anomalyId',
-    titleField: 'title',
     urlPrefix: '/anomalies',
     contentPath: 'anomalies',
   },
@@ -31,7 +25,7 @@ function createTextNode(value: string): TextNode {
 }
 
 function createArticlesMap(entries: [string, string][]): Map<string, ArticleInfo> {
-  return new Map(entries.map(([id, title]) => [id, { id, title }]));
+  return new Map(entries.map(([id, name]) => [id, { id, name }]));
 }
 
 describe('transformTextNode', () => {

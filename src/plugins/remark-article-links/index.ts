@@ -7,18 +7,11 @@ import type { RemarkArticleLinksConfig, ArticleInfo } from './types.js';
 let cachedArticles: Map<string, ArticleInfo> | null = null;
 
 function getCurrentPageId(
-  frontmatter: Record<string, unknown> | undefined,
-  idFields: string[]
+  frontmatter: Record<string, unknown> | undefined
 ): string | null {
   if (!frontmatter) return null;
-  
-  for (const field of idFields) {
-    const value = frontmatter[field];
-    if (typeof value === 'string') {
-      return value.toUpperCase();
-    }
-  }
-  return null;
+  const id = frontmatter.id;
+  return typeof id === 'string' ? id.toUpperCase() : null;
 }
 
 function createTextNode(value: string): Text {
@@ -58,7 +51,7 @@ function transformText(
 
     if (articleInfo && !isCurrentPage) {
       const url = buildArticleUrl(match.id, match.urlPrefix);
-      result.push(createLinkNode(url, match.id, articleInfo.title));
+      result.push(createLinkNode(url, match.id, articleInfo.name));
     } else {
       result.push(createTextNode(text.slice(match.start, match.end)));
     }
@@ -74,15 +67,13 @@ function transformText(
 }
 
 export function remarkArticleLinks(config: RemarkArticleLinksConfig) {
-  const idFields = config.articleTypes.map((t) => t.idField);
-
   return function (tree: Root, file: { data: { astro?: { frontmatter?: Record<string, unknown> } } }) {
     if (!cachedArticles) {
       cachedArticles = loadArticles(config.contentDir, config.articleTypes);
     }
 
     const frontmatter = file.data?.astro?.frontmatter;
-    const currentPageId = getCurrentPageId(frontmatter, idFields);
+    const currentPageId = getCurrentPageId(frontmatter);
 
     visit(tree, 'text', (node: Text, index: number | undefined, parent: Parent | undefined) => {
       if (index === undefined || !parent) return;

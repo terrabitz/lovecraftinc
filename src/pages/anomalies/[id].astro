@@ -7,7 +7,7 @@ export async function getStaticPaths() {
   const anomalies = await getCollection('anomalies');
 
   return anomalies.map((anomaly) => ({
-    params: { id: anomaly.data.anomalyId.toUpperCase() },
+    params: { id: anomaly.data.id.toUpperCase() },
     props: { anomaly }
   }));
 }
@@ -16,13 +16,13 @@ const { anomaly } = Astro.props;
 const { Content } = await render(anomaly);
 ---
 
-<ContentLayout title={`Eidolon Capital Intranet - Anomaly - ${anomaly.data.title}`}>
-  <h2>{anomaly.data.title}</h2>
+<ContentLayout title={`Eidolon Capital Intranet - Anomaly - ${anomaly.data.name}`}>
+  <h2>{anomaly.data.name}</h2>
 
   <Table>
     <tr>
       <td><strong>Anomaly ID:</strong></td>
-      <td>{anomaly.data.anomalyId}</td>
+      <td>{anomaly.data.id}</td>
     </tr>
     <tr>
       <td><strong>Classification:</strong></td>

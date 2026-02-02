@@ -17,7 +17,7 @@ const organizations = await getCollection('organizations');
           <tbody>
             <tr>
               <td><strong>Organization ID:</strong></td>
-              <td>{org.data.orgId}</td>
+              <td>{org.data.id}</td>
             </tr>
             <tr>
               <td><strong>Type:</strong></td>
@@ -37,7 +37,7 @@ const organizations = await getCollection('organizations');
             </tr>
           </tbody>
         </Table>
-        <a href={`/organizations/${org.data.orgId.toUpperCase()}`} slot="bottom">
+        <a href={`/organizations/${org.data.id.toUpperCase()}`} slot="bottom">
           <button>View Profile</button>
         </a>
       </Card>

@@ -25,11 +25,11 @@ const employees = await getCollection('employees');
             </tr>
             <tr>
               <td><strong>ID:</strong></td>
-              <td>{employee.data.employeeId}</td>
+              <td>{employee.data.id}</td>
             </tr>
           </tbody>
         </Table>
-        <a href={`/employees/${employee.data.employeeId.toUpperCase()}`} slot="bottom">
+        <a href={`/employees/${employee.data.id.toUpperCase()}`} slot="bottom">
           <button>View Profile</button>
         </a>
       </Card>

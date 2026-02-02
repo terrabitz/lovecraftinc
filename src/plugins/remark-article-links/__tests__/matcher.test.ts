@@ -9,22 +9,16 @@ import type { ArticleTypeConfig } from '../types.js';
 const testArticleTypes: ArticleTypeConfig[] = [
   {
     pattern: /EID-EMP-\d{3}/,
-    idField: 'employeeId',
-    titleField: 'name',
     urlPrefix: '/employees',
     contentPath: 'employees',
   },
   {
     pattern: /EID-ORG-\d{3}/,
-    idField: 'orgId',
-    titleField: 'name',
     urlPrefix: '/organizations',
     contentPath: 'organizations',
   },
   {
     pattern: /EID-\d{3}/,
-    idField: 'anomalyId',
-    titleField: 'title',
     urlPrefix: '/anomalies',
     contentPath: 'anomalies',
   },
@@ -34,19 +28,19 @@ describe('resolveArticleType', () => {
   it('returns the correct article type for an anomaly ID', () => {
     const result = resolveArticleType('EID-047', testArticleTypes);
     expect(result?.urlPrefix).toBe('/anomalies');
-    expect(result?.idField).toBe('anomalyId');
+    expect(result?.contentPath).toBe('anomalies');
   });
 
   it('returns the correct article type for an employee ID', () => {
     const result = resolveArticleType('EID-EMP-001', testArticleTypes);
     expect(result?.urlPrefix).toBe('/employees');
-    expect(result?.idField).toBe('employeeId');
+    expect(result?.contentPath).toBe('employees');
   });
 
   it('returns the correct article type for an organization ID', () => {
     const result = resolveArticleType('EID-ORG-002', testArticleTypes);
     expect(result?.urlPrefix).toBe('/organizations');
-    expect(result?.idField).toBe('orgId');
+    expect(result?.contentPath).toBe('organizations');
   });
 
   it('handles case-insensitive matching', () => {

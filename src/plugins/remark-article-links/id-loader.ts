@@ -28,12 +28,12 @@ export function loadArticles(
       const content = fs.readFileSync(filePath, 'utf-8');
       const { data: frontmatter } = matter(content);
 
-      const id = frontmatter[articleType.idField];
-      const title = frontmatter[articleType.titleField];
+      const id = frontmatter.id;
+      const name = frontmatter.name;
       if (typeof id === 'string') {
         articles.set(id.toUpperCase(), {
           id: id.toUpperCase(),
-          title: typeof title === 'string' ? title : id,
+          name: typeof name === 'string' ? name : id,
         });
       }
     }

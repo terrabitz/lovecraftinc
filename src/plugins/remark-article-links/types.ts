@@ -2,8 +2,6 @@ import type { Text, Link } from 'mdast';
 
 export interface ArticleTypeConfig {
   pattern: RegExp;
-  idField: string;
-  titleField: string;
   urlPrefix: string;
   contentPath: string;
 }
@@ -15,7 +13,7 @@ export interface RemarkArticleLinksConfig {
 
 export interface ArticleInfo {
   id: string;
-  title: string;
+  name: string;
 }
 
 export interface ArticleMatch {

@@ -35,7 +35,7 @@ export function transformTextNode(
     result.push({
       type: 'link',
       url: buildArticleUrl(match.id, match.urlPrefix),
-      title: articleInfo.title,
+      title: articleInfo.name,
       children: [{ type: 'text', value: match.id }],
     });
 

@@ -12,12 +12,12 @@ const anomalies = await getCollection('anomalies');
 
   <div class="grid">
     {anomalies.map((anomaly) => (
-      <Card title={anomaly.data.title}>
+      <Card title={anomaly.data.name}>
         <Table>
           <tbody>
             <tr>
               <td><strong>Anomaly ID:</strong></td>
-              <td>{anomaly.data.anomalyId}</td>
+              <td>{anomaly.data.id}</td>
             </tr>
             <tr>
               <td><strong>Classification:</strong></td>
@@ -37,7 +37,7 @@ const anomalies = await getCollection('anomalies');
             </tr>
           </tbody>
         </Table>
-        <a href={`/anomalies/${anomaly.data.anomalyId.toUpperCase()}`} slot="bottom">
+        <a href={`/anomalies/${anomaly.data.id.toUpperCase()}`} slot="bottom">
           <button>View Full Report</button>
         </a>
       </Card>

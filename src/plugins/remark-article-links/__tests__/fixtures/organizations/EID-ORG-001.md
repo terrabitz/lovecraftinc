@@ -1,5 +1,5 @@
 ---
-orgId: EID-ORG-001
+id: EID-ORG-001
 name: Test Organization
 type: Research
 relationship: Partner

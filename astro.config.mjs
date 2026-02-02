@@ -24,23 +24,17 @@ export default defineConfig({
           contentDir: './src/content',
           articleTypes: [
             {
-              pattern: /EID-EMP-\d{3}/,
-              idField: 'employeeId',
-              titleField: 'name',
+              pattern: /EID-EMP-\d+/,
               urlPrefix: '/employees',
               contentPath: 'employees',
             },
             {
-              pattern: /EID-ORG-\d{3}/,
-              idField: 'orgId',
-              titleField: 'name',
+              pattern: /EID-ORG-\d+/,
               urlPrefix: '/organizations',
               contentPath: 'organizations',
             },
             {
-              pattern: /EID-\d{3}/,
-              idField: 'anomalyId',
-              titleField: 'title',
+              pattern: /EID-\d+/,
               urlPrefix: '/anomalies',
               contentPath: 'anomalies',
             },

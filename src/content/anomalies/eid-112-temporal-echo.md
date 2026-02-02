@@ -7,6 +7,8 @@ discoveryDate: "1994-11-23"
 location: "Innsmouth Harbor"
 ---
 
+## Contents
+
 ## Description
 
 EID-112 is a localized temporal anomaly occurring in a 5-meter radius area near Pier 7 of Innsmouth Harbor. The anomaly manifests as follows:

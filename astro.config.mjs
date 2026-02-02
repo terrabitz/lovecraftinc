@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
+import remarkToc from 'remark-toc';
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,6 +16,7 @@ export default defineConfig({
     shikiConfig: {
       theme: 'dracula',
     },
+    remarkPlugins: [ [remarkToc, { maxDepth: 3 } ] ],
   },
 
   vite: {

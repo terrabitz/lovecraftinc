@@ -7,6 +7,8 @@ established: "1852"
 location: "Arkham, Massachusetts"
 ---
 
+## Contents
+
 ## Overview
 
 The Arkham Historical Society is a non-profit organization dedicated to preserving and sharing the history of Arkham and the surrounding region. The society maintains an extensive archive of local historical documents, photographs, and artifacts dating back to the 17th century.

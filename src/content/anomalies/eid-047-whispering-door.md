@@ -7,6 +7,8 @@ discoveryDate: "1995-03-15"
 location: "Arkham, Massachusetts"
 ---
 
+## Contents
+
 ## Description
 
 EID-047 refers to a wooden door located in the basement of an abandoned textile mill in Arkham. The door exhibits several anomalous properties:

@@ -6,6 +6,8 @@ employeeId: "EID-EMP-002"
 clearanceLevel: "Level 4"
 ---
 
+## Contents
+
 ## Background
 
 Marcus Chen is a veteran field operative with over 10 years of experience in anomaly containment and retrieval. Former military background with specialization in hazardous environment operations.

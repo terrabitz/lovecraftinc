@@ -4,20 +4,21 @@
 	"name": "Node.js & TypeScript",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
-	"features": {
-		"ghcr.io/devcontainers-extra/features/cloudflare-wrangler:1": {}
-	},
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [
-		4321
+		4321,
+		8976
 	],
 	"portsAttributes": {
 		"4321": {
 			"label": "Astro Page"
+		},
+		"8976": {
+			"label": "Wrangler Login Callback"
 		}
 	}
 

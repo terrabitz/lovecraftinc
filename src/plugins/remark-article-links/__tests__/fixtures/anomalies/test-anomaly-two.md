@@ -1,0 +1,10 @@
+---
+anomalyId: EID-002
+title: Test Anomaly Two
+classification: Class-B
+status: Contained
+discoveryDate: '2021-03-20'
+location: Another Location
+---
+
+This is another test anomaly that references EID-001.

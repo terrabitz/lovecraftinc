@@ -11,7 +11,9 @@ location: "Innsmouth Harbor"
 
 ## Description
 
-EID-112 is a localized temporal anomaly occurring in a 5-meter radius area near Pier 7 of Innsmouth Harbor. The anomaly manifests as follows:
+EID-112 is a localized temporal anomaly occurring in a 5-meter radius area near Pier 7 of Innsmouth Harbor. Some researchers believe there may be a connection to EID-047 due to similar auditory phenomena. The anomaly manifests as follows:
+
+This was first discovered by EID-EMP-001 while working undercover at EID-ORG-002
 
 1. Objects entering the zone experience time dilation effects
 2. Sounds from the past (dated between 1920-1928) can be heard within the zone

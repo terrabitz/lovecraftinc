@@ -18,11 +18,11 @@ function createTextNode(value: string): Text {
   return { type: 'text', value };
 }
 
-function createLinkNode(url: string, text: string, title: string): Link {
+function createLinkNode(url: string, text: string, tooltipText: string): Link {
   return {
     type: 'link',
     url,
-    title,
+    title: tooltipText,
     children: [createTextNode(text)],
   };
 }

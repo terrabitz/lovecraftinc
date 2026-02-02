@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import remarkToc from 'remark-toc';
 import { remarkArticleLinks } from './src/plugins/remark-article-links/index.ts';
+import rehypeTooltip from './src/plugins/rehype-tooltip/index.ts';
 
 // https://astro.build/config
 export default defineConfig({
@@ -42,6 +43,7 @@ export default defineConfig({
         },
       ]
     ],
+    rehypePlugins: [rehypeTooltip],
   },
 
   vite: {

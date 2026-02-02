@@ -1,11 +1,13 @@
 ---
-orgId: "EID-ORG-001"
+id: "EID-ORG-001"
 name: "Miskatonic University"
 type: "Academic Institution"
 relationship: "Research Partner"
 established: "1690"
 location: "Arkham, Massachusetts"
 ---
+
+## Contents
 
 ## Overview
 

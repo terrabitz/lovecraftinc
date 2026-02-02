@@ -1,10 +1,12 @@
 ---
+id: "EID-EMP-003"
 name: "Sarah Blackwood"
 position: "Archivist"
 department: "Documentation & Records"
-employeeId: "EID-EMP-003"
 clearanceLevel: "Level 3"
 ---
+
+## Contents
 
 ## Background
 

@@ -7,7 +7,7 @@ export async function getStaticPaths() {
   const employees = await getCollection('employees');
 
   return employees.map((employee) => ({
-    params: { id: employee.data.employeeId.toUpperCase() },
+    params: { id: employee.data.id.toUpperCase() },
     props: { employee }
   }));
 }
@@ -22,7 +22,7 @@ const { Content } = await render(employee);
   <Table>
     <tr>
       <td><strong>Employee ID:</strong></td>
-      <td>{employee.data.employeeId}</td>
+      <td>{employee.data.id}</td>
     </tr>
     <tr>
       <td><strong>Position:</strong></td>

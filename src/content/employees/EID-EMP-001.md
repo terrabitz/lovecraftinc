@@ -1,10 +1,12 @@
 ---
+id: "EID-EMP-001"
 name: "Dr. Elizabeth Harrow"
 position: "Chief Research Officer"
 department: "Research & Development"
-employeeId: "EID-EMP-001"
 clearanceLevel: "Level 5"
 ---
+
+## Contents
 
 ## Background
 

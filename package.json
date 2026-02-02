@@ -8,7 +8,9 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "wrangler:dev": "npm run build && wrangler dev --ip 0.0.0.0"
+    "wrangler:dev": "npm run build && wrangler dev --ip 0.0.0.0",
+    "test": "vitest",
+    "test:run": "vitest run"
   },
   "keywords": [
     "astro",
@@ -22,9 +24,17 @@
     "@tailwindcss/vite": "^4.1.18",
     "98.css": "^0.1.21",
     "astro": "^5.17.1",
-    "tailwindcss": "^4.1.18"
+    "gray-matter": "^4.0.3",
+    "remark-toc": "^9.0.0",
+    "tailwindcss": "^4.1.18",
+    "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
+    "@types/mdast": "^4.0.4",
+    "@types/node": "^25.2.0",
+    "remark-frontmatter": "^5.0.0",
+    "tsx": "^4.21.0",
+    "vitest": "^4.0.18",
     "wrangler": "^4.61.1"
   }
 }

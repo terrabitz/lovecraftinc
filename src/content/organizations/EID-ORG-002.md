@@ -1,11 +1,13 @@
 ---
-orgId: "EID-ORG-002"
+id: "EID-ORG-002"
 name: "The Arkham Historical Society"
 type: "Historical Organization"
 relationship: "Information Sharing Agreement"
 established: "1852"
 location: "Arkham, Massachusetts"
 ---
+
+## Contents
 
 ## Overview
 
@@ -51,4 +53,3 @@ The society holds several collections of particular interest:
 - The Whateley Family Papers
 - Innsmouth Maritime Records (1800-1930)
 - Arkham Sanitarium Records (1880-1920)
-- Early Colonial Settlement Documents

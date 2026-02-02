@@ -1,13 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
-import type { ArticleTypeConfig } from './types.js';
+import type { ArticleTypeConfig, ArticleInfo } from './types.js';
 
-export function loadValidIds(
+export function loadArticles(
   contentDir: string,
   articleTypes: ArticleTypeConfig[]
-): Set<string> {
-  const validIds = new Set<string>();
+): Map<string, ArticleInfo> {
+  const articles = new Map<string, ArticleInfo>();
   const resolvedContentDir = path.resolve(process.cwd(), contentDir);
 
   for (const articleType of articleTypes) {
@@ -29,11 +29,23 @@ export function loadValidIds(
       const { data: frontmatter } = matter(content);
 
       const id = frontmatter[articleType.idField];
+      const title = frontmatter[articleType.titleField];
       if (typeof id === 'string') {
-        validIds.add(id.toUpperCase());
+        articles.set(id.toUpperCase(), {
+          id: id.toUpperCase(),
+          title: typeof title === 'string' ? title : id,
+        });
       }
     }
   }
 
-  return validIds;
+  return articles;
+}
+
+export function loadValidIds(
+  contentDir: string,
+  articleTypes: ArticleTypeConfig[]
+): Set<string> {
+  const articles = loadArticles(contentDir, articleTypes);
+  return new Set(articles.keys());
 }

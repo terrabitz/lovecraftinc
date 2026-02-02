@@ -1,10 +1,10 @@
 import type { Root, Text, Link, Parent } from 'mdast';
 import { visit, SKIP } from 'unist-util-visit';
-import { loadValidIds } from './id-loader.js';
+import { loadArticles } from './id-loader.js';
 import { findArticleReferences, buildArticleUrl } from './matcher.js';
-import type { RemarkArticleLinksConfig } from './types.js';
+import type { RemarkArticleLinksConfig, ArticleInfo } from './types.js';
 
-let cachedValidIds: Set<string> | null = null;
+let cachedArticles: Map<string, ArticleInfo> | null = null;
 
 function getCurrentPageId(
   frontmatter: Record<string, unknown> | undefined,
@@ -25,17 +25,18 @@ function createTextNode(value: string): Text {
   return { type: 'text', value };
 }
 
-function createLinkNode(url: string, text: string): Link {
+function createLinkNode(url: string, text: string, title: string): Link {
   return {
     type: 'link',
     url,
+    title,
     children: [createTextNode(text)],
   };
 }
 
 function transformText(
   text: string,
-  validIds: Set<string>,
+  articles: Map<string, ArticleInfo>,
   currentPageId: string | null,
   articleTypes: RemarkArticleLinksConfig['articleTypes']
 ): (Text | Link)[] {
@@ -49,15 +50,15 @@ function transformText(
 
   for (const match of matches) {
     const isCurrentPage = currentPageId && match.id === currentPageId;
-    const isValidId = validIds.has(match.id);
+    const articleInfo = articles.get(match.id);
 
     if (match.start > lastIndex) {
       result.push(createTextNode(text.slice(lastIndex, match.start)));
     }
 
-    if (isValidId && !isCurrentPage) {
+    if (articleInfo && !isCurrentPage) {
       const url = buildArticleUrl(match.id, match.urlPrefix);
-      result.push(createLinkNode(url, match.id));
+      result.push(createLinkNode(url, match.id, articleInfo.title));
     } else {
       result.push(createTextNode(text.slice(match.start, match.end)));
     }
@@ -76,8 +77,8 @@ export function remarkArticleLinks(config: RemarkArticleLinksConfig) {
   const idFields = config.articleTypes.map((t) => t.idField);
 
   return function (tree: Root, file: { data: { astro?: { frontmatter?: Record<string, unknown> } } }) {
-    if (!cachedValidIds) {
-      cachedValidIds = loadValidIds(config.contentDir, config.articleTypes);
+    if (!cachedArticles) {
+      cachedArticles = loadArticles(config.contentDir, config.articleTypes);
     }
 
     const frontmatter = file.data?.astro?.frontmatter;
@@ -89,7 +90,7 @@ export function remarkArticleLinks(config: RemarkArticleLinksConfig) {
 
       const transformed = transformText(
         node.value,
-        cachedValidIds!,
+        cachedArticles!,
         currentPageId,
         config.articleTypes
       );
@@ -105,7 +106,7 @@ export function remarkArticleLinks(config: RemarkArticleLinksConfig) {
 }
 
 export function clearCache(): void {
-  cachedValidIds = null;
+  cachedArticles = null;
 }
 
 export type { RemarkArticleLinksConfig, ArticleTypeConfig } from './types.js';

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadValidIds } from '../id-loader.js';
+import { loadValidIds, loadArticles } from '../id-loader.js';
 import type { ArticleTypeConfig } from '../types.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -11,18 +11,21 @@ const testArticleTypes: ArticleTypeConfig[] = [
   {
     pattern: /EID-EMP-\d{3}/,
     idField: 'employeeId',
+    titleField: 'name',
     urlPrefix: '/employees',
     contentPath: 'employees',
   },
   {
     pattern: /EID-ORG-\d{3}/,
     idField: 'orgId',
+    titleField: 'name',
     urlPrefix: '/organizations',
     contentPath: 'organizations',
   },
   {
     pattern: /EID-\d{3}/,
     idField: 'anomalyId',
+    titleField: 'title',
     urlPrefix: '/anomalies',
     contentPath: 'anomalies',
   },
@@ -55,6 +58,7 @@ describe('loadValidIds', () => {
       {
         pattern: /EID-\d{3}/,
         idField: 'nonExistentField',
+        titleField: 'title',
         urlPrefix: '/anomalies',
         contentPath: 'anomalies',
       },
@@ -68,6 +72,7 @@ describe('loadValidIds', () => {
       {
         pattern: /EID-\d{3}/,
         idField: 'anomalyId',
+        titleField: 'title',
         urlPrefix: '/anomalies',
         contentPath: 'anomalies',
       },
@@ -78,5 +83,35 @@ describe('loadValidIds', () => {
     expect(validIds.has('EID-002')).toBe(true);
     expect(validIds.has('EID-EMP-001')).toBe(false);
     expect(validIds.has('EID-ORG-001')).toBe(false);
+  });
+});
+
+describe('loadArticles', () => {
+  it('loads article info with titles', () => {
+    const articles = loadArticles(fixturesDir, testArticleTypes);
+
+    expect(articles.get('EID-001')).toEqual({
+      id: 'EID-001',
+      title: 'Test Anomaly One',
+    });
+    expect(articles.get('EID-002')).toEqual({
+      id: 'EID-002',
+      title: 'Test Anomaly Two',
+    });
+  });
+
+  it('falls back to ID when title field is missing', () => {
+    const typesWithWrongTitleField: ArticleTypeConfig[] = [
+      {
+        pattern: /EID-\d{3}/,
+        idField: 'anomalyId',
+        titleField: 'nonExistentField',
+        urlPrefix: '/anomalies',
+        contentPath: 'anomalies',
+      },
+    ];
+    const articles = loadArticles(fixturesDir, typesWithWrongTitleField);
+
+    expect(articles.get('EID-001')?.title).toBe('EID-001');
   });
 });

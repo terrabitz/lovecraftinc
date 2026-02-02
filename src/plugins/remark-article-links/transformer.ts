@@ -1,9 +1,9 @@
-import type { ArticleTypeConfig, TextNode, TransformedNode } from './types.js';
+import type { ArticleTypeConfig, ArticleInfo, TextNode, TransformedNode } from './types.js';
 import { findArticleReferences, buildArticleUrl } from './matcher.js';
 
 export function transformTextNode(
   node: TextNode,
-  validIds: Set<string>,
+  articles: Map<string, ArticleInfo>,
   currentPageId: string | null,
   articleTypes: ArticleTypeConfig[]
 ): TransformedNode[] {
@@ -12,7 +12,7 @@ export function transformTextNode(
 
   const validMatches = matches.filter(
     (match) =>
-      validIds.has(match.id) &&
+      articles.has(match.id) &&
       (currentPageId === null || match.id !== currentPageId.toUpperCase())
   );
 
@@ -31,9 +31,11 @@ export function transformTextNode(
       });
     }
 
+    const articleInfo = articles.get(match.id)!;
     result.push({
       type: 'link',
       url: buildArticleUrl(match.id, match.urlPrefix),
+      title: articleInfo.title,
       children: [{ type: 'text', value: match.id }],
     });
 

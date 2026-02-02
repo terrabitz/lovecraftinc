@@ -10,18 +10,21 @@ const testArticleTypes: ArticleTypeConfig[] = [
   {
     pattern: /EID-EMP-\d{3}/,
     idField: 'employeeId',
+    titleField: 'name',
     urlPrefix: '/employees',
     contentPath: 'employees',
   },
   {
     pattern: /EID-ORG-\d{3}/,
     idField: 'orgId',
+    titleField: 'name',
     urlPrefix: '/organizations',
     contentPath: 'organizations',
   },
   {
     pattern: /EID-\d{3}/,
     idField: 'anomalyId',
+    titleField: 'title',
     urlPrefix: '/anomalies',
     contentPath: 'anomalies',
   },

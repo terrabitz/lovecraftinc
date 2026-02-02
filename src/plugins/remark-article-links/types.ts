@@ -3,6 +3,7 @@ import type { Text, Link } from 'mdast';
 export interface ArticleTypeConfig {
   pattern: RegExp;
   idField: string;
+  titleField: string;
   urlPrefix: string;
   contentPath: string;
 }
@@ -10,6 +11,11 @@ export interface ArticleTypeConfig {
 export interface RemarkArticleLinksConfig {
   contentDir: string;
   articleTypes: ArticleTypeConfig[];
+}
+
+export interface ArticleInfo {
+  id: string;
+  title: string;
 }
 
 export interface ArticleMatch {

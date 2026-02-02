@@ -61,3 +61,22 @@ button, table, .window{
 [data-tooltip]:hover::before {
   opacity: 1;
 }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.info-box {
+  background: #ffffe1;
+  border: 1px solid #000000;
+  padding: 8px;
+  margin: 8px 0;
+  font-size: 11px;
+}
+
+article {
+  padding: 20px;
+}

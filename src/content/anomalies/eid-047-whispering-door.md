@@ -1,4 +1,3 @@
-
 ---
 anomalyId: "EID-047"
 title: "The Whispering Door"

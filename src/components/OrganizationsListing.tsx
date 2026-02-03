@@ -149,38 +149,44 @@ export default function OrganizationsListing({ organizations }: OrganizationsLis
           </table>
         </div>
         
-        {selectedOrganization && (
-          <div class="detail-panel">
-            <h3>{selectedOrganization.name}</h3>
-            <div class="detail-content">
-              <div class="detail-row">
-                <strong>Organization ID:</strong>
-                <span>{selectedOrganization.id}</span>
+        <div class="detail-panel field-border">
+          {selectedOrganization ? (
+            <>
+              <h3>{selectedOrganization.name}</h3>
+              <div class="detail-content">
+                <div class="detail-row">
+                  <strong>Organization ID:</strong>
+                  <span>{selectedOrganization.id}</span>
+                </div>
+                <div class="detail-row">
+                  <strong>Type:</strong>
+                  <span>{selectedOrganization.type}</span>
+                </div>
+                <div class="detail-row">
+                  <strong>Relationship:</strong>
+                  <span>{selectedOrganization.relationship}</span>
+                </div>
+                <div class="detail-row">
+                  <strong>Established:</strong>
+                  <span>{selectedOrganization.established}</span>
+                </div>
+                <div class="detail-row">
+                  <strong>Location:</strong>
+                  <span>{selectedOrganization.location}</span>
+                </div>
+                <div class="detail-actions">
+                  <a href={`/organizations/${selectedOrganization.id.toUpperCase()}`}>
+                    <button>View Profile</button>
+                  </a>
+                </div>
               </div>
-              <div class="detail-row">
-                <strong>Type:</strong>
-                <span>{selectedOrganization.type}</span>
-              </div>
-              <div class="detail-row">
-                <strong>Relationship:</strong>
-                <span>{selectedOrganization.relationship}</span>
-              </div>
-              <div class="detail-row">
-                <strong>Established:</strong>
-                <span>{selectedOrganization.established}</span>
-              </div>
-              <div class="detail-row">
-                <strong>Location:</strong>
-                <span>{selectedOrganization.location}</span>
-              </div>
-              <div class="detail-actions">
-                <a href={`/organizations/${selectedOrganization.id.toUpperCase()}`}>
-                  <button>View Profile</button>
-                </a>
-              </div>
+            </>
+          ) : (
+            <div class="detail-empty">
+              <p>Select an organization to view details</p>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

@@ -149,38 +149,44 @@ export default function AnomaliesListing({ anomalies }: AnomaliesListingProps) {
           </table>
         </div>
         
-        {selectedAnomaly && (
-          <div class="detail-panel">
-            <h3>{selectedAnomaly.name}</h3>
-            <div class="detail-content">
-              <div class="detail-row">
-                <strong>Anomaly ID:</strong>
-                <span>{selectedAnomaly.id}</span>
+        <div class="detail-panel field-border">
+          {selectedAnomaly ? (
+            <>
+              <h3>{selectedAnomaly.name}</h3>
+              <div class="detail-content">
+                <div class="detail-row">
+                  <strong>Anomaly ID:</strong>
+                  <span>{selectedAnomaly.id}</span>
+                </div>
+                <div class="detail-row">
+                  <strong>Classification:</strong>
+                  <span>{selectedAnomaly.classification}</span>
+                </div>
+                <div class="detail-row">
+                  <strong>Status:</strong>
+                  <span>{selectedAnomaly.status}</span>
+                </div>
+                <div class="detail-row">
+                  <strong>Discovery Date:</strong>
+                  <span>{selectedAnomaly.discoveryDate}</span>
+                </div>
+                <div class="detail-row">
+                  <strong>Location:</strong>
+                  <span>{selectedAnomaly.location}</span>
+                </div>
+                <div class="detail-actions">
+                  <a href={`/anomalies/${selectedAnomaly.id.toUpperCase()}`}>
+                    <button>View Full Report</button>
+                  </a>
+                </div>
               </div>
-              <div class="detail-row">
-                <strong>Classification:</strong>
-                <span>{selectedAnomaly.classification}</span>
-              </div>
-              <div class="detail-row">
-                <strong>Status:</strong>
-                <span>{selectedAnomaly.status}</span>
-              </div>
-              <div class="detail-row">
-                <strong>Discovery Date:</strong>
-                <span>{selectedAnomaly.discoveryDate}</span>
-              </div>
-              <div class="detail-row">
-                <strong>Location:</strong>
-                <span>{selectedAnomaly.location}</span>
-              </div>
-              <div class="detail-actions">
-                <a href={`/anomalies/${selectedAnomaly.id.toUpperCase()}`}>
-                  <button>View Full Report</button>
-                </a>
-              </div>
+            </>
+          ) : (
+            <div class="detail-empty">
+              <p>Select an anomaly to view details</p>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

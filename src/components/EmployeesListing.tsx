@@ -146,30 +146,36 @@ export default function EmployeesListing({ employees }: EmployeesListingProps) {
           </table>
         </div>
         
-        {selectedEmployee && (
-          <div class="detail-panel">
-            <h3>{selectedEmployee.name}</h3>
-            <div class="detail-content">
-              <div class="detail-row">
-                <strong>ID:</strong>
-                <span>{selectedEmployee.id}</span>
+        <div class="detail-panel field-border">
+          {selectedEmployee ? (
+            <>
+              <h3>{selectedEmployee.name}</h3>
+              <div class="detail-content">
+                <div class="detail-row">
+                  <strong>ID:</strong>
+                  <span>{selectedEmployee.id}</span>
+                </div>
+                <div class="detail-row">
+                  <strong>Position:</strong>
+                  <span>{selectedEmployee.position}</span>
+                </div>
+                <div class="detail-row">
+                  <strong>Department:</strong>
+                  <span>{selectedEmployee.department}</span>
+                </div>
+                <div class="detail-actions">
+                  <a href={`/employees/${selectedEmployee.id.toUpperCase()}`}>
+                    <button>View Profile</button>
+                  </a>
+                </div>
               </div>
-              <div class="detail-row">
-                <strong>Position:</strong>
-                <span>{selectedEmployee.position}</span>
-              </div>
-              <div class="detail-row">
-                <strong>Department:</strong>
-                <span>{selectedEmployee.department}</span>
-              </div>
-              <div class="detail-actions">
-                <a href={`/employees/${selectedEmployee.id.toUpperCase()}`}>
-                  <button>View Profile</button>
-                </a>
-              </div>
+            </>
+          ) : (
+            <div class="detail-empty">
+              <p>Select an employee to view details</p>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

@@ -74,8 +74,9 @@ import MainLayout from "../layouts/MainLayout.astro";
 
     const animate = () => {
       const elapsed = Date.now() - startTime;
-      const progress = Math.min((elapsed / duration) * 100, 100);
-
+      let progress = Math.min((elapsed / duration) * 100, 100);
+      progress = progress - (progress % 10)
+      
       progressBarFill.style.width = `${progress}%`;
 
       if (elapsed < duration) {

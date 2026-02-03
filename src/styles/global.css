@@ -314,10 +314,12 @@ article {
 .detail-panel {
   flex-shrink: 0;
   width: 280px;
+  max-width: 100%;
   padding: 12px;
   position: sticky;
   top: 12px;
   min-height: 200px;
+  box-sizing: border-box;
 }
 
 .detail-panel h3 {
@@ -326,13 +328,17 @@ article {
 }
 
 .detail-panel .sunken-panel {
-  width: auto;
-  display: inline-block;
+  width: 100%;
+  display: block;
   margin-bottom: 12px;
+  overflow-x: auto;
+  box-sizing: border-box;
 }
 
 .detail-panel .sunken-panel table {
-  width: auto;
+  width: 100%;
+  table-layout: fixed;
+  word-wrap: break-word;
 }
 
 .detail-actions {

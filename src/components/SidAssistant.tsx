@@ -108,6 +108,7 @@ export default function SidAssistant() {
           width={ICON_SIZE} 
           height={ICON_SIZE}
           onClick={showPanel}
+          draggable={false}
         />
       )}
       
@@ -127,6 +128,7 @@ export default function SidAssistant() {
                   alt="SID Assistant" 
                   width={100}
                   height={100}
+                  draggable={false}
                 />
               </div>
               <div class="sid-speech">

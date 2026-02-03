@@ -55,7 +55,7 @@ export default function OrganizationsListing({ organizations }: OrganizationsLis
         <tbody>
           {filteredOrganizations.length === 0 ? (
             <tr>
-              <td colspan="7" style="text-align: center; padding: 20px;">
+              <td colSpan={7} style="text-align: center; padding: 20px;">
                 No organizations found matching your search.
               </td>
             </tr>

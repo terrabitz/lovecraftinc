@@ -50,7 +50,7 @@ export default function EmployeesListing({ employees }: EmployeesListingProps) {
         <tbody>
           {filteredEmployees.length === 0 ? (
             <tr>
-              <td colspan="5" style="text-align: center; padding: 20px;">
+              <td colSpan={5} style="text-align: center; padding: 20px;">
                 No employees found matching your search.
               </td>
             </tr>

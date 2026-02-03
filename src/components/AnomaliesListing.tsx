@@ -55,7 +55,7 @@ export default function AnomaliesListing({ anomalies }: AnomaliesListingProps) {
         <tbody>
           {filteredAnomalies.length === 0 ? (
             <tr>
-              <td colspan="7" style="text-align: center; padding: 20px;">
+              <td colSpan={7} style="text-align: center; padding: 20px;">
                 No anomalies found matching your search.
               </td>
             </tr>
@@ -70,7 +70,7 @@ export default function AnomaliesListing({ anomalies }: AnomaliesListingProps) {
                 <td>{anomaly.location}</td>
                 <td>
                   <a href={`/anomalies/${anomaly.id.toUpperCase()}`}>
-                    <button>View Report</button>
+                    <button>View Full Report</button>
                   </a>
                 </td>
               </tr>

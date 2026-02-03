@@ -146,28 +146,32 @@ export default function EmployeesListing({ employees }: EmployeesListingProps) {
           </table>
         </div>
         
-        <div class="detail-panel field-border">
+        <div class="detail-panel">
           {selectedEmployee ? (
             <>
               <h3>{selectedEmployee.name}</h3>
-              <div class="detail-content">
-                <div class="detail-row">
-                  <strong>ID:</strong>
-                  <span>{selectedEmployee.id}</span>
-                </div>
-                <div class="detail-row">
-                  <strong>Position:</strong>
-                  <span>{selectedEmployee.position}</span>
-                </div>
-                <div class="detail-row">
-                  <strong>Department:</strong>
-                  <span>{selectedEmployee.department}</span>
-                </div>
-                <div class="detail-actions">
-                  <a href={`/employees/${selectedEmployee.id.toUpperCase()}`}>
-                    <button>View Profile</button>
-                  </a>
-                </div>
+              <div class="sunken-panel">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td><strong>Employee ID:</strong></td>
+                      <td>{selectedEmployee.id}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Position:</strong></td>
+                      <td>{selectedEmployee.position}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Department:</strong></td>
+                      <td>{selectedEmployee.department}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="detail-actions">
+                <a href={`/employees/${selectedEmployee.id.toUpperCase()}`}>
+                  <button>View Profile</button>
+                </a>
               </div>
             </>
           ) : (

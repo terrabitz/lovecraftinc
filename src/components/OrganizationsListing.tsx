@@ -149,36 +149,40 @@ export default function OrganizationsListing({ organizations }: OrganizationsLis
           </table>
         </div>
         
-        <div class="detail-panel field-border">
+        <div class="detail-panel">
           {selectedOrganization ? (
             <>
               <h3>{selectedOrganization.name}</h3>
-              <div class="detail-content">
-                <div class="detail-row">
-                  <strong>Organization ID:</strong>
-                  <span>{selectedOrganization.id}</span>
-                </div>
-                <div class="detail-row">
-                  <strong>Type:</strong>
-                  <span>{selectedOrganization.type}</span>
-                </div>
-                <div class="detail-row">
-                  <strong>Relationship:</strong>
-                  <span>{selectedOrganization.relationship}</span>
-                </div>
-                <div class="detail-row">
-                  <strong>Established:</strong>
-                  <span>{selectedOrganization.established}</span>
-                </div>
-                <div class="detail-row">
-                  <strong>Location:</strong>
-                  <span>{selectedOrganization.location}</span>
-                </div>
-                <div class="detail-actions">
-                  <a href={`/organizations/${selectedOrganization.id.toUpperCase()}`}>
-                    <button>View Profile</button>
-                  </a>
-                </div>
+              <div class="sunken-panel">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td><strong>Organization ID:</strong></td>
+                      <td>{selectedOrganization.id}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Type:</strong></td>
+                      <td>{selectedOrganization.type}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Relationship:</strong></td>
+                      <td>{selectedOrganization.relationship}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Established:</strong></td>
+                      <td>{selectedOrganization.established}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Location:</strong></td>
+                      <td>{selectedOrganization.location}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="detail-actions">
+                <a href={`/organizations/${selectedOrganization.id.toUpperCase()}`}>
+                  <button>View Profile</button>
+                </a>
               </div>
             </>
           ) : (

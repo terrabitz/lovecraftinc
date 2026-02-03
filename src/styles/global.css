@@ -325,30 +325,18 @@ article {
   font-size: 14px;
 }
 
-.detail-content {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.detail-panel .sunken-panel {
+  width: auto;
+  display: inline-block;
+  margin-bottom: 12px;
 }
 
-.detail-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  font-size: 12px;
-}
-
-.detail-row strong {
-  flex-shrink: 0;
-}
-
-.detail-row span {
-  text-align: right;
-  word-break: break-word;
+.detail-panel .sunken-panel table {
+  width: auto;
 }
 
 .detail-actions {
-  margin-top: 12px;
+  margin-top: 0;
 }
 
 .detail-empty {
@@ -378,6 +366,10 @@ article {
 @media (max-width: 768px) {
   .listing-container {
     flex-direction: column;
+  }
+  
+  .table-wrapper {
+    width: 100%;
   }
   
   .detail-panel {

@@ -149,36 +149,40 @@ export default function AnomaliesListing({ anomalies }: AnomaliesListingProps) {
           </table>
         </div>
         
-        <div class="detail-panel field-border">
+        <div class="detail-panel">
           {selectedAnomaly ? (
             <>
               <h3>{selectedAnomaly.name}</h3>
-              <div class="detail-content">
-                <div class="detail-row">
-                  <strong>Anomaly ID:</strong>
-                  <span>{selectedAnomaly.id}</span>
-                </div>
-                <div class="detail-row">
-                  <strong>Classification:</strong>
-                  <span>{selectedAnomaly.classification}</span>
-                </div>
-                <div class="detail-row">
-                  <strong>Status:</strong>
-                  <span>{selectedAnomaly.status}</span>
-                </div>
-                <div class="detail-row">
-                  <strong>Discovery Date:</strong>
-                  <span>{selectedAnomaly.discoveryDate}</span>
-                </div>
-                <div class="detail-row">
-                  <strong>Location:</strong>
-                  <span>{selectedAnomaly.location}</span>
-                </div>
-                <div class="detail-actions">
-                  <a href={`/anomalies/${selectedAnomaly.id.toUpperCase()}`}>
-                    <button>View Full Report</button>
-                  </a>
-                </div>
+              <div class="sunken-panel">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td><strong>Anomaly ID:</strong></td>
+                      <td>{selectedAnomaly.id}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Classification:</strong></td>
+                      <td>{selectedAnomaly.classification}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Status:</strong></td>
+                      <td>{selectedAnomaly.status}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Discovery Date:</strong></td>
+                      <td>{selectedAnomaly.discoveryDate}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Location:</strong></td>
+                      <td>{selectedAnomaly.location}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="detail-actions">
+                <a href={`/anomalies/${selectedAnomaly.id.toUpperCase()}`}>
+                  <button>View Full Report</button>
+                </a>
               </div>
             </>
           ) : (

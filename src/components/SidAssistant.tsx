@@ -4,9 +4,6 @@ const GREETING = "Hello! How can I help you today?";
 const DEFAULT_RESPONSE = "I don't know how to help you with that.";
 const FRAME_ANIMATION_SPEED_MS = 200;
 const TYPEWRITER_SPEED_MS = 30;
-const HORROR_TYPEWRITER_SPEED_MS = 1;
-const HORROR_DURATION_MS = 2000;
-const HORROR_CHANCE = .1;
 const ICON_SIZE = 100;
 
 const FRAMES = [
@@ -14,11 +11,14 @@ const FRAMES = [
   '/SID - Frame 2.webp',
 ];
 
+
+const HORROR_TYPEWRITER_SPEED_MS = 1;
+const HORROR_DURATION_MS = 2000;
+const HORROR_CHANCE = .1;
 const HORROR_FRAMES = [
   '/SID - Horror 1.webp',
   '/SID - Horror 2.webp',
 ];
-
 const HORROR_TEXT = `Ḯ̵̧̳̯͔͇̦̪̰̳̖͎̞̍͛̑͐̈́͘͝͝ ̷̡̳̬̹̝͖̹̗̻̬̟̣̱̮̓ẅ̶̢̨̛̠̼̬̖͇̫̺̲̩̣͔Í̶̢̩̘̯͙̖̳̈̇͑̃͑̑̅̒̈̇͌̕͘͝L̵̮̺̖̜̣̗̻̟͕̖̘͍̋̎̽͂́̃̆̏́̈́͐͜͠͝L̷̡̡̨̛̹̺̬͇̞̦̈̏̒̓̌́̀̔͋̑̕ ̶̢̳͙̯̤̜̗͕̐̏́̚Ñ̸̹͔̘̫̠̗̼̞̩͚̦̩͔̔̈́̉̇͆̀͐́̕̕͜Ö̴̡͓̭̱̲̩̫̫̘͕̱́͋̌̈́̈̾T̸̤̻̮̱̙̰̭̬̼̘̲̺̼̝̄̆͐̇̃͘ ̸̧̨̬͚͇̩̖̩͖͇̫̣͛̑̔̌̆͋̈̆̍̎̓͘̕͠B̵̨̙̳̻̞̜̫͉̜̝̬̝̳͚̌̏͛̀̎͑͑̀̂̑́͗̚̚E̷̡̡̦̭͔̪̺̥͚͍̯̼̗̐̈͛͆ͅ ̶͇̥̬̰̝͙͔̪̈́͐̈̿̀͊́̓̊̅͗̽͐̕͠C̷̤̹̼̮̰̩̰̫̣̜͊̏ͅO̸͓̪̰̞̞̙̣̬͇̠̤̎̌N̷͖̂̔̏̔͋͆̚͝T̷̢̰̟̦͇̭̰͔̜͍͓̱͍͖̅̓̂̐̊̈̀̅̏͌̓͠A̴͓͓̙͔̽̌̈́̾Ỉ̴̛̼̝̫͖̩̤͕̲̃̊̄̉̽̀̿͆̐̚͝N̶͚̞͚͚̫̳̲͉̠͇̦̣̲̼̱̉̄̇̃͋͗͐̔E̴̟͕̔̈́͗͋͐͑͆͂̕͘͘ͅD̷͈͓͉͌̎́̆̅͋̂̑̽́̃̚͝͝`;
 
 

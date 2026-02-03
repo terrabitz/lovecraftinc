@@ -16,11 +16,14 @@ export default function SidAssistant() {
   const [displayedText, setDisplayedText] = useState('');
   const [frameIndex, setFrameIndex] = useState(0);
   const [inputValue, setInputValue] = useState('');
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   
   const typeIntervalRef = useRef<number | null>(null);
   const frameIntervalRef = useRef<number | null>(null);
   const textToTypeRef = useRef('');
   const charIndexRef = useRef(0);
+  const isDraggingRef = useRef(false);
+  const dragOffsetRef = useRef({ x: 0, y: 0 });
 
   const stopFrameAnimation = useCallback(() => {
     if (frameIntervalRef.current) {
@@ -91,6 +94,36 @@ export default function SidAssistant() {
     }
   }, [handleSend]);
 
+  const handleDragStart = useCallback((e: MouseEvent) => {
+    isDraggingRef.current = true;
+    dragOffsetRef.current = {
+      x: e.clientX - position.x,
+      y: e.clientY - position.y,
+    };
+    e.preventDefault();
+  }, [position]);
+
+  const handleDragMove = useCallback((e: MouseEvent) => {
+    if (!isDraggingRef.current) return;
+    setPosition({
+      x: e.clientX - dragOffsetRef.current.x,
+      y: e.clientY - dragOffsetRef.current.y,
+    });
+  }, []);
+
+  const handleDragEnd = useCallback(() => {
+    isDraggingRef.current = false;
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('mousemove', handleDragMove);
+    document.addEventListener('mouseup', handleDragEnd);
+    return () => {
+      document.removeEventListener('mousemove', handleDragMove);
+      document.removeEventListener('mouseup', handleDragEnd);
+    };
+  }, [handleDragMove, handleDragEnd]);
+
   useEffect(() => {
     return () => {
       if (typeIntervalRef.current) clearInterval(typeIntervalRef.current);
@@ -113,8 +146,13 @@ export default function SidAssistant() {
       )}
       
       {isVisible && (
-        <div class="sid-panel window">
-          <div class="title-bar">
+        <div 
+          class="sid-panel window"
+          style={{
+            transform: `translate(${position.x}px, ${position.y}px)`,
+          }}
+        >
+          <div class="title-bar" onMouseDown={handleDragStart}>
             <div class="title-bar-text">SID Assistant</div>
             <div class="title-bar-controls">
               <button aria-label="Close" onClick={hidePanel}></button>
@@ -177,6 +215,11 @@ export default function SidAssistant() {
           bottom: 0;
           right: 0;
           width: 320px;
+        }
+
+        .sid-panel .title-bar {
+          cursor: move;
+          user-select: none;
         }
 
         .sid-body {

@@ -31,6 +31,7 @@ html.dark {
   --border-light: #4d2a2a;
   --border-medium: #3a2020;
   --text-color: #f5f0f0;
+  --text-disabled: #8a7070;
   --link-color: #ff8080;
   --selection-bg: #6a2a2a;
   --selection-text: #fff;
@@ -91,7 +92,13 @@ html.dark input[type="submit"]:not(:disabled):active {
 
 html.dark :disabled,
 html.dark :disabled + label {
-  color: var(--border-medium);
+  color: var(--text-disabled);
+}
+
+html.dark button:disabled,
+html.dark input[type="reset"]:disabled,
+html.dark input[type="submit"]:disabled {
+  text-shadow: 0 0 var(--text-disabled);
 }
 
 html.dark input[type="email"],
@@ -177,6 +184,19 @@ html.dark menu[role="tablist"] > li > a {
 
 html.dark .status-bar-field {
   box-shadow: inset -1px -1px var(--surface-dark), inset 1px 1px var(--border-medium);
+}
+
+html.dark .progress-indicator {
+  box-shadow: inset -2px -2px var(--surface-dark), inset 2px 2px var(--border-dark);
+}
+
+html.dark .progress-indicator > .progress-indicator-bar {
+  background-color: #cc3333;
+}
+
+html.dark .progress-indicator.segmented > .progress-indicator-bar {
+  background-color: transparent;
+  background-image: linear-gradient(90deg, #cc3333 16px, transparent 0 2px);
 }
 
 html.dark .title-bar-controls button[aria-label="Close"],

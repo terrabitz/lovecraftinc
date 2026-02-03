@@ -1,5 +1,6 @@
 ---
 import MainLayout from "./MainLayout.astro";
+import SidAssistant from '../components/SidAssistant.tsx';
 
 const { title = "Eidolon Capital Intranet" } = Astro.props;
 const pathname = Astro.url.pathname;
@@ -26,28 +27,8 @@ const pathname = Astro.url.pathname;
       <div class="status-bar-field">System Status: OPERATIONAL</div>
     </div>
   </div>
+  <SidAssistant client:load transition:persist />
 </MainLayout>
-
-<style is:global>
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 12px;
-    margin: 12px 0;
-  }
-
-  .info-box {
-    background: #ffffe1;
-    border: 1px solid #000000;
-    padding: 8px;
-    margin: 8px 0;
-    font-size: 11px;
-  }
-
-  article {
-    padding: 20px;
-  }
-</style>
 
 <style>
   .window {

@@ -1,4 +1,6 @@
 ---
+import { ClientRouter } from "astro:transitions";
+
 import '98.css';
 import '../styles/global.css';
 
@@ -6,11 +8,12 @@ const { title = "Eidolon Capital Intranet" } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" transition:name="root" transition:animate="none">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
+  <ClientRouter />
 </head>
 <body>
   <slot />

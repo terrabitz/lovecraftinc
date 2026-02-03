@@ -8,7 +8,7 @@ const ICON_SIZE = 100;
 
 const HORROR_TYPEWRITER_SPEED_MS = 1;
 const HORROR_DURATION_MS = 2000;
-const HORROR_CHANCE = 1; // FIXME
+const HORROR_CHANCE = .1;
 
 interface SidAssistantProps {
   frames: string[];
@@ -43,6 +43,11 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
     }
     setFrameIndex(0);
   }, []);
+
+  const getCurrentFrame = () => {
+    const frameSet = isHorrorMode ? horrorFrames : frames;
+    return frameSet[frameIndex % frameSet.length];
+  };
 
   const startFrameAnimation = useCallback((useHorror = false) => {
     if (frameIntervalRef.current) return;
@@ -193,7 +198,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
             <div class="sid-content">
               <div class="sid-character">
                 <img 
-                  src={isHorrorMode ? horrorFrames[frameIndex % horrorFrames.length] : frames[frameIndex % frames.length]}
+                  src={getCurrentFrame()}
                   alt="SID Assistant" 
                   width={100}
                   height={100}

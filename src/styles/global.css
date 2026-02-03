@@ -311,11 +311,6 @@ article {
   color: var(--selection-text);
 }
 
-html.dark .listing-table tbody tr.selected {
-  background-color: var(--selection-bg);
-  color: var(--selection-text);
-}
-
 .detail-panel {
   flex-shrink: 0;
   width: 280px;

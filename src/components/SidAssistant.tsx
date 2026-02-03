@@ -287,8 +287,8 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
         }
 
         .speech-bubble {
-          background: #ffffe1;
-          border: 1px solid #000;
+          background: var(--info-box-bg, #ffffe1);
+          border: 1px solid var(--info-box-border, #000);
           padding: 8px 10px;
           position: relative;
           width: 180px;
@@ -296,7 +296,8 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
           overflow-y: auto;
           font-size: 12px;
           line-height: 1.4;
-          box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff;
+          box-shadow: inset -1px -1px var(--border-dark, #0a0a0a), inset 1px 1px var(--border-light, #fff);
+          color: var(--text-color, #222);
         }
 
         .speech-bubble.horror {
@@ -325,7 +326,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
           height: 0;
           border-top: 8px solid transparent;
           border-bottom: 8px solid transparent;
-          border-right: 10px solid #000;
+          border-right: 10px solid var(--info-box-border, #000);
         }
 
         .speech-bubble::after {
@@ -337,7 +338,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
           height: 0;
           border-top: 7px solid transparent;
           border-bottom: 7px solid transparent;
-          border-right: 9px solid #ffffe1;
+          border-right: 9px solid var(--info-box-bg, #ffffe1);
         }
 
         .sid-input-area {

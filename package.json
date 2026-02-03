@@ -10,6 +10,7 @@
     "preview": "astro preview",
     "wrangler:dev": "npm run build && wrangler dev --ip 0.0.0.0",
     "wrangler:login": "wrangler login --callback-host 0.0.0.0 --callback-port 8976",
+    "wrangler:deploy": "npm run build && npm run wrangler:login && wrangler deploy",
     "test": "vitest",
     "test:run": "vitest run"
   },

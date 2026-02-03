@@ -4,6 +4,41 @@
   --bg-color: #018281;
   --font-family: 'MS Sans Serif', sans-serif;
   --base-font-size: 14px;
+  
+  --surface: silver;
+  --surface-dark: #dfdfdf;
+  --surface-light: #fff;
+  --border-dark: #0a0a0a;
+  --border-light: #fff;
+  --border-medium: grey;
+  --text-color: #222;
+  --link-color: #00f;
+  --selection-bg: navy;
+  --selection-text: #fff;
+  --input-bg: #fff;
+  --tooltip-bg: #333;
+  --tooltip-text: #fff;
+  --info-box-bg: #ffffe1;
+  --info-box-border: #000000;
+}
+
+html.dark {
+  --bg-color: #1a0a0a;
+  --surface: #2d1a1a;
+  --surface-dark: #251515;
+  --surface-light: #3d2020;
+  --border-dark: #0a0505;
+  --border-light: #4d2a2a;
+  --border-medium: #3a2020;
+  --text-color: #f5f0f0;
+  --link-color: #ff8080;
+  --selection-bg: #6a2a2a;
+  --selection-text: #fff;
+  --input-bg: #1a0a0a;
+  --tooltip-bg: #442020;
+  --tooltip-text: #fff;
+  --info-box-bg: #2d1a1a;
+  --info-box-border: #4d2a2a;
 }
 
 body {
@@ -15,6 +50,148 @@ body {
   justify-content: center;
   padding: 10px;
   min-height: 100vh;
+}
+
+html.dark body {
+  color: var(--text-color);
+}
+
+html.dark .window {
+  background: var(--surface);
+  box-shadow: inset -1px -1px var(--border-dark), inset 1px 1px var(--surface-dark), inset -2px -2px var(--border-medium), inset 2px 2px var(--border-light);
+}
+
+html.dark .title-bar {
+  background: linear-gradient(90deg, #2a0a0a, #5a1a1a);
+}
+
+html.dark .title-bar.inactive {
+  background: linear-gradient(90deg, #2a1a1a, #4a2a2a);
+}
+
+html.dark .window-body {
+  color: var(--text-color);
+}
+
+html.dark button,
+html.dark input[type="reset"],
+html.dark input[type="submit"] {
+  background: var(--surface);
+  box-shadow: inset -1px -1px var(--border-dark), inset 1px 1px var(--border-light), inset -2px -2px var(--border-medium), inset 2px 2px var(--surface-dark);
+  color: transparent;
+  text-shadow: 0 0 var(--text-color);
+}
+
+html.dark button:not(:disabled):active,
+html.dark input[type="reset"]:not(:disabled):active,
+html.dark input[type="submit"]:not(:disabled):active {
+  box-shadow: inset -1px -1px var(--border-light), inset 1px 1px var(--border-dark), inset -2px -2px var(--surface-dark), inset 2px 2px var(--border-medium);
+  text-shadow: 1px 1px var(--text-color);
+}
+
+html.dark :disabled,
+html.dark :disabled + label {
+  color: var(--border-medium);
+}
+
+html.dark input[type="email"],
+html.dark input[type="number"],
+html.dark input[type="password"],
+html.dark input[type="search"],
+html.dark input[type="tel"],
+html.dark input[type="text"],
+html.dark input[type="url"],
+html.dark select,
+html.dark textarea {
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  box-shadow: inset -1px -1px var(--border-light), inset 1px 1px var(--border-medium), inset -2px -2px var(--surface-dark), inset 2px 2px var(--border-dark);
+}
+
+html.dark select:focus {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+html.dark a {
+  color: var(--link-color);
+}
+
+html.dark table {
+  background-color: var(--input-bg);
+  color: var(--text-color);
+}
+
+html.dark table > thead > tr > * {
+  background: var(--surface);
+  box-shadow: inset -1px -1px var(--border-dark), inset 1px 1px var(--border-light), inset -2px -2px var(--border-medium), inset 2px 2px var(--surface-dark);
+}
+
+html.dark table > tbody > tr.highlighted {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+html.dark .sunken-panel {
+  background-color: var(--input-bg);
+}
+
+html.dark ul.tree-view {
+  background: var(--input-bg);
+  color: var(--text-color);
+}
+
+html.dark ul.tree-view a {
+  color: var(--text-color);
+}
+
+html.dark ul.tree-view a:focus {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+html.dark fieldset {
+  border-color: var(--border-medium);
+}
+
+html.dark legend {
+  background: var(--surface);
+}
+
+html.dark pre {
+  background: var(--input-bg);
+  color: var(--text-color);
+}
+
+html.dark menu[role="tablist"] > li {
+  box-shadow: inset -1px 0 var(--border-dark), inset 1px 1px var(--surface-dark), inset -2px 0 var(--border-medium), inset 2px 2px var(--border-light);
+}
+
+html.dark menu[role="tablist"] > li[aria-selected="true"] {
+  background-color: var(--surface);
+}
+
+html.dark menu[role="tablist"] > li > a {
+  color: var(--text-color);
+}
+
+html.dark .status-bar-field {
+  box-shadow: inset -1px -1px var(--surface-dark), inset 1px 1px var(--border-medium);
+}
+
+html.dark .title-bar-controls button[aria-label="Close"],
+html.dark .title-bar-controls button[aria-label].close {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 0h2v1h1v1h2V1h1V0h2v1H7v1H6v1H5v1h1v1h1v1h1v1H6V6H5V5H3v1H2v1H0V6h1V5h1V4h1V3H2V2H1V1H0V0z' fill='%23e0e0e0'/%3E%3C/svg%3E");
+}
+
+html.dark .field-border {
+  background: var(--input-bg);
+  box-shadow: inset -1px -1px var(--border-light), inset 1px 1px var(--border-medium), inset -2px -2px var(--surface-dark), inset 2px 2px var(--border-dark);
+}
+
+html.dark .field-border-disabled {
+  background: var(--surface);
+  box-shadow: inset -1px -1px var(--border-light), inset 1px 1px var(--border-medium), inset -2px -2px var(--surface-dark), inset 2px 2px var(--border-dark);
 }
 
 button, table, .window{
@@ -32,8 +209,8 @@ button, table, .window{
   left: 50%;
   transform: translateX(-50%);
   padding: 4px 8px;
-  background: #333;
-  color: #fff;
+  background: var(--tooltip-bg);
+  color: var(--tooltip-text);
   font-size: 12px;
   white-space: nowrap;
   border-radius: 3px;
@@ -50,7 +227,7 @@ button, table, .window{
   left: 50%;
   transform: translateX(-50%);
   border: 6px solid transparent;
-  border-top-color: #333;
+  border-top-color: var(--tooltip-bg);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.1s;
@@ -70,8 +247,8 @@ button, table, .window{
 }
 
 .info-box {
-  background: #ffffe1;
-  border: 1px solid #000000;
+  background: var(--info-box-bg);
+  border: 1px solid var(--info-box-border);
   padding: 8px;
   margin: 8px 0;
   font-size: 11px;

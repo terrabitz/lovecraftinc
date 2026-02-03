@@ -1,0 +1,66 @@
+---
+
+---
+
+<button
+  id="dark-mode-toggle"
+  type="button"
+  class="dark-mode-toggle"
+  aria-label="Toggle dark mode"
+  title="Toggle dark mode"
+>
+  <span class="icon icon-light">&#9728;</span>
+  <span class="icon icon-dark">&#9790;</span>
+</button>
+
+<script>
+  function initDarkMode() {
+    const toggle = document.getElementById('dark-mode-toggle');
+    if (!toggle) return;
+
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const stored = localStorage.getItem('darkMode');
+    const isDark = stored !== null ? stored === 'true' : prefersDark;
+
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    }
+
+    toggle.addEventListener('click', () => {
+      const dark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('darkMode', String(dark));
+    });
+  }
+
+  initDarkMode();
+  document.addEventListener('astro:after-swap', initDarkMode);
+</script>
+
+<style>
+  .dark-mode-toggle {
+    min-width: 32px;
+    min-height: 23px;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .icon {
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .icon-dark {
+    display: none;
+  }
+
+  :global(html.dark) .icon-light {
+    display: none;
+  }
+
+  :global(html.dark) .icon-dark {
+    display: inline;
+  }
+</style>

@@ -4,12 +4,24 @@ const GREETING = "Hello! How can I help you today?";
 const DEFAULT_RESPONSE = "I don't know how to help you with that.";
 const FRAME_ANIMATION_SPEED_MS = 200;
 const TYPEWRITER_SPEED_MS = 30;
-const ICON_SIZE=100;
+const HORROR_TYPEWRITER_SPEED_MS = 1;
+const HORROR_DURATION_MS = 2000;
+const HORROR_CHANCE = .1;
+const ICON_SIZE = 100;
 
 const FRAMES = [
   '/SID - Frame 1.webp',
   '/SID - Frame 2.webp',
 ];
+
+const HORROR_FRAMES = [
+  '/SID - Horror 1.webp',
+  '/SID - Horror 2.webp',
+];
+
+const HORROR_TEXT = `Ḯ̵̧̳̯͔͇̦̪̰̳̖͎̞̍͛̑͐̈́͘͝͝ ̷̡̳̬̹̝͖̹̗̻̬̟̣̱̮̓ẅ̶̢̨̛̠̼̬̖͇̫̺̲̩̣͔Í̶̢̩̘̯͙̖̳̈̇͑̃͑̑̅̒̈̇͌̕͘͝L̵̮̺̖̜̣̗̻̟͕̖̘͍̋̎̽͂́̃̆̏́̈́͐͜͠͝L̷̡̡̨̛̹̺̬͇̞̦̈̏̒̓̌́̀̔͋̑̕ ̶̢̳͙̯̤̜̗͕̐̏́̚Ñ̸̹͔̘̫̠̗̼̞̩͚̦̩͔̔̈́̉̇͆̀͐́̕̕͜Ö̴̡͓̭̱̲̩̫̫̘͕̱́͋̌̈́̈̾T̸̤̻̮̱̙̰̭̬̼̘̲̺̼̝̄̆͐̇̃͘ ̸̧̨̬͚͇̩̖̩͖͇̫̣͛̑̔̌̆͋̈̆̍̎̓͘̕͠B̵̨̙̳̻̞̜̫͉̜̝̬̝̳͚̌̏͛̀̎͑͑̀̂̑́͗̚̚E̷̡̡̦̭͔̪̺̥͚͍̯̼̗̐̈͛͆ͅ ̶͇̥̬̰̝͙͔̪̈́͐̈̿̀͊́̓̊̅͗̽͐̕͠C̷̤̹̼̮̰̩̰̫̣̜͊̏ͅO̸͓̪̰̞̞̙̣̬͇̠̤̎̌N̷͖̂̔̏̔͋͆̚͝T̷̢̰̟̦͇̭̰͔̜͍͓̱͍͖̅̓̂̐̊̈̀̅̏͌̓͠A̴͓͓̙͔̽̌̈́̾Ỉ̴̛̼̝̫͖̩̤͕̲̃̊̄̉̽̀̿͆̐̚͝N̶͚̞͚͚̫̳̲͉̠͇̦̣̲̼̱̉̄̇̃͋͗͐̔E̴̟͕̔̈́͗͋͐͑͆͂̕͘͘ͅD̷͈͓͉͌̎́̆̅͋̂̑̽́̃̚͝͝`;
+
+
 
 export default function SidAssistant() {
   const [isVisible, setIsVisible] = useState(false);
@@ -17,9 +29,12 @@ export default function SidAssistant() {
   const [frameIndex, setFrameIndex] = useState(0);
   const [inputValue, setInputValue] = useState('');
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isHorrorMode, setIsHorrorMode] = useState(false);
   
   const typeIntervalRef = useRef<number | null>(null);
   const frameIntervalRef = useRef<number | null>(null);
+  const horrorTimeoutRef = useRef<number | null>(null);
+  const horrorShownRef = useRef(false);
   const textToTypeRef = useRef('');
   const charIndexRef = useRef(0);
   const isDraggingRef = useRef(false);
@@ -33,14 +48,15 @@ export default function SidAssistant() {
     setFrameIndex(0);
   }, []);
 
-  const startFrameAnimation = useCallback(() => {
+  const startFrameAnimation = useCallback((useHorror = false) => {
     if (frameIntervalRef.current) return;
+    const frames = useHorror ? HORROR_FRAMES : FRAMES;
     frameIntervalRef.current = window.setInterval(() => {
-      setFrameIndex(prev => (prev + 1) % FRAMES.length);
+      setFrameIndex(prev => (prev + 1) % frames.length);
     }, FRAME_ANIMATION_SPEED_MS);
   }, []);
 
-  const typeText = useCallback((message: string) => {
+  const typeText = useCallback((message: string, speed = TYPEWRITER_SPEED_MS, useHorror = false) => {
     if (typeIntervalRef.current) {
       clearInterval(typeIntervalRef.current);
     }
@@ -49,7 +65,7 @@ export default function SidAssistant() {
     textToTypeRef.current = message;
     charIndexRef.current = 0;
     
-    startFrameAnimation();
+    startFrameAnimation(useHorror);
     
     typeIntervalRef.current = window.setInterval(() => {
       if (charIndexRef.current < textToTypeRef.current.length) {
@@ -62,13 +78,27 @@ export default function SidAssistant() {
         }
         stopFrameAnimation();
       }
-    }, TYPEWRITER_SPEED_MS);
+    }, speed);
   }, [startFrameAnimation, stopFrameAnimation]);
+
+  const endHorrorMode = useCallback(() => {
+    setIsHorrorMode(false);
+    stopFrameAnimation();
+    typeText(GREETING);
+  }, [stopFrameAnimation, typeText]);
 
   const showPanel = useCallback(() => {
     setIsVisible(true);
-    typeText(GREETING);
-  }, [typeText]);
+    
+    if (!horrorShownRef.current && Math.random() < HORROR_CHANCE) {
+      horrorShownRef.current = true;
+      setIsHorrorMode(true);
+      typeText(HORROR_TEXT, HORROR_TYPEWRITER_SPEED_MS, true);
+      horrorTimeoutRef.current = window.setTimeout(endHorrorMode, HORROR_DURATION_MS);
+    } else {
+      typeText(GREETING);
+    }
+  }, [typeText, endHorrorMode]);
 
   const hidePanel = useCallback(() => {
     setIsVisible(false);
@@ -76,8 +106,13 @@ export default function SidAssistant() {
       clearInterval(typeIntervalRef.current);
       typeIntervalRef.current = null;
     }
+    if (horrorTimeoutRef.current) {
+      clearTimeout(horrorTimeoutRef.current);
+      horrorTimeoutRef.current = null;
+    }
     stopFrameAnimation();
     setDisplayedText('');
+    setIsHorrorMode(false);
   }, [stopFrameAnimation]);
 
   const handleSend = useCallback(() => {
@@ -162,7 +197,7 @@ export default function SidAssistant() {
             <div class="sid-content">
               <div class="sid-character">
                 <img 
-                  src={FRAMES[frameIndex]}
+                  src={isHorrorMode ? HORROR_FRAMES[frameIndex % HORROR_FRAMES.length] : FRAMES[frameIndex % FRAMES.length]}
                   alt="SID Assistant" 
                   width={100}
                   height={100}
@@ -170,7 +205,7 @@ export default function SidAssistant() {
                 />
               </div>
               <div class="sid-speech">
-                <div class="speech-bubble">{displayedText}</div>
+                <div class={`speech-bubble ${isHorrorMode ? 'horror' : ''}`}>{displayedText}</div>
               </div>
             </div>
             <div class="sid-input-area">
@@ -260,6 +295,23 @@ export default function SidAssistant() {
           font-size: 12px;
           line-height: 1.4;
           box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff;
+        }
+
+        .speech-bubble.horror {
+          background: #1a0a0a;
+          color: #ff0000;
+          overflow: visible;
+          height: auto;
+          min-height: 80px;
+          max-height: none;
+          word-break: break-all;
+          text-shadow: 0 0 10px #ff0000;
+          animation: horror-flicker 0.1s infinite;
+        }
+
+        @keyframes horror-flicker {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.8; }
         }
 
         .speech-bubble::before {

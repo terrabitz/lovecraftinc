@@ -11,8 +11,7 @@
     "wrangler:dev": "npm run build && wrangler dev --ip 0.0.0.0",
     "wrangler:login": "wrangler login --callback-host 0.0.0.0 --callback-port 8976",
     "test": "vitest",
-    "test:run": "vitest run",
-    "webp": "./util/convert_to_webp.sh"
+    "test:run": "vitest run"
   },
   "keywords": [
     "astro",

@@ -6,24 +6,20 @@ const FRAME_ANIMATION_SPEED_MS = 200;
 const TYPEWRITER_SPEED_MS = 30;
 const ICON_SIZE = 100;
 
-const FRAMES = [
-  '/SID - Frame 1.webp',
-  '/SID - Frame 2.webp',
-];
-
-
 const HORROR_TYPEWRITER_SPEED_MS = 1;
 const HORROR_DURATION_MS = 2000;
 const HORROR_CHANCE = .1;
-const HORROR_FRAMES = [
-  '/SID - Horror 1.webp',
-  '/SID - Horror 2.webp',
-];
+
+interface SidAssistantProps {
+  frames: string[];
+  horrorFrames: string[];
+  helpIcon: string;
+}
 const HORROR_TEXT = `Ḯ̵̧̳̯͔͇̦̪̰̳̖͎̞̍͛̑͐̈́͘͝͝ ̷̡̳̬̹̝͖̹̗̻̬̟̣̱̮̓ẅ̶̢̨̛̠̼̬̖͇̫̺̲̩̣͔Í̶̢̩̘̯͙̖̳̈̇͑̃͑̑̅̒̈̇͌̕͘͝L̵̮̺̖̜̣̗̻̟͕̖̘͍̋̎̽͂́̃̆̏́̈́͐͜͠͝L̷̡̡̨̛̹̺̬͇̞̦̈̏̒̓̌́̀̔͋̑̕ ̶̢̳͙̯̤̜̗͕̐̏́̚Ñ̸̹͔̘̫̠̗̼̞̩͚̦̩͔̔̈́̉̇͆̀͐́̕̕͜Ö̴̡͓̭̱̲̩̫̫̘͕̱́͋̌̈́̈̾T̸̤̻̮̱̙̰̭̬̼̘̲̺̼̝̄̆͐̇̃͘ ̸̧̨̬͚͇̩̖̩͖͇̫̣͛̑̔̌̆͋̈̆̍̎̓͘̕͠B̵̨̙̳̻̞̜̫͉̜̝̬̝̳͚̌̏͛̀̎͑͑̀̂̑́͗̚̚E̷̡̡̦̭͔̪̺̥͚͍̯̼̗̐̈͛͆ͅ ̶͇̥̬̰̝͙͔̪̈́͐̈̿̀͊́̓̊̅͗̽͐̕͠C̷̤̹̼̮̰̩̰̫̣̜͊̏ͅO̸͓̪̰̞̞̙̣̬͇̠̤̎̌N̷͖̂̔̏̔͋͆̚͝T̷̢̰̟̦͇̭̰͔̜͍͓̱͍͖̅̓̂̐̊̈̀̅̏͌̓͠A̴͓͓̙͔̽̌̈́̾Ỉ̴̛̼̝̫͖̩̤͕̲̃̊̄̉̽̀̿͆̐̚͝N̶͚̞͚͚̫̳̲͉̠͇̦̣̲̼̱̉̄̇̃͋͗͐̔E̴̟͕̔̈́͗͋͐͑͆͂̕͘͘ͅD̷͈͓͉͌̎́̆̅͋̂̑̽́̃̚͝͝`;
 
 
 
-export default function SidAssistant() {
+export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssistantProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [displayedText, setDisplayedText] = useState('');
   const [frameIndex, setFrameIndex] = useState(0);
@@ -48,13 +44,18 @@ export default function SidAssistant() {
     setFrameIndex(0);
   }, []);
 
+  const getCurrentFrame = () => {
+    const frameSet = isHorrorMode ? horrorFrames : frames;
+    return frameSet[frameIndex % frameSet.length];
+  };
+
   const startFrameAnimation = useCallback((useHorror = false) => {
     if (frameIntervalRef.current) return;
-    const frames = useHorror ? HORROR_FRAMES : FRAMES;
+    const animFrames = useHorror ? horrorFrames : frames;
     frameIntervalRef.current = window.setInterval(() => {
-      setFrameIndex(prev => (prev + 1) % frames.length);
+      setFrameIndex(prev => (prev + 1) % animFrames.length);
     }, FRAME_ANIMATION_SPEED_MS);
-  }, []);
+  }, [frames, horrorFrames]);
 
   const typeText = useCallback((message: string, speed = TYPEWRITER_SPEED_MS, useHorror = false) => {
     if (typeIntervalRef.current) {
@@ -171,7 +172,7 @@ export default function SidAssistant() {
       {!isVisible && (
         <img 
           class="help-icon" 
-          src="/windows_95_icons_help_book_large.webp" 
+          src={helpIcon} 
           alt="Help" 
           width={ICON_SIZE} 
           height={ICON_SIZE}
@@ -197,7 +198,7 @@ export default function SidAssistant() {
             <div class="sid-content">
               <div class="sid-character">
                 <img 
-                  src={isHorrorMode ? HORROR_FRAMES[frameIndex % HORROR_FRAMES.length] : FRAMES[frameIndex % FRAMES.length]}
+                  src={getCurrentFrame()}
                   alt="SID Assistant" 
                   width={100}
                   height={100}

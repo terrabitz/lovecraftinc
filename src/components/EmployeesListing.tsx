@@ -46,8 +46,8 @@ export default function EmployeesListing({ employees }: EmployeesListingProps) {
 
     // Apply sorting
     result = [...result].sort((a, b) => {
-      const aValue = a[sortField].toLowerCase();
-      const bValue = b[sortField].toLowerCase();
+      const aValue = String(a[sortField]).toLowerCase();
+      const bValue = String(b[sortField]).toLowerCase();
       const comparison = aValue.localeCompare(bValue);
       return sortDirection === 'asc' ? comparison : -comparison;
     });
@@ -60,6 +60,13 @@ export default function EmployeesListing({ employees }: EmployeesListingProps) {
     return sortDirection === 'asc' ? ' ▲' : ' ▼';
   };
 
+  const handleKeyDown = (e: KeyboardEvent, field: SortField) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleSort(field);
+    }
+  };
+
   return (
     <div style="width: 100%;">
       <SearchBox 
@@ -70,16 +77,40 @@ export default function EmployeesListing({ employees }: EmployeesListingProps) {
       <table style="width: 100%;">
         <thead>
           <tr>
-            <th style="cursor: pointer;" onClick={() => handleSort('name')}>
+            <th 
+              style="cursor: pointer;" 
+              onClick={() => handleSort('name')}
+              onKeyDown={(e) => handleKeyDown(e, 'name')}
+              role="button"
+              tabIndex={0}
+            >
               Name{getSortIndicator('name')}
             </th>
-            <th style="cursor: pointer;" onClick={() => handleSort('position')}>
+            <th 
+              style="cursor: pointer;" 
+              onClick={() => handleSort('position')}
+              onKeyDown={(e) => handleKeyDown(e, 'position')}
+              role="button"
+              tabIndex={0}
+            >
               Position{getSortIndicator('position')}
             </th>
-            <th style="cursor: pointer;" onClick={() => handleSort('department')}>
+            <th 
+              style="cursor: pointer;" 
+              onClick={() => handleSort('department')}
+              onKeyDown={(e) => handleKeyDown(e, 'department')}
+              role="button"
+              tabIndex={0}
+            >
               Department{getSortIndicator('department')}
             </th>
-            <th style="cursor: pointer;" onClick={() => handleSort('id')}>
+            <th 
+              style="cursor: pointer;" 
+              onClick={() => handleSort('id')}
+              onKeyDown={(e) => handleKeyDown(e, 'id')}
+              role="button"
+              tabIndex={0}
+            >
               ID{getSortIndicator('id')}
             </th>
             <th>Actions</th>

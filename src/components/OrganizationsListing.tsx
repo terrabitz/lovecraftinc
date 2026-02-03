@@ -49,8 +49,8 @@ export default function OrganizationsListing({ organizations }: OrganizationsLis
 
     // Apply sorting
     result = [...result].sort((a, b) => {
-      const aValue = a[sortField].toLowerCase();
-      const bValue = b[sortField].toLowerCase();
+      const aValue = String(a[sortField]).toLowerCase();
+      const bValue = String(b[sortField]).toLowerCase();
       const comparison = aValue.localeCompare(bValue);
       return sortDirection === 'asc' ? comparison : -comparison;
     });
@@ -63,6 +63,13 @@ export default function OrganizationsListing({ organizations }: OrganizationsLis
     return sortDirection === 'asc' ? ' ▲' : ' ▼';
   };
 
+  const handleKeyDown = (e: KeyboardEvent, field: SortField) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleSort(field);
+    }
+  };
+
   return (
     <div style="width: 100%;">
       <SearchBox 
@@ -73,22 +80,58 @@ export default function OrganizationsListing({ organizations }: OrganizationsLis
       <table style="width: 100%;">
         <thead>
           <tr>
-            <th style="cursor: pointer;" onClick={() => handleSort('name')}>
+            <th 
+              style="cursor: pointer;" 
+              onClick={() => handleSort('name')}
+              onKeyDown={(e) => handleKeyDown(e, 'name')}
+              role="button"
+              tabIndex={0}
+            >
               Name{getSortIndicator('name')}
             </th>
-            <th style="cursor: pointer;" onClick={() => handleSort('id')}>
+            <th 
+              style="cursor: pointer;" 
+              onClick={() => handleSort('id')}
+              onKeyDown={(e) => handleKeyDown(e, 'id')}
+              role="button"
+              tabIndex={0}
+            >
               Organization ID{getSortIndicator('id')}
             </th>
-            <th style="cursor: pointer;" onClick={() => handleSort('type')}>
+            <th 
+              style="cursor: pointer;" 
+              onClick={() => handleSort('type')}
+              onKeyDown={(e) => handleKeyDown(e, 'type')}
+              role="button"
+              tabIndex={0}
+            >
               Type{getSortIndicator('type')}
             </th>
-            <th style="cursor: pointer;" onClick={() => handleSort('relationship')}>
+            <th 
+              style="cursor: pointer;" 
+              onClick={() => handleSort('relationship')}
+              onKeyDown={(e) => handleKeyDown(e, 'relationship')}
+              role="button"
+              tabIndex={0}
+            >
               Relationship{getSortIndicator('relationship')}
             </th>
-            <th style="cursor: pointer;" onClick={() => handleSort('established')}>
+            <th 
+              style="cursor: pointer;" 
+              onClick={() => handleSort('established')}
+              onKeyDown={(e) => handleKeyDown(e, 'established')}
+              role="button"
+              tabIndex={0}
+            >
               Established{getSortIndicator('established')}
             </th>
-            <th style="cursor: pointer;" onClick={() => handleSort('location')}>
+            <th 
+              style="cursor: pointer;" 
+              onClick={() => handleSort('location')}
+              onKeyDown={(e) => handleKeyDown(e, 'location')}
+              role="button"
+              tabIndex={0}
+            >
               Location{getSortIndicator('location')}
             </th>
             <th>Actions</th>

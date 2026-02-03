@@ -49,8 +49,8 @@ export default function AnomaliesListing({ anomalies }: AnomaliesListingProps) {
 
     // Apply sorting
     result = [...result].sort((a, b) => {
-      const aValue = a[sortField].toLowerCase();
-      const bValue = b[sortField].toLowerCase();
+      const aValue = String(a[sortField]).toLowerCase();
+      const bValue = String(b[sortField]).toLowerCase();
       const comparison = aValue.localeCompare(bValue);
       return sortDirection === 'asc' ? comparison : -comparison;
     });
@@ -63,6 +63,13 @@ export default function AnomaliesListing({ anomalies }: AnomaliesListingProps) {
     return sortDirection === 'asc' ? ' ▲' : ' ▼';
   };
 
+  const handleKeyDown = (e: KeyboardEvent, field: SortField) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleSort(field);
+    }
+  };
+
   return (
     <div style="width: 100%;">
       <SearchBox 
@@ -73,22 +80,58 @@ export default function AnomaliesListing({ anomalies }: AnomaliesListingProps) {
       <table style="width: 100%;">
         <thead>
           <tr>
-            <th style="cursor: pointer;" onClick={() => handleSort('name')}>
+            <th 
+              style="cursor: pointer;" 
+              onClick={() => handleSort('name')}
+              onKeyDown={(e) => handleKeyDown(e, 'name')}
+              role="button"
+              tabIndex={0}
+            >
               Name{getSortIndicator('name')}
             </th>
-            <th style="cursor: pointer;" onClick={() => handleSort('id')}>
+            <th 
+              style="cursor: pointer;" 
+              onClick={() => handleSort('id')}
+              onKeyDown={(e) => handleKeyDown(e, 'id')}
+              role="button"
+              tabIndex={0}
+            >
               Anomaly ID{getSortIndicator('id')}
             </th>
-            <th style="cursor: pointer;" onClick={() => handleSort('classification')}>
+            <th 
+              style="cursor: pointer;" 
+              onClick={() => handleSort('classification')}
+              onKeyDown={(e) => handleKeyDown(e, 'classification')}
+              role="button"
+              tabIndex={0}
+            >
               Classification{getSortIndicator('classification')}
             </th>
-            <th style="cursor: pointer;" onClick={() => handleSort('status')}>
+            <th 
+              style="cursor: pointer;" 
+              onClick={() => handleSort('status')}
+              onKeyDown={(e) => handleKeyDown(e, 'status')}
+              role="button"
+              tabIndex={0}
+            >
               Status{getSortIndicator('status')}
             </th>
-            <th style="cursor: pointer;" onClick={() => handleSort('discoveryDate')}>
+            <th 
+              style="cursor: pointer;" 
+              onClick={() => handleSort('discoveryDate')}
+              onKeyDown={(e) => handleKeyDown(e, 'discoveryDate')}
+              role="button"
+              tabIndex={0}
+            >
               Discovery Date{getSortIndicator('discoveryDate')}
             </th>
-            <th style="cursor: pointer;" onClick={() => handleSort('location')}>
+            <th 
+              style="cursor: pointer;" 
+              onClick={() => handleSort('location')}
+              onKeyDown={(e) => handleKeyDown(e, 'location')}
+              role="button"
+              tabIndex={0}
+            >
               Location{getSortIndicator('location')}
             </th>
             <th>Actions</th>

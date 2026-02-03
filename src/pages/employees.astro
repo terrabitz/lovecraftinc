@@ -1,38 +1,19 @@
 ---
 import { getCollection } from 'astro:content';
-import Card from '../components/Card.astro';
-import Table from '../components/Table.astro';
 import ContentLayout from '../layouts/ContentLayout.astro';
+import EmployeesListing from '../components/EmployeesListing';
 
 const employees = await getCollection('employees');
+const employeesData = employees.map(emp => ({
+  id: emp.data.id,
+  name: emp.data.name,
+  position: emp.data.position,
+  department: emp.data.department,
+}));
 ---
 
 <ContentLayout title="Eidolon Capital Intranet - Employees">
   <h1>Employee Directory</h1>
 
-  <div class="grid">
-    {employees.map((employee) => (
-      <Card title={employee.data.name}>
-        <Table>
-          <tbody>
-            <tr>
-              <td><strong>Position:</strong></td>
-              <td>{employee.data.position}</td>
-            </tr>
-            <tr>
-              <td><strong>Department:</strong></td>
-              <td>{employee.data.department}</td>
-            </tr>
-            <tr>
-              <td><strong>ID:</strong></td>
-              <td>{employee.data.id}</td>
-            </tr>
-          </tbody>
-        </Table>
-        <a href={`/employees/${employee.data.id.toUpperCase()}`} slot="bottom">
-          <button>View Profile</button>
-        </a>
-      </Card>
-    ))}
-  </div>
+  <EmployeesListing employees={employeesData} client:load />
 </ContentLayout>

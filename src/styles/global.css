@@ -313,7 +313,8 @@ article {
 
 .detail-panel {
   flex-shrink: 0;
-  width: 280px;
+  width: 350px;
+  min-width: 300px;
   max-width: 100%;
   padding: 12px;
   position: sticky;

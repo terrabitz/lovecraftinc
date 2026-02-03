@@ -13,6 +13,16 @@ const { title = "Eidolon Capital Intranet" } = Astro.props;
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
+  <script is:inline>
+    (function() {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const stored = localStorage.getItem('darkMode');
+      const isDark = stored !== null ? stored === 'true' : prefersDark;
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
   <ClientRouter />
 </head>
 <body>

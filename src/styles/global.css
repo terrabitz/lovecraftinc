@@ -4,6 +4,41 @@
   --bg-color: #018281;
   --font-family: 'MS Sans Serif', sans-serif;
   --base-font-size: 14px;
+  
+  --surface: silver;
+  --surface-dark: #dfdfdf;
+  --surface-light: #fff;
+  --border-dark: #0a0a0a;
+  --border-light: #fff;
+  --border-medium: grey;
+  --text-color: #222;
+  --link-color: #00f;
+  --selection-bg: navy;
+  --selection-text: #fff;
+  --input-bg: #fff;
+  --tooltip-bg: #333;
+  --tooltip-text: #fff;
+  --info-box-bg: #ffffe1;
+  --info-box-border: #000000;
+}
+
+html.dark {
+  --bg-color: #1a1a2e;
+  --surface: #2d2d44;
+  --surface-dark: #252538;
+  --surface-light: #3d3d5c;
+  --border-dark: #0a0a14;
+  --border-light: #4d4d6d;
+  --border-medium: #3a3a4d;
+  --text-color: #e0e0e0;
+  --link-color: #6db3f2;
+  --selection-bg: #4a4a8a;
+  --selection-text: #fff;
+  --input-bg: #1a1a2e;
+  --tooltip-bg: #444;
+  --tooltip-text: #fff;
+  --info-box-bg: #2d2d3d;
+  --info-box-border: #4d4d6d;
 }
 
 body {
@@ -15,6 +50,143 @@ body {
   justify-content: center;
   padding: 10px;
   min-height: 100vh;
+}
+
+html.dark body {
+  color: var(--text-color);
+}
+
+html.dark .window {
+  background: var(--surface);
+  box-shadow: inset -1px -1px var(--border-dark), inset 1px 1px var(--surface-dark), inset -2px -2px var(--border-medium), inset 2px 2px var(--border-light);
+}
+
+html.dark .title-bar {
+  background: linear-gradient(90deg, #2a2a5a, #4a4a8a);
+}
+
+html.dark .title-bar.inactive {
+  background: linear-gradient(90deg, #3a3a4a, #5a5a6a);
+}
+
+html.dark .window-body {
+  color: var(--text-color);
+}
+
+html.dark button,
+html.dark input[type="reset"],
+html.dark input[type="submit"] {
+  background: var(--surface);
+  box-shadow: inset -1px -1px var(--border-dark), inset 1px 1px var(--border-light), inset -2px -2px var(--border-medium), inset 2px 2px var(--surface-dark);
+  color: transparent;
+  text-shadow: 0 0 var(--text-color);
+}
+
+html.dark button:not(:disabled):active,
+html.dark input[type="reset"]:not(:disabled):active,
+html.dark input[type="submit"]:not(:disabled):active {
+  box-shadow: inset -1px -1px var(--border-light), inset 1px 1px var(--border-dark), inset -2px -2px var(--surface-dark), inset 2px 2px var(--border-medium);
+  text-shadow: 1px 1px var(--text-color);
+}
+
+html.dark :disabled,
+html.dark :disabled + label {
+  color: var(--border-medium);
+}
+
+html.dark input[type="email"],
+html.dark input[type="number"],
+html.dark input[type="password"],
+html.dark input[type="search"],
+html.dark input[type="tel"],
+html.dark input[type="text"],
+html.dark input[type="url"],
+html.dark select,
+html.dark textarea {
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  box-shadow: inset -1px -1px var(--border-light), inset 1px 1px var(--border-medium), inset -2px -2px var(--surface-dark), inset 2px 2px var(--border-dark);
+}
+
+html.dark select:focus {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+html.dark a {
+  color: var(--link-color);
+}
+
+html.dark table {
+  background-color: var(--input-bg);
+  color: var(--text-color);
+}
+
+html.dark table > thead > tr > * {
+  background: var(--surface);
+  box-shadow: inset -1px -1px var(--border-dark), inset 1px 1px var(--border-light), inset -2px -2px var(--border-medium), inset 2px 2px var(--surface-dark);
+}
+
+html.dark table > tbody > tr.highlighted {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+html.dark .sunken-panel {
+  background-color: var(--input-bg);
+}
+
+html.dark ul.tree-view {
+  background: var(--input-bg);
+  color: var(--text-color);
+}
+
+html.dark ul.tree-view a {
+  color: var(--text-color);
+}
+
+html.dark ul.tree-view a:focus {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+html.dark fieldset {
+  border-color: var(--border-medium);
+}
+
+html.dark legend {
+  background: var(--surface);
+}
+
+html.dark pre {
+  background: var(--input-bg);
+  color: var(--text-color);
+}
+
+html.dark menu[role="tablist"] > li {
+  box-shadow: inset -1px 0 var(--border-dark), inset 1px 1px var(--surface-dark), inset -2px 0 var(--border-medium), inset 2px 2px var(--border-light);
+}
+
+html.dark menu[role="tablist"] > li[aria-selected="true"] {
+  background-color: var(--surface);
+}
+
+html.dark menu[role="tablist"] > li > a {
+  color: var(--text-color);
+}
+
+html.dark .status-bar-field {
+  box-shadow: inset -1px -1px var(--surface-dark), inset 1px 1px var(--border-medium);
+}
+
+html.dark .field-border {
+  background: var(--input-bg);
+  box-shadow: inset -1px -1px var(--border-light), inset 1px 1px var(--border-medium), inset -2px -2px var(--surface-dark), inset 2px 2px var(--border-dark);
+}
+
+html.dark .field-border-disabled {
+  background: var(--surface);
+  box-shadow: inset -1px -1px var(--border-light), inset 1px 1px var(--border-medium), inset -2px -2px var(--surface-dark), inset 2px 2px var(--border-dark);
 }
 
 button, table, .window{
@@ -32,8 +204,8 @@ button, table, .window{
   left: 50%;
   transform: translateX(-50%);
   padding: 4px 8px;
-  background: #333;
-  color: #fff;
+  background: var(--tooltip-bg);
+  color: var(--tooltip-text);
   font-size: 12px;
   white-space: nowrap;
   border-radius: 3px;
@@ -50,7 +222,7 @@ button, table, .window{
   left: 50%;
   transform: translateX(-50%);
   border: 6px solid transparent;
-  border-top-color: #333;
+  border-top-color: var(--tooltip-bg);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.1s;
@@ -70,8 +242,8 @@ button, table, .window{
 }
 
 .info-box {
-  background: #ffffe1;
-  border: 1px solid #000000;
+  background: var(--info-box-bg);
+  border: 1px solid var(--info-box-border);
   padding: 8px;
   margin: 8px 0;
   font-size: 11px;

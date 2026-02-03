@@ -1,6 +1,7 @@
 ---
 import MainLayout from "./MainLayout.astro";
 import SidAssistant from '../components/SidAssistant.tsx';
+import DarkModeToggle from '../components/DarkModeToggle.astro';
 import { getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
@@ -28,6 +29,9 @@ const pathname = Astro.url.pathname;
   <div class="window flex flex-col">
     <div class="title-bar">
       <div class="title-bar-text">{title}</div>
+      <div class="title-bar-controls">
+        <DarkModeToggle />
+      </div>
     </div>
     <div class="window-body flex-grow">
       <menu role="tablist">

@@ -1,6 +1,24 @@
 ---
 import MainLayout from "./MainLayout.astro";
 import SidAssistant from '../components/SidAssistant.tsx';
+import { getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+import sidFrame1Src from '../assets/SID - Frame 1.png';
+import sidFrame2Src from '../assets/SID - Frame 2.png';
+import sidHorror1Src from '../assets/SID - Horror 1.png';
+import sidHorror2Src from '../assets/SID - Horror 2.png';
+import helpIconSrc from '../assets/windows_95_icons_help_book_large.png';
+
+const SID_IMAGE_SIZE = 200;
+
+async function getOptimizedImage(src: ImageMetadata): Promise<string> {
+  return (await getImage({ src, format: 'webp', width: SID_IMAGE_SIZE })).src;
+}
+
+const sidFrames = await Promise.all([sidFrame1Src, sidFrame2Src].map(getOptimizedImage));
+const sidHorrorFrames = await Promise.all([sidHorror1Src, sidHorror2Src].map(getOptimizedImage));
+const sidHelpIcon = await getOptimizedImage(helpIconSrc);
 
 const { title = "Eidolon Capital Intranet" } = Astro.props;
 const pathname = Astro.url.pathname;
@@ -27,7 +45,13 @@ const pathname = Astro.url.pathname;
       <div class="status-bar-field">System Status: OPERATIONAL</div>
     </div>
   </div>
-  <SidAssistant client:load transition:persist />
+  <SidAssistant 
+    frames={sidFrames} 
+    horrorFrames={sidHorrorFrames} 
+    helpIcon={sidHelpIcon} 
+    client:load 
+    transition:persist 
+  />
 </MainLayout>
 
 <style>

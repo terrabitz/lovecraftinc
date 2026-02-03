@@ -20,8 +20,9 @@ type SortDirection = 'asc' | 'desc';
 
 export default function AnomaliesListing({ anomalies }: AnomaliesListingProps) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortField, setSortField] = useState<SortField>('name');
+  const [sortField, setSortField] = useState<SortField>('id');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [selectedAnomaly, setSelectedAnomaly] = useState<Anomaly | null>(null);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -77,92 +78,110 @@ export default function AnomaliesListing({ anomalies }: AnomaliesListingProps) {
         placeholder="Search anomalies by name, classification, status, location, or ID..."
       />
       
-      <table style="width: 100%;">
-        <thead>
-          <tr>
-            <th 
-              style="cursor: pointer;" 
-              onClick={() => handleSort('name')}
-              onKeyDown={(e) => handleKeyDown(e, 'name')}
-              role="button"
-              tabIndex={0}
-            >
-              Name{getSortIndicator('name')}
-            </th>
-            <th 
-              style="cursor: pointer;" 
-              onClick={() => handleSort('id')}
-              onKeyDown={(e) => handleKeyDown(e, 'id')}
-              role="button"
-              tabIndex={0}
-            >
-              Anomaly ID{getSortIndicator('id')}
-            </th>
-            <th 
-              style="cursor: pointer;" 
-              onClick={() => handleSort('classification')}
-              onKeyDown={(e) => handleKeyDown(e, 'classification')}
-              role="button"
-              tabIndex={0}
-            >
-              Classification{getSortIndicator('classification')}
-            </th>
-            <th 
-              style="cursor: pointer;" 
-              onClick={() => handleSort('status')}
-              onKeyDown={(e) => handleKeyDown(e, 'status')}
-              role="button"
-              tabIndex={0}
-            >
-              Status{getSortIndicator('status')}
-            </th>
-            <th 
-              style="cursor: pointer;" 
-              onClick={() => handleSort('discoveryDate')}
-              onKeyDown={(e) => handleKeyDown(e, 'discoveryDate')}
-              role="button"
-              tabIndex={0}
-            >
-              Discovery Date{getSortIndicator('discoveryDate')}
-            </th>
-            <th 
-              style="cursor: pointer;" 
-              onClick={() => handleSort('location')}
-              onKeyDown={(e) => handleKeyDown(e, 'location')}
-              role="button"
-              tabIndex={0}
-            >
-              Location{getSortIndicator('location')}
-            </th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredAndSortedAnomalies.length === 0 ? (
-            <tr>
-              <td colSpan={7} style="text-align: center; padding: 20px;">
-                No anomalies found matching your search.
-              </td>
-            </tr>
-          ) : (
-            filteredAndSortedAnomalies.map(anomaly => (
-              <tr key={anomaly.id}>
-                <td>{anomaly.name}</td>
-                <td>{anomaly.id}</td>
-                <td>{anomaly.classification}</td>
-                <td>{anomaly.status}</td>
-                <td>{anomaly.discoveryDate}</td>
-                <td>{anomaly.location}</td>
-                <td>
-                  <a href={`/anomalies/${anomaly.id.toUpperCase()}`}>
-                    <button>View Full Report</button>
-                  </a>
-                </td>
+      <div class="listing-container">
+        <div class="table-wrapper">
+          <table class="listing-table">
+            <thead>
+              <tr>
+                <th 
+                  style="cursor: pointer;" 
+                  onClick={() => handleSort('id')}
+                  onKeyDown={(e) => handleKeyDown(e, 'id')}
+                  role="button"
+                  tabIndex={0}
+                >
+                  ID{getSortIndicator('id')}
+                </th>
+                <th 
+                  style="cursor: pointer;" 
+                  onClick={() => handleSort('name')}
+                  onKeyDown={(e) => handleKeyDown(e, 'name')}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Name{getSortIndicator('name')}
+                </th>
+                <th 
+                  class="hide-mobile"
+                  style="cursor: pointer;" 
+                  onClick={() => handleSort('classification')}
+                  onKeyDown={(e) => handleKeyDown(e, 'classification')}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Classification{getSortIndicator('classification')}
+                </th>
+                <th 
+                  class="hide-tablet"
+                  style="cursor: pointer;" 
+                  onClick={() => handleSort('status')}
+                  onKeyDown={(e) => handleKeyDown(e, 'status')}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Status{getSortIndicator('status')}
+                </th>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {filteredAndSortedAnomalies.length === 0 ? (
+                <tr>
+                  <td colSpan={4} style="text-align: center; padding: 20px;">
+                    No anomalies found matching your search.
+                  </td>
+                </tr>
+              ) : (
+                filteredAndSortedAnomalies.map(anomaly => (
+                  <tr 
+                    key={anomaly.id}
+                    class={selectedAnomaly?.id === anomaly.id ? 'selected' : ''}
+                    onClick={() => setSelectedAnomaly(anomaly)}
+                    style="cursor: pointer;"
+                  >
+                    <td>{anomaly.id}</td>
+                    <td>{anomaly.name}</td>
+                    <td class="hide-mobile">{anomaly.classification}</td>
+                    <td class="hide-tablet">{anomaly.status}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+        
+        {selectedAnomaly && (
+          <div class="detail-panel">
+            <h3>{selectedAnomaly.name}</h3>
+            <div class="detail-content">
+              <div class="detail-row">
+                <strong>Anomaly ID:</strong>
+                <span>{selectedAnomaly.id}</span>
+              </div>
+              <div class="detail-row">
+                <strong>Classification:</strong>
+                <span>{selectedAnomaly.classification}</span>
+              </div>
+              <div class="detail-row">
+                <strong>Status:</strong>
+                <span>{selectedAnomaly.status}</span>
+              </div>
+              <div class="detail-row">
+                <strong>Discovery Date:</strong>
+                <span>{selectedAnomaly.discoveryDate}</span>
+              </div>
+              <div class="detail-row">
+                <strong>Location:</strong>
+                <span>{selectedAnomaly.location}</span>
+              </div>
+              <div class="detail-actions">
+                <a href={`/anomalies/${selectedAnomaly.id.toUpperCase()}`}>
+                  <button>View Full Report</button>
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

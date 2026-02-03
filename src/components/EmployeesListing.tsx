@@ -18,8 +18,9 @@ type SortDirection = 'asc' | 'desc';
 
 export default function EmployeesListing({ employees }: EmployeesListingProps) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortField, setSortField] = useState<SortField>('name');
+  const [sortField, setSortField] = useState<SortField>('id');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -74,72 +75,102 @@ export default function EmployeesListing({ employees }: EmployeesListingProps) {
         placeholder="Search employees by name, position, department, or ID..."
       />
       
-      <table style="width: 100%;">
-        <thead>
-          <tr>
-            <th 
-              style="cursor: pointer;" 
-              onClick={() => handleSort('name')}
-              onKeyDown={(e) => handleKeyDown(e, 'name')}
-              role="button"
-              tabIndex={0}
-            >
-              Name{getSortIndicator('name')}
-            </th>
-            <th 
-              style="cursor: pointer;" 
-              onClick={() => handleSort('position')}
-              onKeyDown={(e) => handleKeyDown(e, 'position')}
-              role="button"
-              tabIndex={0}
-            >
-              Position{getSortIndicator('position')}
-            </th>
-            <th 
-              style="cursor: pointer;" 
-              onClick={() => handleSort('department')}
-              onKeyDown={(e) => handleKeyDown(e, 'department')}
-              role="button"
-              tabIndex={0}
-            >
-              Department{getSortIndicator('department')}
-            </th>
-            <th 
-              style="cursor: pointer;" 
-              onClick={() => handleSort('id')}
-              onKeyDown={(e) => handleKeyDown(e, 'id')}
-              role="button"
-              tabIndex={0}
-            >
-              ID{getSortIndicator('id')}
-            </th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredAndSortedEmployees.length === 0 ? (
-            <tr>
-              <td colSpan={5} style="text-align: center; padding: 20px;">
-                No employees found matching your search.
-              </td>
-            </tr>
-          ) : (
-            filteredAndSortedEmployees.map(employee => (
-              <tr key={employee.id}>
-                <td>{employee.name}</td>
-                <td>{employee.position}</td>
-                <td>{employee.department}</td>
-                <td>{employee.id}</td>
-                <td>
-                  <a href={`/employees/${employee.id.toUpperCase()}`}>
-                    <button>View Profile</button>
-                  </a>
-                </td>
+      <div class="listing-container">
+        <div class="table-wrapper">
+          <table class="listing-table">
+            <thead>
+              <tr>
+                <th 
+                  style="cursor: pointer;" 
+                  onClick={() => handleSort('id')}
+                  onKeyDown={(e) => handleKeyDown(e, 'id')}
+                  role="button"
+                  tabIndex={0}
+                >
+                  ID{getSortIndicator('id')}
+                </th>
+                <th 
+                  style="cursor: pointer;" 
+                  onClick={() => handleSort('name')}
+                  onKeyDown={(e) => handleKeyDown(e, 'name')}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Name{getSortIndicator('name')}
+                </th>
+                <th 
+                  class="hide-mobile"
+                  style="cursor: pointer;" 
+                  onClick={() => handleSort('position')}
+                  onKeyDown={(e) => handleKeyDown(e, 'position')}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Position{getSortIndicator('position')}
+                </th>
+                <th 
+                  class="hide-tablet"
+                  style="cursor: pointer;" 
+                  onClick={() => handleSort('department')}
+                  onKeyDown={(e) => handleKeyDown(e, 'department')}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Department{getSortIndicator('department')}
+                </th>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {filteredAndSortedEmployees.length === 0 ? (
+                <tr>
+                  <td colSpan={4} style="text-align: center; padding: 20px;">
+                    No employees found matching your search.
+                  </td>
+                </tr>
+              ) : (
+                filteredAndSortedEmployees.map(employee => (
+                  <tr 
+                    key={employee.id}
+                    class={selectedEmployee?.id === employee.id ? 'selected' : ''}
+                    onClick={() => setSelectedEmployee(employee)}
+                    style="cursor: pointer;"
+                  >
+                    <td>{employee.id}</td>
+                    <td>{employee.name}</td>
+                    <td class="hide-mobile">{employee.position}</td>
+                    <td class="hide-tablet">{employee.department}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+        
+        {selectedEmployee && (
+          <div class="detail-panel">
+            <h3>{selectedEmployee.name}</h3>
+            <div class="detail-content">
+              <div class="detail-row">
+                <strong>ID:</strong>
+                <span>{selectedEmployee.id}</span>
+              </div>
+              <div class="detail-row">
+                <strong>Position:</strong>
+                <span>{selectedEmployee.position}</span>
+              </div>
+              <div class="detail-row">
+                <strong>Department:</strong>
+                <span>{selectedEmployee.department}</span>
+              </div>
+              <div class="detail-actions">
+                <a href={`/employees/${selectedEmployee.id.toUpperCase()}`}>
+                  <button>View Profile</button>
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

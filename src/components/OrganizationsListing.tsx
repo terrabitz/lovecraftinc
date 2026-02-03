@@ -20,8 +20,9 @@ type SortDirection = 'asc' | 'desc';
 
 export default function OrganizationsListing({ organizations }: OrganizationsListingProps) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortField, setSortField] = useState<SortField>('name');
+  const [sortField, setSortField] = useState<SortField>('id');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [selectedOrganization, setSelectedOrganization] = useState<Organization | null>(null);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -77,92 +78,110 @@ export default function OrganizationsListing({ organizations }: OrganizationsLis
         placeholder="Search organizations by name, type, relationship, location, or ID..."
       />
       
-      <table style="width: 100%;">
-        <thead>
-          <tr>
-            <th 
-              style="cursor: pointer;" 
-              onClick={() => handleSort('name')}
-              onKeyDown={(e) => handleKeyDown(e, 'name')}
-              role="button"
-              tabIndex={0}
-            >
-              Name{getSortIndicator('name')}
-            </th>
-            <th 
-              style="cursor: pointer;" 
-              onClick={() => handleSort('id')}
-              onKeyDown={(e) => handleKeyDown(e, 'id')}
-              role="button"
-              tabIndex={0}
-            >
-              Organization ID{getSortIndicator('id')}
-            </th>
-            <th 
-              style="cursor: pointer;" 
-              onClick={() => handleSort('type')}
-              onKeyDown={(e) => handleKeyDown(e, 'type')}
-              role="button"
-              tabIndex={0}
-            >
-              Type{getSortIndicator('type')}
-            </th>
-            <th 
-              style="cursor: pointer;" 
-              onClick={() => handleSort('relationship')}
-              onKeyDown={(e) => handleKeyDown(e, 'relationship')}
-              role="button"
-              tabIndex={0}
-            >
-              Relationship{getSortIndicator('relationship')}
-            </th>
-            <th 
-              style="cursor: pointer;" 
-              onClick={() => handleSort('established')}
-              onKeyDown={(e) => handleKeyDown(e, 'established')}
-              role="button"
-              tabIndex={0}
-            >
-              Established{getSortIndicator('established')}
-            </th>
-            <th 
-              style="cursor: pointer;" 
-              onClick={() => handleSort('location')}
-              onKeyDown={(e) => handleKeyDown(e, 'location')}
-              role="button"
-              tabIndex={0}
-            >
-              Location{getSortIndicator('location')}
-            </th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredAndSortedOrganizations.length === 0 ? (
-            <tr>
-              <td colSpan={7} style="text-align: center; padding: 20px;">
-                No organizations found matching your search.
-              </td>
-            </tr>
-          ) : (
-            filteredAndSortedOrganizations.map(org => (
-              <tr key={org.id}>
-                <td>{org.name}</td>
-                <td>{org.id}</td>
-                <td>{org.type}</td>
-                <td>{org.relationship}</td>
-                <td>{org.established}</td>
-                <td>{org.location}</td>
-                <td>
-                  <a href={`/organizations/${org.id.toUpperCase()}`}>
-                    <button>View Profile</button>
-                  </a>
-                </td>
+      <div class="listing-container">
+        <div class="table-wrapper">
+          <table class="listing-table">
+            <thead>
+              <tr>
+                <th 
+                  style="cursor: pointer;" 
+                  onClick={() => handleSort('id')}
+                  onKeyDown={(e) => handleKeyDown(e, 'id')}
+                  role="button"
+                  tabIndex={0}
+                >
+                  ID{getSortIndicator('id')}
+                </th>
+                <th 
+                  style="cursor: pointer;" 
+                  onClick={() => handleSort('name')}
+                  onKeyDown={(e) => handleKeyDown(e, 'name')}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Name{getSortIndicator('name')}
+                </th>
+                <th 
+                  class="hide-mobile"
+                  style="cursor: pointer;" 
+                  onClick={() => handleSort('type')}
+                  onKeyDown={(e) => handleKeyDown(e, 'type')}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Type{getSortIndicator('type')}
+                </th>
+                <th 
+                  class="hide-tablet"
+                  style="cursor: pointer;" 
+                  onClick={() => handleSort('relationship')}
+                  onKeyDown={(e) => handleKeyDown(e, 'relationship')}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Relationship{getSortIndicator('relationship')}
+                </th>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {filteredAndSortedOrganizations.length === 0 ? (
+                <tr>
+                  <td colSpan={4} style="text-align: center; padding: 20px;">
+                    No organizations found matching your search.
+                  </td>
+                </tr>
+              ) : (
+                filteredAndSortedOrganizations.map(org => (
+                  <tr 
+                    key={org.id}
+                    class={selectedOrganization?.id === org.id ? 'selected' : ''}
+                    onClick={() => setSelectedOrganization(org)}
+                    style="cursor: pointer;"
+                  >
+                    <td>{org.id}</td>
+                    <td>{org.name}</td>
+                    <td class="hide-mobile">{org.type}</td>
+                    <td class="hide-tablet">{org.relationship}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+        
+        {selectedOrganization && (
+          <div class="detail-panel">
+            <h3>{selectedOrganization.name}</h3>
+            <div class="detail-content">
+              <div class="detail-row">
+                <strong>Organization ID:</strong>
+                <span>{selectedOrganization.id}</span>
+              </div>
+              <div class="detail-row">
+                <strong>Type:</strong>
+                <span>{selectedOrganization.type}</span>
+              </div>
+              <div class="detail-row">
+                <strong>Relationship:</strong>
+                <span>{selectedOrganization.relationship}</span>
+              </div>
+              <div class="detail-row">
+                <strong>Established:</strong>
+                <span>{selectedOrganization.established}</span>
+              </div>
+              <div class="detail-row">
+                <strong>Location:</strong>
+                <span>{selectedOrganization.location}</span>
+              </div>
+              <div class="detail-actions">
+                <a href={`/organizations/${selectedOrganization.id.toUpperCase()}`}>
+                  <button>View Profile</button>
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

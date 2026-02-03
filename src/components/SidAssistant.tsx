@@ -216,8 +216,9 @@ export default function SidAssistant() {
                 value={inputValue}
                 onInput={(e) => setInputValue((e.target as HTMLInputElement).value)}
                 onKeyDown={handleKeyDown}
+                disabled={isHorrorMode}
               />
-              <button onClick={handleSend}>Send</button>
+              <button onClick={handleSend} disabled={isHorrorMode || !inputValue.trim()}>Send</button>
             </div>
           </div>
         </div>

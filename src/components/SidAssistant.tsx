@@ -5,10 +5,15 @@ const DEFAULT_RESPONSE = "I don't know how to help you with that.";
 const FRAME_ANIMATION_SPEED_MS = 200;
 const TYPEWRITER_SPEED_MS = 30;
 
+const FRAMES = [
+  '/SID - Frame 1.webp',
+  '/SID - Frame 2.webp',
+];
+
 export default function SidAssistant() {
   const [isVisible, setIsVisible] = useState(false);
   const [displayedText, setDisplayedText] = useState('');
-  const [currentFrame, setCurrentFrame] = useState(1);
+  const [frameIndex, setFrameIndex] = useState(0);
   const [inputValue, setInputValue] = useState('');
   
   const typeIntervalRef = useRef<number | null>(null);
@@ -21,13 +26,13 @@ export default function SidAssistant() {
       clearInterval(frameIntervalRef.current);
       frameIntervalRef.current = null;
     }
-    setCurrentFrame(1);
+    setFrameIndex(0);
   }, []);
 
   const startFrameAnimation = useCallback(() => {
     if (frameIntervalRef.current) return;
     frameIntervalRef.current = window.setInterval(() => {
-      setCurrentFrame(prev => prev === 1 ? 2 : 1);
+      setFrameIndex(prev => (prev + 1) % FRAMES.length);
     }, FRAME_ANIMATION_SPEED_MS);
   }, []);
 
@@ -116,7 +121,7 @@ export default function SidAssistant() {
             <div class="sid-content">
               <div class="sid-character">
                 <img 
-                  src={`/SID - Frame ${currentFrame}.webp`}
+                  src={FRAMES[frameIndex]}
                   alt="SID Assistant" 
                   width={100}
                   height={100}

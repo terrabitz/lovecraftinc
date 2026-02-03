@@ -4,6 +4,7 @@ const GREETING = "Hello! How can I help you today?";
 const DEFAULT_RESPONSE = "I don't know how to help you with that.";
 const FRAME_ANIMATION_SPEED_MS = 200;
 const TYPEWRITER_SPEED_MS = 30;
+const ICON_SIZE=100;
 
 const FRAMES = [
   '/SID - Frame 1.webp',
@@ -100,13 +101,14 @@ export default function SidAssistant() {
   return (
     <div class="sid-container">
       {!isVisible && (
-        <button 
-          class="help-button" 
-          aria-label="Open assistant"
+        <img 
+          class="help-icon" 
+          src="/windows_95_icons_help_book_large.webp" 
+          alt="Help" 
+          width={ICON_SIZE} 
+          height={ICON_SIZE}
           onClick={showPanel}
-        >
-          ?
-        </button>
+        />
       )}
       
       {isVisible && (
@@ -155,27 +157,17 @@ export default function SidAssistant() {
           font-family: var(--font-family, 'MS Sans Serif', sans-serif);
         }
 
-        .help-button {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background: #c0c0c0;
-          border: 2px outset #dfdfdf;
-          font-size: 20px;
-          font-weight: bold;
+        .help-icon {
           cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+          image-rendering: pixelated;
         }
 
-        .help-button:hover {
-          background: #d4d4d4;
+        .help-icon:hover {
+          transform: scale(1.1);
         }
 
-        .help-button:active {
-          border-style: inset;
+        .help-icon:active {
+          transform: scale(0.95);
         }
 
         .sid-panel {

@@ -1,5 +1,6 @@
 ---
 import MainLayout from "./MainLayout.astro";
+import SidAssistant from '../components/SidAssistant.astro';
 
 const { title = "Eidolon Capital Intranet" } = Astro.props;
 const pathname = Astro.url.pathname;
@@ -26,6 +27,7 @@ const pathname = Astro.url.pathname;
       <div class="status-bar-field">System Status: OPERATIONAL</div>
     </div>
   </div>
+  <SidAssistant transition:persist />
 </MainLayout>
 
 <style>

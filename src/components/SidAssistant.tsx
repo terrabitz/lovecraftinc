@@ -3,6 +3,7 @@ import Fuse from 'fuse.js';
 import Typed from 'typed.js';
 import { navigate } from 'astro:transitions/client';
 import styles from './SidAssistant.module.css';
+import { type SearchResult } from '../utils/searchContent';
 
 const GREETING = "Hello! How can I help you today? Type <code>/help</code> for available commands.";
 const DEFAULT_RESPONSE = "I don't know how to help you with that. Type <code>/help</code> for available commands.";
@@ -19,13 +20,6 @@ const HELP_TEXT = `Available commands:
 <code>/search &lt;query&gt;</code> - Search all content
 <code>/goto &lt;id&gt;</code> - Navigate directly to an article by ID`;
 
-interface SearchResult {
-  id: string;
-  title: string;
-  url: string;
-  type: 'employee' | 'anomaly' | 'organization';
-  content: string;
-}
 
 interface SidAssistantProps {
   frames: string[];

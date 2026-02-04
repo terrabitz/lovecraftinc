@@ -13,8 +13,7 @@ const HORROR_CHANCE = .1;
 
 const HELP_TEXT = `Available commands:
 /help - Show this help message
-/search <query> - Search all content (employees, anomalies, organizations)
-/fhtagn - Ph'nglui mglw'nafh...`;
+/search <query> - Search all content (employees, anomalies, organizations)`;
 
 interface SearchResult {
   title: string;
@@ -142,7 +141,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
     
     // /search command
     if (trimmedCommand.startsWith('/search ')) {
-      const query = trimmedCommand.substring(8).trim();
+      const query = trimmedCommand.replace('/search ', '').trim();
       
       if (!query) {
         typeText("Please provide a search query. Example: /search harrow");

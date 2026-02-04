@@ -53,6 +53,11 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
   const dragOffsetRef = useRef({ x: 0, y: 0 });
   const searchContentRef = useRef<SearchResult[]>(searchContent);
 
+  // Update searchContentRef when prop changes
+  useEffect(() => {
+    searchContentRef.current = searchContent;
+  }, [searchContent]);
+
   // Initialize search index on mount
   useEffect(() => {
     if (searchContent && !searchIndex) {

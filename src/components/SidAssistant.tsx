@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks';
+import Fuse from 'fuse.js';
 
-const GREETING = "Hello! How can I help you today?";
-const DEFAULT_RESPONSE = "I don't know how to help you with that.";
+const GREETING = "Hello! How can I help you today? Type /help for available commands.";
+const DEFAULT_RESPONSE = "I don't know how to help you with that. Type /help for available commands.";
 const FRAME_ANIMATION_SPEED_MS = 200;
 const TYPEWRITER_SPEED_MS = 30;
 const ICON_SIZE = 100;
@@ -9,6 +10,18 @@ const ICON_SIZE = 100;
 const HORROR_TYPEWRITER_SPEED_MS = 1;
 const HORROR_DURATION_MS = 2000;
 const HORROR_CHANCE = .1;
+
+const HELP_TEXT = `Available commands:
+/help - Show this help message
+/search <query> - Search all content (employees, anomalies, organizations)
+/fhtagn - Ph'nglui mglw'nafh...`;
+
+interface SearchResult {
+  title: string;
+  description: string;
+  url: string;
+  type: 'employee' | 'anomaly' | 'organization';
+}
 
 interface SidAssistantProps {
   frames: string[];
@@ -26,6 +39,8 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
   const [inputValue, setInputValue] = useState('');
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHorrorMode, setIsHorrorMode] = useState(false);
+  const [searchIndex, setSearchIndex] = useState<Fuse<SearchResult> | null>(null);
+  const [isLoadingContent, setIsLoadingContent] = useState(false);
   
   const typeIntervalRef = useRef<number | null>(null);
   const frameIntervalRef = useRef<number | null>(null);
@@ -88,6 +103,80 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
     typeText(GREETING);
   }, [stopFrameAnimation, typeText]);
 
+  const loadSearchContent = useCallback(async () => {
+    if (searchIndex || isLoadingContent) return;
+    
+    setIsLoadingContent(true);
+    try {
+      const response = await fetch('/api/search-content.json');
+      const content: SearchResult[] = await response.json();
+      const fuse = new Fuse(content, {
+        keys: ['title', 'description'],
+        threshold: 0.3,
+        includeScore: true,
+      });
+      setSearchIndex(fuse);
+    } catch (error) {
+      console.error('Failed to load search content:', error);
+    } finally {
+      setIsLoadingContent(false);
+    }
+  }, [searchIndex, isLoadingContent]);
+
+  const handleCommand = useCallback((command: string) => {
+    const trimmedCommand = command.trim();
+    
+    // /help command
+    if (trimmedCommand === '/help') {
+      typeText(HELP_TEXT);
+      return;
+    }
+    
+    // /fhtagn command (hidden horror mode)
+    if (trimmedCommand === '/fhtagn') {
+      setIsHorrorMode(true);
+      typeText(HORROR_TEXT, HORROR_TYPEWRITER_SPEED_MS, true);
+      horrorTimeoutRef.current = window.setTimeout(endHorrorMode, HORROR_DURATION_MS);
+      return;
+    }
+    
+    // /search command
+    if (trimmedCommand.startsWith('/search ')) {
+      const query = trimmedCommand.substring(8).trim();
+      
+      if (!query) {
+        typeText("Please provide a search query. Example: /search harrow");
+        return;
+      }
+      
+      if (!searchIndex) {
+        typeText("Loading search index, please try again in a moment...");
+        loadSearchContent();
+        return;
+      }
+      
+      const results = searchIndex.search(query).slice(0, 5);
+      
+      if (results.length === 0) {
+        typeText(`No results found for "${query}"`);
+        return;
+      }
+      
+      let responseText = `Found ${results.length} result(s) for "${query}":\n\n`;
+      results.forEach((result, index) => {
+        const item = result.item;
+        responseText += `${index + 1}. ${item.title}\n   ${item.description}\n   Type: ${item.type}\n\n`;
+      });
+      
+      typeText(responseText);
+      return;
+    }
+    
+    // Unknown command
+    typeText(DEFAULT_RESPONSE);
+  }, [searchIndex, typeText, loadSearchContent, endHorrorMode]);
+
+
   const showPanel = useCallback(() => {
     setIsVisible(true);
     
@@ -121,8 +210,8 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
     if (!message) return;
     
     setInputValue('');
-    typeText(DEFAULT_RESPONSE);
-  }, [inputValue, typeText]);
+    handleCommand(message);
+  }, [inputValue, handleCommand]);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -292,12 +381,13 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
           padding: 8px 10px;
           position: relative;
           width: 180px;
-          height: 80px;
+          height: 120px;
           overflow-y: auto;
           font-size: 12px;
           line-height: 1.4;
           box-shadow: inset -1px -1px var(--border-dark, #0a0a0a), inset 1px 1px var(--border-light, #fff);
           color: var(--text-color, #222);
+          white-space: pre-wrap;
         }
 
         .speech-bubble.horror {
@@ -351,6 +441,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
           padding: 4px;
           font-size: 12px;
           font-family: inherit;
+          min-width: 200px;
         }
 
         .sid-input-area button {

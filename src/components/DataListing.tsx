@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import { useState, useMemo } from 'preact/hooks';
 import SearchBox from './SearchBox';
+import styles from './DataListing.module.css';
 
 // Generic type for any data item with at least an id and name
 export interface DataItem {
@@ -104,15 +105,15 @@ export default function DataListing({
         placeholder={searchPlaceholder}
       />
       
-      <div class="listing-container">
-        <div class="table-wrapper">
-          <table class="listing-table">
+      <div class={styles.listingContainer}>
+        <div class={styles.tableWrapper}>
+          <table class={styles.listingTable}>
             <thead>
               <tr>
                 {columns.map(column => (
                   <th 
                     key={column.key}
-                    class={`${column.hideOnMobile ? 'hide-mobile' : ''} ${column.hideOnTablet ? 'hide-tablet' : ''}`.trim()}
+                    class={`${column.hideOnMobile ? styles.hideMobile : ''} ${column.hideOnTablet ? styles.hideTablet : ''}`.trim()}
                     style={column.sortable !== false ? "cursor: pointer;" : undefined}
                     onClick={column.sortable !== false ? () => handleSort(column.key) : undefined}
                     onKeyDown={column.sortable !== false ? (e) => handleKeyDown(e, column.key) : undefined}
@@ -142,7 +143,7 @@ export default function DataListing({
                     {columns.map(column => (
                       <td 
                         key={column.key}
-                        class={`${column.hideOnMobile ? 'hide-mobile' : ''} ${column.hideOnTablet ? 'hide-tablet' : ''}`.trim()}
+                        class={`${column.hideOnMobile ? styles.hideMobile : ''} ${column.hideOnTablet ? styles.hideTablet : ''}`.trim()}
                       >
                         {String(item[column.key])}
                       </td>
@@ -154,9 +155,10 @@ export default function DataListing({
           </table>
         </div>
         
-        <div class="detail-panel">
+        <div class={styles.detailPanel}>
           {selectedItem ? (
             <>
+              <h3>{selectedItem.name}</h3>
               <div class="sunken-panel">
                 <table>
                   <tbody>
@@ -169,14 +171,14 @@ export default function DataListing({
                   </tbody>
                 </table>
               </div>
-              <div class="detail-actions">
+              <div class={styles.detailActions}>
                 <a href={`${detailPath}/${selectedItem.id.toUpperCase()}`}>
                   <button>{detailButtonLabel}</button>
                 </a>
               </div>
             </>
           ) : (
-            <div class="detail-empty">
+            <div class={styles.detailEmpty}>
               <p>{detailEmptyMessage}</p>
             </div>
           )}

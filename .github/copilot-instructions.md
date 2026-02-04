@@ -10,6 +10,11 @@
 
 ## Styling Best Practices
 
+### General Principles
+- **Always prefer component-scoped styles over global styles**
+- Only use global styles for truly global concerns (CSS variables, resets, base element styles)
+- Component-specific styles should be colocated with the component
+
 ### CSS Variables
 - Define global CSS variables in `src/styles/global.css` using `:root` selector
 - Import global styles in layout files, not individual pages
@@ -22,11 +27,20 @@
   ```
 
 ### Component Styles
+
+#### For .astro files
 - Use inline `<style>` tags in `.astro` files for component-specific styles
 - Place `<style>` blocks at the root level (after HTML, not inside `<head>`)
 - Astro automatically scopes component styles
 - Use `<style is:global>` only when you need to override scoped styles
-- Move styles to `global.css` only if used across multiple layouts/components
+- **Never** add component-specific styles to `global.css`
+
+#### For React/Preact/Vue/Svelte components (.tsx, .jsx, .vue, .svelte)
+- Use CSS Modules for component-scoped styles (e.g., `ComponentName.module.css`)
+- Import the module: `import styles from './ComponentName.module.css'`
+- Apply styles: `<div className={styles.myClass}>...</div>`
+- Use `:global()` in CSS modules only when targeting elements from external libraries
+- **Never** add component-specific styles to `global.css`
 
 ### Style Organization
 ```astro

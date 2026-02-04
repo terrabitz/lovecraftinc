@@ -18,6 +18,7 @@
   --input-bg: #fff;
   --tooltip-bg: #333;
   --tooltip-text: #fff;
+  --tooltip-font-family: 'Pixelated MS Sans Serif', Arial;
   --info-box-bg: #ffffe1;
   --info-box-border: #000000;
 }

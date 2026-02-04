@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks';
 import Fuse from 'fuse.js';
 import { navigate } from 'astro:transitions/client';
+import styles from './SidAssistant.module.css';
 
 const GREETING = "Hello! How can I help you today? Type /help for available commands.";
 const DEFAULT_RESPONSE = "I don't know how to help you with that. Type /help for available commands.";
@@ -282,10 +283,10 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
   }, []);
 
   return (
-    <div class="sid-container">
+    <div class={styles.container}>
       {!isVisible && (
         <img 
-          class="help-icon" 
+          class={styles.helpIcon} 
           src={helpIcon} 
           alt="Help" 
           width={ICON_SIZE} 
@@ -297,7 +298,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
       
       {isVisible && (
         <div 
-          class="sid-panel window"
+          class={`${styles.panel} window`}
           style={{
             transform: `translate(${position.x}px, ${position.y}px)`,
           }}
@@ -308,9 +309,9 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
               <button aria-label="Close" onClick={hidePanel}></button>
             </div>
           </div>
-          <div class="window-body sid-body">
-            <div class="sid-content">
-              <div class="sid-character">
+          <div class={`window-body ${styles.body}`}>
+            <div class={styles.content}>
+              <div class={styles.character}>
                 <img 
                   src={getCurrentFrame()}
                   alt="SID Assistant" 
@@ -319,11 +320,11 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
                   draggable={false}
                 />
               </div>
-              <div class="sid-speech">
-                <div class={`speech-bubble ${isHorrorMode ? 'horror' : ''}`} dangerouslySetInnerHTML={{ __html: displayedText.replace(/\n/g, '<br>') }}></div>
+              <div class={styles.speech}>
+                <div class={`${styles.speechBubble} ${isHorrorMode ? styles.horror : ''}`} dangerouslySetInnerHTML={{ __html: displayedText.replace(/\n/g, '<br>') }}></div>
               </div>
             </div>
-            <div class="sid-input-area">
+            <div class={styles.inputArea}>
               <input 
                 type="text" 
                 placeholder="Type a message..."
@@ -338,143 +339,6 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
           </div>
         </div>
       )}
-
-      <style>{`
-        .sid-container {
-          position: fixed;
-          bottom: 20px;
-          right: 20px;
-          z-index: 9999;
-          font-family: var(--font-family, 'MS Sans Serif', sans-serif);
-        }
-
-        .help-icon {
-          cursor: pointer;
-          image-rendering: pixelated;
-        }
-
-        .help-icon:hover {
-          transform: scale(1.1);
-        }
-
-        .help-icon:active {
-          transform: scale(0.95);
-        }
-
-        .sid-panel {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          width: 320px;
-        }
-
-        .sid-panel .title-bar {
-          cursor: move;
-          user-select: none;
-        }
-
-        .sid-body {
-          padding: 8px;
-        }
-
-        .sid-content {
-          display: flex;
-          gap: 12px;
-          margin-bottom: 12px;
-        }
-
-        .sid-character {
-          flex-shrink: 0;
-        }
-
-        .sid-character img {
-          width: 100px;
-          height: 100px;
-          object-fit: contain;
-          image-rendering: pixelated;
-        }
-
-        .sid-speech {
-          flex-grow: 1;
-          display: flex;
-          align-items: flex-start;
-        }
-
-        .speech-bubble {
-          background: var(--info-box-bg, #ffffe1);
-          border: 1px solid var(--info-box-border, #000);
-          padding: 8px 10px;
-          position: relative;
-          width: 180px;
-          height: 120px;
-          overflow-y: auto;
-          font-size: 12px;
-          line-height: 1.4;
-          box-shadow: inset -1px -1px var(--border-dark, #0a0a0a), inset 1px 1px var(--border-light, #fff);
-          color: var(--text-color, #222);
-          white-space: pre-wrap;
-        }
-
-        .speech-bubble.horror {
-          background: #1a0a0a;
-          color: #ff0000;
-          overflow: visible;
-          height: auto;
-          min-height: 80px;
-          max-height: none;
-          word-break: break-all;
-          text-shadow: 0 0 10px #ff0000;
-          animation: horror-flicker 0.1s infinite;
-        }
-
-        @keyframes horror-flicker {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.8; }
-        }
-
-        .speech-bubble::before {
-          content: '';
-          position: absolute;
-          left: -10px;
-          top: 12px;
-          width: 0;
-          height: 0;
-          border-top: 8px solid transparent;
-          border-bottom: 8px solid transparent;
-          border-right: 10px solid var(--info-box-border, #000);
-        }
-
-        .speech-bubble::after {
-          content: '';
-          position: absolute;
-          left: -8px;
-          top: 13px;
-          width: 0;
-          height: 0;
-          border-top: 7px solid transparent;
-          border-bottom: 7px solid transparent;
-          border-right: 9px solid var(--info-box-bg, #ffffe1);
-        }
-
-        .sid-input-area {
-          display: flex;
-          gap: 4px;
-        }
-
-        .sid-input-area input {
-          flex-grow: 1;
-          padding: 4px;
-          font-size: 12px;
-          font-family: inherit;
-          min-width: 200px;
-        }
-
-        .sid-input-area button {
-          padding: 4px 12px;
-          font-size: 12px;
-          font-family: inherit;
-        }
-      `}</style>
     </div>
   );
 }

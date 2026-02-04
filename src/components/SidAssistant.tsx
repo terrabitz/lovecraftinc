@@ -132,78 +132,78 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
     typeText(GREETING);
   }, [stopFrameAnimation, typeText]);
 
+  const handleHelpCommand = useCallback(() => {
+    typeText(HELP_TEXT);
+  }, [typeText]);
+
+  const handleFhtagnCommand = useCallback(() => {
+    setIsHorrorMode(true);
+    typeText(HORROR_TEXT, HORROR_TYPEWRITER_SPEED_MS, true);
+    horrorTimeoutRef.current = window.setTimeout(endHorrorMode, HORROR_DURATION_MS);
+  }, [typeText, endHorrorMode]);
+
+  const handleGotoCommand = useCallback((args: string) => {
+    const id = args.trim().toUpperCase();
+    
+    if (!id) {
+      typeText("Please provide an ID. Example: /goto EID-EMP-001");
+      return;
+    }
+    
+    const item = searchContentRef.current.find(item => item.id.toUpperCase() === id);
+    
+    if (!item) {
+      typeText(`No article found with ID "${id}"`);
+      return;
+    }
+    
+    navigate(item.url);
+  }, [typeText]);
+
+  const handleSearchCommand = useCallback((args: string) => {
+    const query = args.trim();
+    
+    if (!query) {
+      typeText("Please provide a search query. Example: /search harrow");
+      return;
+    }
+    
+    if (!searchIndex) {
+      typeText("Search index not available. Please refresh the page.");
+      return;
+    }
+    
+    const results = searchIndex.search(query).slice(0, 5);
+    
+    if (results.length === 0) {
+      typeText(`No results found for "${query}"`);
+      return;
+    }
+    
+    let responseText = `Found ${results.length} result(s) for "${query}":\n\n`;
+    results.forEach((result, index) => {
+      const item = result.item;
+      responseText += `${index + 1}. <a href="${item.url}">${item.title}</a>\n\n`;
+    });
+    
+    typeText(responseText);
+  }, [searchIndex, typeText]);
+
   const handleCommand = useCallback((command: string) => {
     const trimmedCommand = command.trim();
     
-    // /help command
     if (trimmedCommand === '/help') {
-      typeText(HELP_TEXT);
-      return;
+      handleHelpCommand();
+    } else if (trimmedCommand === '/fhtagn') {
+      handleFhtagnCommand();
+    } else if (trimmedCommand.startsWith('/goto ')) {
+      handleGotoCommand(trimmedCommand.replace('/goto ', ''));
+    } else if (trimmedCommand.startsWith('/search ')) {
+      handleSearchCommand(trimmedCommand.replace('/search ', ''));
+    } else {
+      typeText(DEFAULT_RESPONSE);
     }
-    
-    // /fhtagn command (hidden horror mode)
-    if (trimmedCommand === '/fhtagn') {
-      setIsHorrorMode(true);
-      typeText(HORROR_TEXT, HORROR_TYPEWRITER_SPEED_MS, true);
-      horrorTimeoutRef.current = window.setTimeout(endHorrorMode, HORROR_DURATION_MS);
-      return;
-    }
-    
-    // /goto command
-    if (trimmedCommand.startsWith('/goto ')) {
-      const id = trimmedCommand.replace('/goto ', '').trim().toUpperCase();
-      
-      if (!id) {
-        typeText("Please provide an ID. Example: /goto EID-EMP-001");
-        return;
-      }
-      
-      const item = searchContentRef.current.find(item => item.id.toUpperCase() === id);
-      
-      if (!item) {
-        typeText(`No article found with ID "${id}"`);
-        return;
-      }
-      
-      // Navigate to the article using Astro's client-side router
-      navigate(item.url);
-      return;
-    }
-    
-    // /search command
-    if (trimmedCommand.startsWith('/search ')) {
-      const query = trimmedCommand.replace('/search ', '').trim();
-      
-      if (!query) {
-        typeText("Please provide a search query. Example: /search harrow");
-        return;
-      }
-      
-      if (!searchIndex) {
-        typeText("Search index not available. Please refresh the page.");
-        return;
-      }
-      
-      const results = searchIndex.search(query).slice(0, 5);
-      
-      if (results.length === 0) {
-        typeText(`No results found for "${query}"`);
-        return;
-      }
-      
-      let responseText = `Found ${results.length} result(s) for "${query}":\n\n`;
-      results.forEach((result, index) => {
-        const item = result.item;
-        responseText += `${index + 1}. <a href="${item.url}">${item.title}</a>\n\n`;
-      });
-      
-      typeText(responseText);
-      return;
-    }
-    
-    // Unknown command
-    typeText(DEFAULT_RESPONSE);
-  }, [searchIndex, typeText, endHorrorMode]);
+  }, [handleHelpCommand, handleFhtagnCommand, handleGotoCommand, handleSearchCommand, typeText]);
 
 
   const showPanel = useCallback(() => {

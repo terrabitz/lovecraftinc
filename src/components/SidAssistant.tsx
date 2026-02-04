@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks';
 import Fuse from 'fuse.js';
+import Typed from 'typed.js';
 import { navigate } from 'astro:transitions/client';
 import styles from './SidAssistant.module.css';
 
 const GREETING = "Hello! How can I help you today? Type /help for available commands.";
 const DEFAULT_RESPONSE = "I don't know how to help you with that. Type /help for available commands.";
 const FRAME_ANIMATION_SPEED_MS = 200;
-const TYPEWRITER_SPEED_MS = 30;
+const TYPEWRITER_SPEED_MS = 10;
 const ICON_SIZE = 100;
 
 const HORROR_TYPEWRITER_SPEED_MS = 1;
@@ -38,19 +39,18 @@ const HORROR_TEXT = `Ḯ̵̧̳̯͔͇̦̪̰̳̖͎̞̍͛̑͐̈́͘͝͝ ̷̳̬̹̝̓�
 
 export default function SidAssistant({ frames, horrorFrames, helpIcon, searchContent }: SidAssistantProps) {
   const [isVisible, setIsVisible] = useState(false);
-  const [displayedText, setDisplayedText] = useState('');
   const [frameIndex, setFrameIndex] = useState(0);
   const [inputValue, setInputValue] = useState('');
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHorrorMode, setIsHorrorMode] = useState(false);
   const [searchIndex, setSearchIndex] = useState<Fuse<SearchResult> | null>(null);
   
-  const typeIntervalRef = useRef<number | null>(null);
+  const typedInstanceRef = useRef<Typed | null>(null);
+  const speechBubbleRef = useRef<HTMLDivElement>(null);
   const frameIntervalRef = useRef<number | null>(null);
   const horrorTimeoutRef = useRef<number | null>(null);
   const horrorShownRef = useRef(false);
-  const textToTypeRef = useRef('');
-  const charIndexRef = useRef(0);
+  const pendingMessageRef = useRef<{ message: string; speed: number; useHorror: boolean } | null>(null);
   const isDraggingRef = useRef(false);
   const dragOffsetRef = useRef({ x: 0, y: 0 });
   const searchContentRef = useRef<SearchResult[]>(searchContent);
@@ -99,28 +99,31 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
   }, [frames, horrorFrames]);
 
   const typeText = useCallback((message: string, speed = TYPEWRITER_SPEED_MS, useHorror = false) => {
-    if (typeIntervalRef.current) {
-      clearInterval(typeIntervalRef.current);
+    if (typedInstanceRef.current) {
+      typedInstanceRef.current.destroy();
+      typedInstanceRef.current = null;
     }
     
-    setDisplayedText('');
-    textToTypeRef.current = message;
-    charIndexRef.current = 0;
+    if (!speechBubbleRef.current) {
+      pendingMessageRef.current = { message, speed, useHorror };
+      return;
+    }
     
-    startFrameAnimation(useHorror);
+    pendingMessageRef.current = null;
+    speechBubbleRef.current.innerHTML = '';
     
-    typeIntervalRef.current = window.setInterval(() => {
-      if (charIndexRef.current < textToTypeRef.current.length) {
-        setDisplayedText(textToTypeRef.current.slice(0, charIndexRef.current + 1));
-        charIndexRef.current++;
-      } else {
-        if (typeIntervalRef.current) {
-          clearInterval(typeIntervalRef.current);
-          typeIntervalRef.current = null;
-        }
+    typedInstanceRef.current = new Typed(speechBubbleRef.current, {
+      strings: [message.replace(/\n/g, '<br>')],
+      typeSpeed: speed,
+      showCursor: false,
+      contentType: 'html',
+      onBegin: () => {
+        startFrameAnimation(useHorror);
+      },
+      onComplete: () => {
         stopFrameAnimation();
-      }
-    }, speed);
+      },
+    });
   }, [startFrameAnimation, stopFrameAnimation]);
 
   const endHorrorMode = useCallback(() => {
@@ -216,18 +219,25 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
     }
   }, [typeText, endHorrorMode]);
 
+  // Type pending message once speech bubble is available
+  useEffect(() => {
+    if (isVisible && speechBubbleRef.current && pendingMessageRef.current) {
+      const { message, speed, useHorror } = pendingMessageRef.current;
+      typeText(message, speed, useHorror);
+    }
+  }, [isVisible, typeText]);
+
   const hidePanel = useCallback(() => {
     setIsVisible(false);
-    if (typeIntervalRef.current) {
-      clearInterval(typeIntervalRef.current);
-      typeIntervalRef.current = null;
+    if (typedInstanceRef.current) {
+      typedInstanceRef.current.destroy();
+      typedInstanceRef.current = null;
     }
     if (horrorTimeoutRef.current) {
       clearTimeout(horrorTimeoutRef.current);
       horrorTimeoutRef.current = null;
     }
     stopFrameAnimation();
-    setDisplayedText('');
     setIsHorrorMode(false);
   }, [stopFrameAnimation]);
 
@@ -277,7 +287,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
 
   useEffect(() => {
     return () => {
-      if (typeIntervalRef.current) clearInterval(typeIntervalRef.current);
+      if (typedInstanceRef.current) typedInstanceRef.current.destroy();
       if (frameIntervalRef.current) clearInterval(frameIntervalRef.current);
     };
   }, []);
@@ -321,7 +331,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
                 />
               </div>
               <div class={styles.speech}>
-                <div class={`${styles.speechBubble} ${isHorrorMode ? styles.horror : ''}`} dangerouslySetInnerHTML={{ __html: displayedText.replace(/\n/g, '<br>') }}></div>
+                <div ref={speechBubbleRef} class={`${styles.speechBubble} ${isHorrorMode ? styles.horror : ''}`}></div>
               </div>
             </div>
             <div class={styles.inputArea}>

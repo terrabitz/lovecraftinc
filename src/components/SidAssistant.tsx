@@ -190,7 +190,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
       let responseText = `Found ${results.length} result(s) for "${query}":\n\n`;
       results.forEach((result, index) => {
         const item = result.item;
-        responseText += `${index + 1}. ${item.title}\n   ${item.url}\n\n`;
+        responseText += `${index + 1}. <a href="${item.url}">${item.title}</a>\n\n`;
       });
       
       typeText(responseText);
@@ -320,7 +320,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
                 />
               </div>
               <div class="sid-speech">
-                <div class={`speech-bubble ${isHorrorMode ? 'horror' : ''}`}>{displayedText}</div>
+                <div class={`speech-bubble ${isHorrorMode ? 'horror' : ''}`} dangerouslySetInnerHTML={{ __html: displayedText.replace(/\n/g, '<br>') }}></div>
               </div>
             </div>
             <div class="sid-input-area">

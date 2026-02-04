@@ -73,6 +73,15 @@
   white-space: pre-wrap;
 }
 
+.speechBubble :global(code) {
+  background: var(--surface-dark, #dfdfdf);
+  color: var(--text-color, #222);
+  padding: 1px 4px;
+  font-family: monospace;
+  font-size: 11px;
+  border: 1px solid var(--border-medium, #808080);
+}
+
 .speechBubble.horror {
   background: #1a0a0a;
   color: #ff0000;

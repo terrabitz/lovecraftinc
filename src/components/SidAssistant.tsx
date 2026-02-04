@@ -4,8 +4,8 @@ import Typed from 'typed.js';
 import { navigate } from 'astro:transitions/client';
 import styles from './SidAssistant.module.css';
 
-const GREETING = "Hello! How can I help you today? Type /help for available commands.";
-const DEFAULT_RESPONSE = "I don't know how to help you with that. Type /help for available commands.";
+const GREETING = "Hello! How can I help you today? Type <code>/help</code> for available commands.";
+const DEFAULT_RESPONSE = "I don't know how to help you with that. Type <code>/help</code> for available commands.";
 const FRAME_ANIMATION_SPEED_MS = 200;
 const TYPEWRITER_SPEED_MS = 10;
 const ICON_SIZE = 100;
@@ -15,9 +15,9 @@ const HORROR_DURATION_MS = 2000;
 const HORROR_CHANCE = .1;
 
 const HELP_TEXT = `Available commands:
-/help - Show this help message
-/search <query> - Search all content (employees, anomalies, organizations)
-/goto <id> - Navigate directly to an article by ID (e.g., /goto EID-EMP-001)`;
+<code>/help</code> - Show this help message
+<code>/search &lt;query&gt;</code> - Search all content (employees, anomalies, organizations)
+<code>/goto &lt;id&gt;</code> - Navigate directly to an article by ID (e.g., <code>/goto EID-EMP-001</code>)`;
 
 interface SearchResult {
   id: string;
@@ -146,7 +146,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
     const id = args.trim().toUpperCase();
     
     if (!id) {
-      typeText("Please provide an ID. Example: /goto EID-EMP-001");
+      typeText("Please provide an ID. Example: <code>/goto EID-EMP-001</code>");
       return;
     }
     
@@ -164,7 +164,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
     const query = args.trim();
     
     if (!query) {
-      typeText("Please provide a search query. Example: /search harrow");
+      typeText("Please provide a search query. Example: <code>/search harrow</code>");
       return;
     }
     

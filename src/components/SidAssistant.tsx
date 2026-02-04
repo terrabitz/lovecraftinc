@@ -60,7 +60,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
       });
       setSearchIndex(fuse);
     }
-  }, [searchContent, searchIndex]);
+  }, [searchContent]);
 
   const stopFrameAnimation = useCallback(() => {
     if (frameIntervalRef.current) {

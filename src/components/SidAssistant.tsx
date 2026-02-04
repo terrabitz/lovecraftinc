@@ -31,13 +31,12 @@ interface SidAssistantProps {
   frames: string[];
   horrorFrames: string[];
   helpIcon: string;
-  searchContent: SearchResult[];
 }
 const HORROR_TEXT = `Ĭ̵̹̭́ ̶̛̘̜͙͇̫͚̜̍̈́Ẃ̵̬̣̥̝̠̫̈́͊I̵̢̨͍͆͒̀̀̓L̸̨̮̙͓̪̽͑̈́L̵̢̡̮͚̈́̈́̇̌̔̔͠ͅ ̷͚̳̃͐́̄̔͠N̶̫̱̎̉̇̎̚̚Ǫ̵̢̠̰̳͕̟̒̏̈͠Ţ̴̧̬͔̗̒̔͛́̈́ ̶̼̉̈́̌̓͘͝͝B̷̺̎̇E̴̡͎͖̜̪͆̌̍͗͋̽ ̶̺̯̥͇̀̋̕C̸̭͚͚̱̦̐̅̓̕͝Ǫ̴̨̜̠̼͒N̸̻̬̫̥̤͍̓̋̈́T̶͎̥͋̽̚͜A̷͈͒̇̓́̒͠Ȋ̸̩̓̚N̷̜̩͕͌͜ͅẺ̷̡̹̥̲̭͓D̷̯̏́͑͗D̷̗̲́`;
 
 
 
-export default function SidAssistant({ frames, horrorFrames, helpIcon, searchContent }: SidAssistantProps) {
+export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssistantProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [frameIndex, setFrameIndex] = useState(0);
   const [inputValue, setInputValue] = useState('');
@@ -56,29 +55,28 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
   const isResizingRef = useRef(false);
   const dragOffsetRef = useRef({ x: 0, y: 0 });
   const resizeStartRef = useRef({ x: 0, y: 0, width: 320, height: 220 });
-  const searchContentRef = useRef<SearchResult[]>(searchContent);
+  const searchContentRef = useRef<SearchResult[]>([]);
 
-  // Update searchContentRef when prop changes
+  // Eagerly fetch search content on mount (non-blocking)
   useEffect(() => {
-    searchContentRef.current = searchContent;
-  }, [searchContent]);
-
-  // Initialize search index on mount
-  useEffect(() => {
-    if (searchContent && !searchIndex) {
-      const fuse = new Fuse(searchContent, {
-        keys: [
-          { name: 'title', weight: 2 },     // Higher weight for title matches
-          { name: 'content', weight: 1 }    // Lower weight for content matches
-        ],
-        threshold: 0.3,  // Balanced threshold for fuzzy matching
-        includeScore: true,
-        ignoreLocation: true,  // Search entire text, not just beginning
-        minMatchCharLength: 3,  // Minimum match length
-      });
-      setSearchIndex(fuse);
-    }
-  }, [searchContent]);
+    fetch('/api/search-content.json')
+      .then(res => res.json())
+      .then((content: SearchResult[]) => {
+        searchContentRef.current = content;
+        const fuse = new Fuse(content, {
+          keys: [
+            { name: 'title', weight: 2 },
+            { name: 'content', weight: 1 }
+          ],
+          threshold: 0.3,
+          includeScore: true,
+          ignoreLocation: true,
+          minMatchCharLength: 3,
+        });
+        setSearchIndex(fuse);
+      })
+      .catch(err => console.error('Failed to load search index:', err));
+  }, []);
 
   const stopFrameAnimation = useCallback(() => {
     if (frameIntervalRef.current) {

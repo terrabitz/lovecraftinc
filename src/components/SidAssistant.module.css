@@ -65,8 +65,7 @@
   position: relative;
   width: 180px;
   height: 120px;
-  overflow: clip;
-  overflow-clip-margin: 100px;
+  overflow-y: auto;
   font-size: 12px;
   line-height: 1.4;
   box-shadow: inset -1px -1px var(--border-dark, #0a0a0a), inset 1px 1px var(--border-light, #fff);

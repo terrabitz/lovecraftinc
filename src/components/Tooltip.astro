@@ -1,0 +1,157 @@
+---
+// Portal-based tooltip component that renders tooltips for [data-tooltip] elements
+// This component should be included once in the main layout
+---
+
+<div id="tooltip-portal" class="tooltip-portal"></div>
+
+<style>
+  .tooltip-portal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    z-index: 99999;
+    pointer-events: none;
+  }
+
+  .tooltip-portal :global(.tooltip) {
+    position: fixed;
+    padding: 4px 8px;
+    background: var(--tooltip-bg, #333);
+    color: var(--tooltip-text, #fff);
+    font-size: 12px;
+    font-family: var(--tooltip-font-family, 'Pixelated MS Sans Serif', Arial);
+    white-space: nowrap;
+    border-radius: 3px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.1s;
+  }
+
+  .tooltip-portal :global(.tooltip.visible) {
+    opacity: 1;
+  }
+
+  .tooltip-portal :global(.tooltip-arrow) {
+    position: absolute;
+    border: 6px solid transparent;
+  }
+
+  .tooltip-portal :global(.tooltip.position-top .tooltip-arrow) {
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top-color: var(--tooltip-bg, #333);
+    border-bottom: none;
+  }
+
+  .tooltip-portal :global(.tooltip.position-bottom .tooltip-arrow) {
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom-color: var(--tooltip-bg, #333);
+    border-top: none;
+  }
+</style>
+
+<script>
+  function initTooltip() {
+    const portal = document.getElementById('tooltip-portal');
+    if (!portal) return;
+
+    let tooltip: HTMLElement | null = null;
+    let currentTarget: HTMLElement | null = null;
+
+    function createTooltip() {
+      const el = document.createElement('div');
+      el.className = 'tooltip';
+      el.innerHTML = '<span class="tooltip-arrow"></span><span class="tooltip-text"></span>';
+      portal!.appendChild(el);
+      return el;
+    }
+
+    function positionTooltip(target: HTMLElement, tooltipEl: HTMLElement) {
+      const text = target.getAttribute('data-tooltip');
+      if (!text) return;
+
+      const textEl = tooltipEl.querySelector('.tooltip-text') as HTMLElement;
+      textEl.textContent = text + ' ↗';
+
+      tooltipEl.style.visibility = 'hidden';
+      tooltipEl.classList.add('visible');
+
+      const targetRect = target.getBoundingClientRect();
+      const tooltipRect = tooltipEl.getBoundingClientRect();
+
+      const MARGIN = 8;
+      const spaceAbove = targetRect.top;
+      const spaceBelow = window.innerHeight - targetRect.bottom;
+
+      let top: number;
+      let positionClass: string;
+
+      if (spaceAbove >= tooltipRect.height + MARGIN || spaceAbove >= spaceBelow) {
+        top = targetRect.top - tooltipRect.height - MARGIN;
+        positionClass = 'position-top';
+      } else {
+        top = targetRect.bottom + MARGIN;
+        positionClass = 'position-bottom';
+      }
+
+      let left = targetRect.left + targetRect.width / 2 - tooltipRect.width / 2;
+      left = Math.max(MARGIN, Math.min(left, window.innerWidth - tooltipRect.width - MARGIN));
+
+      tooltipEl.style.top = `${top}px`;
+      tooltipEl.style.left = `${left}px`;
+      tooltipEl.style.visibility = 'visible';
+      tooltipEl.className = `tooltip visible ${positionClass}`;
+    }
+
+    function showTooltip(target: HTMLElement) {
+      if (!tooltip) {
+        tooltip = createTooltip();
+      }
+
+      currentTarget = target;
+      tooltip.classList.remove('visible');
+
+      requestAnimationFrame(() => {
+        if (tooltip && currentTarget === target) {
+          positionTooltip(target, tooltip);
+        }
+      });
+    }
+
+    function hideTooltip() {
+      if (tooltip) {
+        tooltip.classList.remove('visible');
+      }
+      currentTarget = null;
+    }
+
+    function handleMouseOver(e: Event) {
+      const target = (e.target as HTMLElement).closest('[data-tooltip]') as HTMLElement | null;
+      if (target && target !== currentTarget) {
+        showTooltip(target);
+      }
+    }
+
+    function handleMouseOut(e: Event) {
+      const target = (e.target as HTMLElement).closest('[data-tooltip]');
+      if (target) {
+        const relatedTarget = (e as MouseEvent).relatedTarget as HTMLElement | null;
+        if (!relatedTarget || !target.contains(relatedTarget)) {
+          hideTooltip();
+        }
+      }
+    }
+
+    document.addEventListener('mouseover', handleMouseOver);
+    document.addEventListener('mouseout', handleMouseOut);
+    document.addEventListener('scroll', hideTooltip, true);
+  }
+
+  document.addEventListener('astro:page-load', initTooltip);
+</script>

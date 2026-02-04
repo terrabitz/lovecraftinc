@@ -1,0 +1,174 @@
+.container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  font-family: var(--font-family, 'MS Sans Serif', sans-serif);
+}
+
+.helpIcon {
+  cursor: pointer;
+  image-rendering: pixelated;
+}
+
+.helpIcon:hover {
+  transform: scale(1.1);
+}
+
+.helpIcon:active {
+  transform: scale(0.95);
+}
+
+.panel {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.resizeHandle {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 12px;
+  height: 12px;
+  cursor: nwse-resize;
+  z-index: 10;
+}
+
+.resizeHandle::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 8px;
+  height: 8px;
+  border-left: 2px solid var(--border-dark, #0a0a0a);
+  border-top: 2px solid var(--border-dark, #0a0a0a);
+}
+
+.panel :global(.title-bar) {
+  cursor: move;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.body {
+  padding: 8px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.content {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+.character {
+  flex-shrink: 0;
+}
+
+.character img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.speech {
+  flex-grow: 1;
+  display: flex;
+  align-items: stretch;
+  min-height: 0;
+}
+
+.speechBubble {
+  background: var(--info-box-bg, #ffffe1);
+  border: 1px solid var(--info-box-border, #000);
+  padding: 8px 10px;
+  position: relative;
+  flex: 1;
+  min-height: 120px;
+  overflow-y: auto;
+  font-size: 12px;
+  line-height: 1.4;
+  box-shadow: inset -1px -1px var(--border-dark, #0a0a0a), inset 1px 1px var(--border-light, #fff);
+  color: var(--text-color, #222);
+  white-space: pre-wrap;
+}
+
+.speechBubble :global(code) {
+  background: var(--surface-dark, #dfdfdf);
+  color: var(--text-color, #222);
+  padding: 1px 4px;
+  font-family: monospace;
+  font-size: 11px;
+  border: 1px solid var(--border-medium, #808080);
+}
+
+.speechBubble.horror {
+  background: #1a0a0a;
+  color: #ff0000;
+  overflow: visible;
+  height: auto;
+  min-height: 80px;
+  max-height: none;
+  word-break: break-all;
+  text-shadow: 0 0 10px #ff0000;
+  animation: horrorFlicker 0.1s infinite;
+}
+
+@keyframes horrorFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.speechBubble::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 12px;
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 10px solid var(--info-box-border, #000);
+}
+
+.speechBubble::after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 13px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-right: 9px solid var(--info-box-bg, #ffffe1);
+}
+
+.inputArea {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.inputArea input {
+  flex-grow: 1;
+  padding: 4px;
+  font-size: 12px;
+  font-family: inherit;
+  min-width: 200px;
+}
+
+.inputArea button {
+  padding: 4px 12px;
+  font-size: 12px;
+  font-family: inherit;
+}

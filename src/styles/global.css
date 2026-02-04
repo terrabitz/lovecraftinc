@@ -18,6 +18,7 @@
   --input-bg: #fff;
   --tooltip-bg: #333;
   --tooltip-text: #fff;
+  --tooltip-font-family: 'Pixelated MS Sans Serif', Arial;
   --info-box-bg: #ffffe1;
   --info-box-border: #000000;
 }
@@ -218,46 +219,7 @@ button, table, .window{
   font-size: var(--base-font-size)
 }
 
-[data-tooltip] {
-  position: relative;
-}
 
-[data-tooltip]::after {
-  content: attr(data-tooltip) " ↗";
-  position: absolute;
-  bottom: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 4px 8px;
-  background: var(--tooltip-bg);
-  color: var(--tooltip-text);
-  font-size: 12px;
-  white-space: nowrap;
-  border-radius: 3px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.1s;
-  z-index: 1000;
-}
-
-[data-tooltip]::before {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: var(--tooltip-bg);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.1s;
-  z-index: 1000;
-}
-
-[data-tooltip]:hover::after,
-[data-tooltip]:hover::before {
-  opacity: 1;
-}
 
 .grid {
   display: grid;

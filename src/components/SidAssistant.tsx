@@ -1,40 +1,82 @@
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks';
+import Fuse from 'fuse.js';
+import Typed from 'typed.js';
+import { navigate } from 'astro:transitions/client';
+import styles from './SidAssistant.module.css';
+import type { SearchResult } from '../types/search';
 
-const GREETING = "Hello! How can I help you today?";
-const DEFAULT_RESPONSE = "I don't know how to help you with that.";
+const GREETING = "Hello! How can I help you today? Type <code>/help</code> for available commands.";
+const DEFAULT_RESPONSE = "I don't know how to help you with that. Type <code>/help</code> for available commands.";
 const FRAME_ANIMATION_SPEED_MS = 200;
-const TYPEWRITER_SPEED_MS = 30;
+const TYPEWRITER_SPEED_MS = 10;
 const ICON_SIZE = 100;
 
 const HORROR_TYPEWRITER_SPEED_MS = 1;
-const HORROR_DURATION_MS = 2000;
+const HORROR_DURATION_MS = 2400;
 const HORROR_CHANCE = .1;
+
+const HELP_TEXT = `Available commands:
+<code>/help</code> - Show this help message
+<code>/search &lt;query&gt;</code> - Search all content
+<code>/goto &lt;id&gt;</code> - Navigate directly to an article by ID
+
+You can use the arrow keys to navigate command history`;
+
 
 interface SidAssistantProps {
   frames: string[];
   horrorFrames: string[];
   helpIcon: string;
 }
-const HORROR_TEXT = `Ḯ̵̧̳̯͔͇̦̪̰̳̖͎̞̍͛̑͐̈́͘͝͝ ̷̡̳̬̹̝͖̹̗̻̬̟̣̱̮̓ẅ̶̢̨̛̠̼̬̖͇̫̺̲̩̣͔Í̶̢̩̘̯͙̖̳̈̇͑̃͑̑̅̒̈̇͌̕͘͝L̵̮̺̖̜̣̗̻̟͕̖̘͍̋̎̽͂́̃̆̏́̈́͐͜͠͝L̷̡̡̨̛̹̺̬͇̞̦̈̏̒̓̌́̀̔͋̑̕ ̶̢̳͙̯̤̜̗͕̐̏́̚Ñ̸̹͔̘̫̠̗̼̞̩͚̦̩͔̔̈́̉̇͆̀͐́̕̕͜Ö̴̡͓̭̱̲̩̫̫̘͕̱́͋̌̈́̈̾T̸̤̻̮̱̙̰̭̬̼̘̲̺̼̝̄̆͐̇̃͘ ̸̧̨̬͚͇̩̖̩͖͇̫̣͛̑̔̌̆͋̈̆̍̎̓͘̕͠B̵̨̙̳̻̞̜̫͉̜̝̬̝̳͚̌̏͛̀̎͑͑̀̂̑́͗̚̚E̷̡̡̦̭͔̪̺̥͚͍̯̼̗̐̈͛͆ͅ ̶͇̥̬̰̝͙͔̪̈́͐̈̿̀͊́̓̊̅͗̽͐̕͠C̷̤̹̼̮̰̩̰̫̣̜͊̏ͅO̸͓̪̰̞̞̙̣̬͇̠̤̎̌N̷͖̂̔̏̔͋͆̚͝T̷̢̰̟̦͇̭̰͔̜͍͓̱͍͖̅̓̂̐̊̈̀̅̏͌̓͠A̴͓͓̙͔̽̌̈́̾Ỉ̴̛̼̝̫͖̩̤͕̲̃̊̄̉̽̀̿͆̐̚͝N̶͚̞͚͚̫̳̲͉̠͇̦̣̲̼̱̉̄̇̃͋͗͐̔E̴̟͕̔̈́͗͋͐͑͆͂̕͘͘ͅD̷͈͓͉͌̎́̆̅͋̂̑̽́̃̚͝͝`;
+const HORROR_TEXT = `Ĭ̵̹̭́ ̶̛̘̜͙͇̫͚̜̍̈́Ẃ̵̬̣̥̝̠̫̈́͊I̵̢̨͍͆͒̀̀̓L̸̨̮̙͓̪̽͑̈́L̵̢̡̮͚̈́̈́̇̌̔̔͠ͅ ̷͚̳̃͐́̄̔͠N̶̫̱̎̉̇̎̚̚Ǫ̵̢̠̰̳͕̟̒̏̈͠Ţ̴̧̬͔̗̒̔͛́̈́ ̶̼̉̈́̌̓͘͝͝B̷̺̎̇E̴̡͎͖̜̪͆̌̍͗͋̽ ̶̺̯̥͇̀̋̕C̸̭͚͚̱̦̐̅̓̕͝Ǫ̴̨̜̠̼͒N̸̻̬̫̥̤͍̓̋̈́T̶͎̥͋̽̚͜A̷͈͒̇̓́̒͠Ȋ̸̩̓̚N̷̜̩͕͌͜ͅẺ̷̡̹̥̲̭͓D̷̯̏́͑͗D̷̗̲́`;
 
 
 
 export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssistantProps) {
   const [isVisible, setIsVisible] = useState(false);
-  const [displayedText, setDisplayedText] = useState('');
   const [frameIndex, setFrameIndex] = useState(0);
   const [inputValue, setInputValue] = useState('');
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [panelSize, setPanelSize] = useState({ width: 320, height: 220 });
   const [isHorrorMode, setIsHorrorMode] = useState(false);
+  const [searchIndex, setSearchIndex] = useState<Fuse<SearchResult> | null>(null);
   
-  const typeIntervalRef = useRef<number | null>(null);
+  const [commandHistory, setCommandHistory] = useState<string[]>([]);
+  
+  const typedInstanceRef = useRef<Typed | null>(null);
+  const speechBubbleRef = useRef<HTMLDivElement>(null);
   const frameIntervalRef = useRef<number | null>(null);
   const horrorTimeoutRef = useRef<number | null>(null);
   const horrorShownRef = useRef(false);
-  const textToTypeRef = useRef('');
-  const charIndexRef = useRef(0);
+  const pendingMessageRef = useRef<{ message: string; speed: number; useHorror: boolean } | null>(null);
   const isDraggingRef = useRef(false);
+  const isResizingRef = useRef(false);
   const dragOffsetRef = useRef({ x: 0, y: 0 });
+  const resizeStartRef = useRef({ x: 0, y: 0, width: 320, height: 220 });
+  const searchContentRef = useRef<SearchResult[]>([]);
+  const historyIndexRef = useRef(-1);
+  const tempInputRef = useRef('');
+
+  // Eagerly fetch search content on mount (non-blocking)
+  useEffect(() => {
+    fetch('/api/search-content.json')
+      .then(res => res.json())
+      .then((content: SearchResult[]) => {
+        searchContentRef.current = content;
+        const fuse = new Fuse(content, {
+          keys: [
+            { name: 'title', weight: 2 },
+            { name: 'content', weight: 1 }
+          ],
+          threshold: 0.3,
+          includeScore: true,
+          ignoreLocation: true,
+          minMatchCharLength: 3,
+        });
+        setSearchIndex(fuse);
+      })
+      .catch(err => console.error('Failed to load search index:', err));
+  }, []);
 
   const stopFrameAnimation = useCallback(() => {
     if (frameIntervalRef.current) {
@@ -58,28 +100,31 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
   }, [frames, horrorFrames]);
 
   const typeText = useCallback((message: string, speed = TYPEWRITER_SPEED_MS, useHorror = false) => {
-    if (typeIntervalRef.current) {
-      clearInterval(typeIntervalRef.current);
+    if (typedInstanceRef.current) {
+      typedInstanceRef.current.destroy();
+      typedInstanceRef.current = null;
     }
     
-    setDisplayedText('');
-    textToTypeRef.current = message;
-    charIndexRef.current = 0;
+    if (!speechBubbleRef.current) {
+      pendingMessageRef.current = { message, speed, useHorror };
+      return;
+    }
     
-    startFrameAnimation(useHorror);
+    pendingMessageRef.current = null;
+    speechBubbleRef.current.innerHTML = '';
     
-    typeIntervalRef.current = window.setInterval(() => {
-      if (charIndexRef.current < textToTypeRef.current.length) {
-        setDisplayedText(textToTypeRef.current.slice(0, charIndexRef.current + 1));
-        charIndexRef.current++;
-      } else {
-        if (typeIntervalRef.current) {
-          clearInterval(typeIntervalRef.current);
-          typeIntervalRef.current = null;
-        }
+    typedInstanceRef.current = new Typed(speechBubbleRef.current, {
+      strings: [message.replace(/\n/g, '<br>')],
+      typeSpeed: speed,
+      showCursor: false,
+      contentType: 'html',
+      onBegin: () => {
+        startFrameAnimation(useHorror);
+      },
+      onComplete: () => {
         stopFrameAnimation();
-      }
-    }, speed);
+      },
+    });
   }, [startFrameAnimation, stopFrameAnimation]);
 
   const endHorrorMode = useCallback(() => {
@@ -87,6 +132,80 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
     stopFrameAnimation();
     typeText(GREETING);
   }, [stopFrameAnimation, typeText]);
+
+  const handleHelpCommand = useCallback(() => {
+    typeText(HELP_TEXT);
+  }, [typeText]);
+
+  const handleFhtagnCommand = useCallback(() => {
+    setIsHorrorMode(true);
+    typeText(HORROR_TEXT, HORROR_TYPEWRITER_SPEED_MS, true);
+    horrorTimeoutRef.current = window.setTimeout(endHorrorMode, HORROR_DURATION_MS);
+  }, [typeText, endHorrorMode]);
+
+  const handleGotoCommand = useCallback((args: string) => {
+    const id = args.trim().toUpperCase();
+    
+    if (!id) {
+      typeText("Please provide an ID. Example: <code>/goto EID-EMP-001</code>");
+      return;
+    }
+    
+    const item = searchContentRef.current.find(item => item.id.toUpperCase() === id);
+    
+    if (!item) {
+      typeText(`No article found with ID "${id}"`);
+      return;
+    }
+    
+    navigate(item.url);
+  }, [typeText]);
+
+  const handleSearchCommand = useCallback((args: string) => {
+    const query = args.trim();
+    
+    if (!query) {
+      typeText("Please provide a search query. Example: <code>/search harrow</code>");
+      return;
+    }
+    
+    if (!searchIndex) {
+      typeText("Search index not available. Please refresh the page.");
+      return;
+    }
+    
+    const results = searchIndex.search(query).slice(0, 5);
+    
+    if (results.length === 0) {
+      typeText(`No results found for "${query}"`);
+      return;
+    }
+    
+    let responseText = `Found ${results.length} result(s) for "${query}":\n\n`;
+    results.forEach((result, index) => {
+      const item = result.item;
+      responseText += `${index + 1}. [<a href="${item.url}" data-tooltip="${item.title}">${item.id}</a>]\n`;
+    });
+    
+    typeText(responseText);
+  }, [searchIndex, typeText]);
+
+  const handleCommand = useCallback((command: string) => {
+    const trimmedCommand = command.trim();
+    
+    if (trimmedCommand === '/help') {
+      handleHelpCommand();
+    } else if (trimmedCommand === '/fhtagn') {
+      handleFhtagnCommand();
+    } else if (trimmedCommand.startsWith('/goto ')) {
+      handleGotoCommand(trimmedCommand.replace('/goto ', ''));
+    } else if (trimmedCommand.startsWith('/search ')) {
+      handleSearchCommand(trimmedCommand.replace('/search ', ''));
+    } else {
+      typeText(DEFAULT_RESPONSE);
+    }
+  }, [handleHelpCommand, handleFhtagnCommand, handleGotoCommand, handleSearchCommand, typeText]);
+
 
   const showPanel = useCallback(() => {
     setIsVisible(true);
@@ -101,18 +220,25 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
     }
   }, [typeText, endHorrorMode]);
 
+  // Type pending message once speech bubble is available
+  useEffect(() => {
+    if (isVisible && speechBubbleRef.current && pendingMessageRef.current) {
+      const { message, speed, useHorror } = pendingMessageRef.current;
+      typeText(message, speed, useHorror);
+    }
+  }, [isVisible, typeText]);
+
   const hidePanel = useCallback(() => {
     setIsVisible(false);
-    if (typeIntervalRef.current) {
-      clearInterval(typeIntervalRef.current);
-      typeIntervalRef.current = null;
+    if (typedInstanceRef.current) {
+      typedInstanceRef.current.destroy();
+      typedInstanceRef.current = null;
     }
     if (horrorTimeoutRef.current) {
       clearTimeout(horrorTimeoutRef.current);
       horrorTimeoutRef.current = null;
     }
     stopFrameAnimation();
-    setDisplayedText('');
     setIsHorrorMode(false);
   }, [stopFrameAnimation]);
 
@@ -120,15 +246,48 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
     const message = inputValue.trim();
     if (!message) return;
     
+    setCommandHistory(prev => [message, ...prev]);
+    historyIndexRef.current = -1;
+    tempInputRef.current = '';
     setInputValue('');
-    typeText(DEFAULT_RESPONSE);
-  }, [inputValue, typeText]);
+    handleCommand(message);
+  }, [inputValue, handleCommand]);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleSend();
+      return;
     }
-  }, [handleSend]);
+    
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (commandHistory.length === 0) return;
+      
+      if (historyIndexRef.current === -1) {
+        tempInputRef.current = inputValue;
+      }
+      
+      const newIndex = Math.min(historyIndexRef.current + 1, commandHistory.length - 1);
+      historyIndexRef.current = newIndex;
+      setInputValue(commandHistory[newIndex]);
+      return;
+    }
+    
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (historyIndexRef.current === -1) return;
+      
+      const newIndex = historyIndexRef.current - 1;
+      historyIndexRef.current = newIndex;
+      
+      if (newIndex === -1) {
+        setInputValue(tempInputRef.current);
+      } else {
+        setInputValue(commandHistory[newIndex]);
+      }
+      return;
+    }
+  }, [handleSend, commandHistory, inputValue]);
 
   const handleDragStart = useCallback((e: MouseEvent) => {
     isDraggingRef.current = true;
@@ -151,27 +310,61 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
     isDraggingRef.current = false;
   }, []);
 
-  useEffect(() => {
-    document.addEventListener('mousemove', handleDragMove);
-    document.addEventListener('mouseup', handleDragEnd);
-    return () => {
-      document.removeEventListener('mousemove', handleDragMove);
-      document.removeEventListener('mouseup', handleDragEnd);
+  const handleResizeStart = useCallback((e: MouseEvent) => {
+    isResizingRef.current = true;
+    resizeStartRef.current = {
+      x: e.clientX,
+      y: e.clientY,
+      width: panelSize.width,
+      height: panelSize.height,
     };
-  }, [handleDragMove, handleDragEnd]);
+    e.preventDefault();
+    e.stopPropagation();
+  }, [panelSize]);
+
+  const handleResizeMove = useCallback((e: MouseEvent) => {
+    if (!isResizingRef.current) return;
+    const deltaX = resizeStartRef.current.x - e.clientX;
+    const deltaY = resizeStartRef.current.y - e.clientY;
+    setPanelSize({
+      width: Math.max(320, resizeStartRef.current.width + deltaX),
+      height: Math.max(220, resizeStartRef.current.height + deltaY),
+    });
+  }, []);
+
+  const handleResizeEnd = useCallback(() => {
+    isResizingRef.current = false;
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      handleDragMove(e);
+      handleResizeMove(e);
+    };
+    const handleMouseUp = () => {
+      handleDragEnd();
+      handleResizeEnd();
+    };
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [handleDragMove, handleDragEnd, handleResizeMove, handleResizeEnd]);
 
   useEffect(() => {
     return () => {
-      if (typeIntervalRef.current) clearInterval(typeIntervalRef.current);
+      if (typedInstanceRef.current) typedInstanceRef.current.destroy();
       if (frameIntervalRef.current) clearInterval(frameIntervalRef.current);
     };
   }, []);
 
   return (
-    <div class="sid-container">
+    <div class={styles.container}>
       {!isVisible && (
         <img 
-          class="help-icon" 
+          class={styles.helpIcon} 
           src={helpIcon} 
           alt="Help" 
           width={ICON_SIZE} 
@@ -183,20 +376,23 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
       
       {isVisible && (
         <div 
-          class="sid-panel window"
+          class={`${styles.panel} window`}
           style={{
             transform: `translate(${position.x}px, ${position.y}px)`,
+            width: `${panelSize.width}px`,
+            height: `${panelSize.height}px`,
           }}
         >
+          <div class={styles.resizeHandle} onMouseDown={handleResizeStart}></div>
           <div class="title-bar" onMouseDown={handleDragStart}>
             <div class="title-bar-text">SID Assistant</div>
             <div class="title-bar-controls">
               <button aria-label="Close" onClick={hidePanel}></button>
             </div>
           </div>
-          <div class="window-body sid-body">
-            <div class="sid-content">
-              <div class="sid-character">
+          <div class={`window-body ${styles.body}`}>
+            <div class={styles.content}>
+              <div class={styles.character}>
                 <img 
                   src={getCurrentFrame()}
                   alt="SID Assistant" 
@@ -205,11 +401,11 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
                   draggable={false}
                 />
               </div>
-              <div class="sid-speech">
-                <div class={`speech-bubble ${isHorrorMode ? 'horror' : ''}`}>{displayedText}</div>
+              <div class={styles.speech}>
+                <div ref={speechBubbleRef} class={`${styles.speechBubble} ${isHorrorMode ? styles.horror : ''}`}></div>
               </div>
             </div>
-            <div class="sid-input-area">
+            <div class={styles.inputArea}>
               <input 
                 type="text" 
                 placeholder="Type a message..."
@@ -224,141 +420,6 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
           </div>
         </div>
       )}
-
-      <style>{`
-        .sid-container {
-          position: fixed;
-          bottom: 20px;
-          right: 20px;
-          z-index: 9999;
-          font-family: var(--font-family, 'MS Sans Serif', sans-serif);
-        }
-
-        .help-icon {
-          cursor: pointer;
-          image-rendering: pixelated;
-        }
-
-        .help-icon:hover {
-          transform: scale(1.1);
-        }
-
-        .help-icon:active {
-          transform: scale(0.95);
-        }
-
-        .sid-panel {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          width: 320px;
-        }
-
-        .sid-panel .title-bar {
-          cursor: move;
-          user-select: none;
-        }
-
-        .sid-body {
-          padding: 8px;
-        }
-
-        .sid-content {
-          display: flex;
-          gap: 12px;
-          margin-bottom: 12px;
-        }
-
-        .sid-character {
-          flex-shrink: 0;
-        }
-
-        .sid-character img {
-          width: 100px;
-          height: 100px;
-          object-fit: contain;
-          image-rendering: pixelated;
-        }
-
-        .sid-speech {
-          flex-grow: 1;
-          display: flex;
-          align-items: flex-start;
-        }
-
-        .speech-bubble {
-          background: var(--info-box-bg, #ffffe1);
-          border: 1px solid var(--info-box-border, #000);
-          padding: 8px 10px;
-          position: relative;
-          width: 180px;
-          height: 80px;
-          overflow-y: auto;
-          font-size: 12px;
-          line-height: 1.4;
-          box-shadow: inset -1px -1px var(--border-dark, #0a0a0a), inset 1px 1px var(--border-light, #fff);
-          color: var(--text-color, #222);
-        }
-
-        .speech-bubble.horror {
-          background: #1a0a0a;
-          color: #ff0000;
-          overflow: visible;
-          height: auto;
-          min-height: 80px;
-          max-height: none;
-          word-break: break-all;
-          text-shadow: 0 0 10px #ff0000;
-          animation: horror-flicker 0.1s infinite;
-        }
-
-        @keyframes horror-flicker {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.8; }
-        }
-
-        .speech-bubble::before {
-          content: '';
-          position: absolute;
-          left: -10px;
-          top: 12px;
-          width: 0;
-          height: 0;
-          border-top: 8px solid transparent;
-          border-bottom: 8px solid transparent;
-          border-right: 10px solid var(--info-box-border, #000);
-        }
-
-        .speech-bubble::after {
-          content: '';
-          position: absolute;
-          left: -8px;
-          top: 13px;
-          width: 0;
-          height: 0;
-          border-top: 7px solid transparent;
-          border-bottom: 7px solid transparent;
-          border-right: 9px solid var(--info-box-bg, #ffffe1);
-        }
-
-        .sid-input-area {
-          display: flex;
-          gap: 4px;
-        }
-
-        .sid-input-area input {
-          flex-grow: 1;
-          padding: 4px;
-          font-size: 12px;
-          font-family: inherit;
-        }
-
-        .sid-input-area button {
-          padding: 4px 12px;
-          font-size: 12px;
-          font-family: inherit;
-        }
-      `}</style>
     </div>
   );
 }

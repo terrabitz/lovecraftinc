@@ -43,11 +43,6 @@
   box-sizing: border-box;
 }
 
-.detailPanel h3 {
-  margin: 0 0 12px 0;
-  font-size: 14px;
-}
-
 .detailPanel :global(.sunken-panel) {
   width: 100%;
   display: block;

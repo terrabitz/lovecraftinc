@@ -158,7 +158,6 @@ export default function DataListing({
         <div class={styles.detailPanel}>
           {selectedItem ? (
             <>
-              <h3>{selectedItem.name}</h3>
               <div class="sunken-panel">
                 <table>
                   <tbody>

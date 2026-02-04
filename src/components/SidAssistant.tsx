@@ -3,7 +3,7 @@ import Fuse from 'fuse.js';
 import Typed from 'typed.js';
 import { navigate } from 'astro:transitions/client';
 import styles from './SidAssistant.module.css';
-import { type SearchResult } from '../utils/searchContent';
+import type { SearchResult } from '../types/search';
 
 const GREETING = "Hello! How can I help you today? Type <code>/help</code> for available commands.";
 const DEFAULT_RESPONSE = "I don't know how to help you with that. Type <code>/help</code> for available commands.";

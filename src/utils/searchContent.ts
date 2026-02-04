@@ -1,12 +1,7 @@
 import { getCollection } from 'astro:content';
+import type { SearchResult } from '../types/search';
 
-export interface SearchResult {
-  id: string;
-  title: string;
-  url: string;
-  type: 'employee' | 'anomaly' | 'organization';
-  content: string;
-}
+export type { SearchResult };
 
 export async function getAllSearchableContent(): Promise<SearchResult[]> {
   const [employees, anomalies, organizations] = await Promise.all([

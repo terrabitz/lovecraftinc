@@ -24,7 +24,6 @@ export interface ColumnConfig {
 export interface DataListingProps {
   data: DataItem[];
   columns: ColumnConfig[];
-  searchPlaceholder: string;
   emptyMessage: string;
   detailEmptyMessage: string;
   detailPath: string;
@@ -36,7 +35,6 @@ type SortDirection = 'asc' | 'desc';
 export default function DataListing({
   data,
   columns,
-  searchPlaceholder,
   emptyMessage,
   detailEmptyMessage,
   detailPath,
@@ -101,8 +99,7 @@ export default function DataListing({
   return (
     <div style="width: 100%;">
       <SearchBox 
-        onSearch={setSearchQuery} 
-        placeholder={searchPlaceholder}
+        onSearch={setSearchQuery}
       />
       
       <div class={styles.listingContainer}>

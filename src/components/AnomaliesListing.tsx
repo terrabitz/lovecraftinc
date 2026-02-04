@@ -28,7 +28,6 @@ export default function AnomaliesListing({ anomalies }: AnomaliesListingProps) {
     <DataListing
       data={anomalies}
       columns={columns}
-      searchPlaceholder="Search anomalies by name, classification, status, location, or ID..."
       emptyMessage="No anomalies found matching your search."
       detailEmptyMessage="Select an anomaly to view details"
       detailPath="/anomalies"

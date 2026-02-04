@@ -3,10 +3,9 @@ import { useState } from 'preact/hooks';
 
 interface SearchBoxProps {
   onSearch: (query: string) => void;
-  placeholder?: string;
 }
 
-export default function SearchBox({ onSearch, placeholder = "Search..." }: SearchBoxProps) {
+export default function SearchBox({ onSearch }: SearchBoxProps) {
   const [query, setQuery] = useState('');
 
   const handleInput = (e: Event) => {
@@ -23,7 +22,6 @@ export default function SearchBox({ onSearch, placeholder = "Search..." }: Searc
         type="text"
         value={query}
         onInput={handleInput}
-        placeholder={placeholder}
         style="width: 300px;"
       />
     </div>

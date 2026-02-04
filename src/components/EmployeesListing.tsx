@@ -24,7 +24,6 @@ export default function EmployeesListing({ employees }: EmployeesListingProps) {
     <DataListing
       data={employees}
       columns={columns}
-      searchPlaceholder="Search employees by name, position, department, or ID..."
       emptyMessage="No employees found matching your search."
       detailEmptyMessage="Select an employee to view details"
       detailPath="/employees"

@@ -28,7 +28,6 @@ export default function OrganizationsListing({ organizations }: OrganizationsLis
     <DataListing
       data={organizations}
       columns={columns}
-      searchPlaceholder="Search organizations by name, type, relationship, location, or ID..."
       emptyMessage="No organizations found matching your search."
       detailEmptyMessage="Select an organization to view details"
       detailPath="/organizations"

@@ -24,7 +24,7 @@ export async function getAllSearchableContent(): Promise<SearchResult[]> {
     results.push({
       id: employee.data.id,
       title: employee.data.name,
-      url: `/employees/${employee.slug}`,
+      url: `/employees/${employee.data.id.toUpperCase()}`,
       type: 'employee',
       content,
     });
@@ -37,7 +37,7 @@ export async function getAllSearchableContent(): Promise<SearchResult[]> {
     results.push({
       id: anomaly.data.id,
       title: anomaly.data.name,
-      url: `/anomalies/${anomaly.slug}`,
+      url: `/anomalies/${anomaly.data.id.toUpperCase()}`,
       type: 'anomaly',
       content,
     });
@@ -50,7 +50,7 @@ export async function getAllSearchableContent(): Promise<SearchResult[]> {
     results.push({
       id: organization.data.id,
       title: organization.data.name,
-      url: `/organizations/${organization.slug}`,
+      url: `/organizations/${organization.data.id.toUpperCase()}`,
       type: 'organization',
       content,
     });

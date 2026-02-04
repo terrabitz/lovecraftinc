@@ -1,0 +1,101 @@
+/* DataListing component styles */
+.listingContainer {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.tableWrapper {
+  flex: 1;
+  overflow-x: auto;
+  min-width: 0;
+}
+
+.listingTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.listingTable tbody tr {
+  transition: background-color 0.1s;
+}
+
+.listingTable tbody tr:hover {
+  background-color: var(--surface-dark);
+}
+
+.listingTable tbody tr.selected {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+.detailPanel {
+  flex-shrink: 0;
+  width: 350px;
+  min-width: 300px;
+  max-width: 100%;
+  padding: 12px;
+  position: sticky;
+  top: 12px;
+  min-height: 200px;
+  box-sizing: border-box;
+}
+
+.detailPanel :global(.sunken-panel) {
+  width: 100%;
+  display: block;
+  margin-bottom: 12px;
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
+.detailPanel :global(.sunken-panel) table {
+  width: 100%;
+  table-layout: fixed;
+  word-wrap: break-word;
+}
+
+.detailActions {
+  margin-top: 0;
+}
+
+.detailEmpty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  color: grey;
+  font-style: italic;
+  text-align: center;
+}
+
+/* Responsive column hiding */
+@media (max-width: 768px) {
+  .hideMobile {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hideTablet {
+    display: none;
+  }
+}
+
+/* Mobile layout - stack vertically */
+@media (max-width: 768px) {
+  .listingContainer {
+    flex-direction: column;
+  }
+  
+  .tableWrapper {
+    width: 100%;
+  }
+  
+  .detailPanel {
+    width: 100%;
+    position: static;
+  }
+}

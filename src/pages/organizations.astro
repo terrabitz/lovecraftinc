@@ -1,48 +1,23 @@
 ---
 import { getCollection } from 'astro:content';
-import Card from '../components/Card.astro';
-import Table from '../components/Table.astro';
 import ContentLayout from '../layouts/ContentLayout.astro';
+import OrganizationsListing from '../components/OrganizationsListing';
 
 const organizations = await getCollection('organizations');
+const organizationsData = organizations.map(org => ({
+  id: org.data.id,
+  name: org.data.name,
+  type: org.data.type,
+  relationship: org.data.relationship,
+  established: org.data.established,
+  location: org.data.location,
+}));
 ---
 
 <ContentLayout title="Eidolon Capital Intranet - Organizations">
-  <h1>Partner Organizations</h1>
+  <h1 style="font-size: clamp(24px, 8vw, 48px);">Partner Organizations</h1>
 
-  <div class="grid">
-    {organizations.map((org) => (
-      <Card title={org.data.name}>
-        <Table>
-          <tbody>
-            <tr>
-              <td><strong>Organization ID:</strong></td>
-              <td>{org.data.id}</td>
-            </tr>
-            <tr>
-              <td><strong>Type:</strong></td>
-              <td>{org.data.type}</td>
-            </tr>
-            <tr>
-              <td><strong>Relationship:</strong></td>
-              <td>{org.data.relationship}</td>
-            </tr>
-            <tr>
-              <td><strong>Established:</strong></td>
-              <td>{org.data.established}</td>
-            </tr>
-            <tr>
-              <td><strong>Location:</strong></td>
-              <td>{org.data.location}</td>
-            </tr>
-          </tbody>
-        </Table>
-        <a href={`/organizations/${org.data.id.toUpperCase()}`} slot="bottom">
-          <button>View Profile</button>
-        </a>
-      </Card>
-    ))}
-  </div>
+  <OrganizationsListing organizations={organizationsData} client:load />
 
   <hr>
 </ContentLayout>

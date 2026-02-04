@@ -26,12 +26,13 @@ interface SidAssistantProps {
   frames: string[];
   horrorFrames: string[];
   helpIcon: string;
+  searchContent: SearchResult[];
 }
 const HORROR_TEXT = `Ḯ̵̧̳̯͔͇̦̪̰̳̖͎̞̍͛̑͐̈́͘͝͝ ̷̡̳̬̹̝͖̹̗̻̬̟̣̱̮̓ẅ̶̢̨̛̠̼̬̖͇̫̺̲̩̣͔Í̶̢̩̘̯͙̖̳̈̇͑̃͑̑̅̒̈̇͌̕͘͝L̵̮̺̖̜̣̗̻̟͕̖̘͍̋̎̽͂́̃̆̏́̈́͐͜͠͝L̷̡̡̨̛̹̺̬͇̞̦̈̏̒̓̌́̀̔͋̑̕ ̶̢̳͙̯̤̜̗͕̐̏́̚Ñ̸̹͔̘̫̠̗̼̞̩͚̦̩͔̔̈́̉̇͆̀͐́̕̕͜Ö̴̡͓̭̱̲̩̫̫̘͕̱́͋̌̈́̈̾T̸̤̻̮̱̙̰̭̬̼̘̲̺̼̝̄̆͐̇̃͘ ̸̧̨̬͚͇̩̖̩͖͇̫̣͛̑̔̌̆͋̈̆̍̎̓͘̕͠B̵̨̙̳̻̞̜̫͉̜̝̬̝̳͚̌̏͛̀̎͑͑̀̂̑́͗̚̚E̷̡̡̦̭͔̪̺̥͚͍̯̼̗̐̈͛͆ͅ ̶͇̥̬̰̝͙͔̪̈́͐̈̿̀͊́̓̊̅͗̽͐̕͠C̷̤̹̼̮̰̩̰̫̣̜͊̏ͅO̸͓̪̰̞̞̙̣̬͇̠̤̎̌N̷͖̂̔̏̔͋͆̚͝T̷̢̰̟̦͇̭̰͔̜͍͓̱͍͖̅̓̂̐̊̈̀̅̏͌̓͠A̴͓͓̙͔̽̌̈́̾Ỉ̴̛̼̝̫͖̩̤͕̲̃̊̄̉̽̀̿͆̐̚͝N̶͚̞͚͚̫̳̲͉̠͇̦̣̲̼̱̉̄̇̃͋͗͐̔E̴̟͕̔̈́͗͋͐͑͆͂̕͘͘ͅD̷͈͓͉͌̎́̆̅͋̂̑̽́̃̚͝͝`;
 
 
 
-export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssistantProps) {
+export default function SidAssistant({ frames, horrorFrames, helpIcon, searchContent }: SidAssistantProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [displayedText, setDisplayedText] = useState('');
   const [frameIndex, setFrameIndex] = useState(0);
@@ -39,7 +40,6 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHorrorMode, setIsHorrorMode] = useState(false);
   const [searchIndex, setSearchIndex] = useState<Fuse<SearchResult> | null>(null);
-  const [isLoadingContent, setIsLoadingContent] = useState(false);
   
   const typeIntervalRef = useRef<number | null>(null);
   const frameIntervalRef = useRef<number | null>(null);
@@ -49,6 +49,18 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
   const charIndexRef = useRef(0);
   const isDraggingRef = useRef(false);
   const dragOffsetRef = useRef({ x: 0, y: 0 });
+
+  // Initialize search index on mount
+  useEffect(() => {
+    if (searchContent && !searchIndex) {
+      const fuse = new Fuse(searchContent, {
+        keys: ['title', 'description'],
+        threshold: 0.3,
+        includeScore: true,
+      });
+      setSearchIndex(fuse);
+    }
+  }, [searchContent, searchIndex]);
 
   const stopFrameAnimation = useCallback(() => {
     if (frameIntervalRef.current) {
@@ -102,26 +114,6 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
     typeText(GREETING);
   }, [stopFrameAnimation, typeText]);
 
-  const loadSearchContent = useCallback(async () => {
-    if (searchIndex || isLoadingContent) return;
-    
-    setIsLoadingContent(true);
-    try {
-      const response = await fetch('/api/search-content.json');
-      const content: SearchResult[] = await response.json();
-      const fuse = new Fuse(content, {
-        keys: ['title', 'description'],
-        threshold: 0.3,
-        includeScore: true,
-      });
-      setSearchIndex(fuse);
-    } catch (error) {
-      console.error('Failed to load search content:', error);
-    } finally {
-      setIsLoadingContent(false);
-    }
-  }, [searchIndex, isLoadingContent]);
-
   const handleCommand = useCallback((command: string) => {
     const trimmedCommand = command.trim();
     
@@ -149,8 +141,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
       }
       
       if (!searchIndex) {
-        typeText("Loading search index, please try again in a moment...");
-        loadSearchContent();
+        typeText("Search index not available. Please refresh the page.");
         return;
       }
       
@@ -173,7 +164,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
     
     // Unknown command
     typeText(DEFAULT_RESPONSE);
-  }, [searchIndex, typeText, loadSearchContent, endHorrorMode]);
+  }, [searchIndex, typeText, endHorrorMode]);
 
 
   const showPanel = useCallback(() => {

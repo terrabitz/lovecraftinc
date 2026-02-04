@@ -4,6 +4,7 @@ import SidAssistant from '../components/SidAssistant.tsx';
 import DarkModeToggle from '../components/DarkModeToggle.astro';
 import { getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import { getAllSearchableContent } from '../utils/searchContent';
 
 import sidFrame1Src from '../assets/SID/SID - Frame 1.png';
 import sidFrame2Src from '../assets/SID/SID - Frame 2.png';
@@ -20,6 +21,7 @@ async function getOptimizedImage(src: ImageMetadata): Promise<string> {
 const sidFrames = await Promise.all([sidFrame1Src, sidFrame2Src].map(getOptimizedImage));
 const sidHorrorFrames = await Promise.all([sidHorror1Src, sidHorror2Src].map(getOptimizedImage));
 const sidHelpIcon = await getOptimizedImage(helpIconSrc);
+const searchContent = await getAllSearchableContent();
 
 const { title = "Eidolon Capital Intranet" } = Astro.props;
 const pathname = Astro.url.pathname;
@@ -52,7 +54,8 @@ const pathname = Astro.url.pathname;
   <SidAssistant 
     frames={sidFrames} 
     horrorFrames={sidHorrorFrames} 
-    helpIcon={sidHelpIcon} 
+    helpIcon={sidHelpIcon}
+    searchContent={searchContent}
     client:load 
     transition:persist 
   />

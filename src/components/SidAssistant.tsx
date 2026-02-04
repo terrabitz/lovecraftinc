@@ -183,7 +183,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
     let responseText = `Found ${results.length} result(s) for "${query}":\n\n`;
     results.forEach((result, index) => {
       const item = result.item;
-      responseText += `${index + 1}. <a href="${item.url}">${item.title}</a>\n\n`;
+      responseText += `${index + 1}. [<a href="${item.url}" data-tooltip="${item.title}">${item.id}</a>]\n`;
     });
     
     typeText(responseText);

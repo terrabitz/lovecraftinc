@@ -39,6 +39,8 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
   const [isHorrorMode, setIsHorrorMode] = useState(false);
   const [searchIndex, setSearchIndex] = useState<Fuse<SearchResult> | null>(null);
   
+  const [commandHistory, setCommandHistory] = useState<string[]>([]);
+  
   const typedInstanceRef = useRef<Typed | null>(null);
   const speechBubbleRef = useRef<HTMLDivElement>(null);
   const frameIntervalRef = useRef<number | null>(null);
@@ -50,6 +52,8 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
   const dragOffsetRef = useRef({ x: 0, y: 0 });
   const resizeStartRef = useRef({ x: 0, y: 0, width: 320, height: 220 });
   const searchContentRef = useRef<SearchResult[]>([]);
+  const historyIndexRef = useRef(-1);
+  const tempInputRef = useRef('');
 
   // Eagerly fetch search content on mount (non-blocking)
   useEffect(() => {
@@ -240,6 +244,9 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
     const message = inputValue.trim();
     if (!message) return;
     
+    setCommandHistory(prev => [message, ...prev]);
+    historyIndexRef.current = -1;
+    tempInputRef.current = '';
     setInputValue('');
     handleCommand(message);
   }, [inputValue, handleCommand]);
@@ -247,8 +254,38 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleSend();
+      return;
     }
-  }, [handleSend]);
+    
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (commandHistory.length === 0) return;
+      
+      if (historyIndexRef.current === -1) {
+        tempInputRef.current = inputValue;
+      }
+      
+      const newIndex = Math.min(historyIndexRef.current + 1, commandHistory.length - 1);
+      historyIndexRef.current = newIndex;
+      setInputValue(commandHistory[newIndex]);
+      return;
+    }
+    
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (historyIndexRef.current === -1) return;
+      
+      const newIndex = historyIndexRef.current - 1;
+      historyIndexRef.current = newIndex;
+      
+      if (newIndex === -1) {
+        setInputValue(tempInputRef.current);
+      } else {
+        setInputValue(commandHistory[newIndex]);
+      }
+      return;
+    }
+  }, [handleSend, commandHistory, inputValue]);
 
   const handleDragStart = useCallback((e: MouseEvent) => {
     isDraggingRef.current = true;

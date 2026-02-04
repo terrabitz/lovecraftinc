@@ -58,10 +58,10 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
     if (searchContent && !searchIndex) {
       const fuse = new Fuse(searchContent, {
         keys: [
-          { name: 'title', weight: 2 },     // Higher weight for title
-          { name: 'content', weight: 1 }    // Lower weight for content
+          { name: 'title', weight: 2 },     // Higher weight for title matches
+          { name: 'content', weight: 1 }    // Lower weight for content matches
         ],
-        threshold: 0.4,
+        threshold: 0.4,  // Slightly relaxed threshold for content search
         includeScore: true,
       });
       setSearchIndex(fuse);
@@ -146,7 +146,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
         return;
       }
       
-      const item = searchContentRef.current.find(item => item.id === id);
+      const item = searchContentRef.current.find(item => item.id.toUpperCase() === id);
       
       if (!item) {
         typeText(`No article found with ID "${id}"`);

@@ -1,5 +1,4 @@
 import { getCollection } from 'astro:content';
-import Fuse from 'fuse.js';
 
 export interface SearchResult {
   title: string;
@@ -48,17 +47,4 @@ export async function getAllSearchableContent(): Promise<SearchResult[]> {
   }
 
   return results;
-}
-
-export function createSearchIndex(content: SearchResult[]) {
-  return new Fuse(content, {
-    keys: ['title', 'description'],
-    threshold: 0.3,
-    includeScore: true,
-  });
-}
-
-export function searchContent(query: string, searchIndex: Fuse<SearchResult>): SearchResult[] {
-  const results = searchIndex.search(query);
-  return results.slice(0, 5).map(result => result.item);
 }

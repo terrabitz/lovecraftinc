@@ -13,10 +13,10 @@ interface EmployeesListingProps {
 }
 
 const columns: ColumnConfig[] = [
-  { key: 'id', label: 'ID', showInDetail: true },
-  { key: 'name', label: 'Name', showInDetail: true },
-  { key: 'position', label: 'Position', hideOnMobile: true, showInDetail: true },
-  { key: 'department', label: 'Department', hideOnTablet: true, showInDetail: true },
+  { key: 'id', label: 'ID', detailLabel: 'ID:', showInDetail: true },
+  { key: 'name', label: 'Name', detailLabel: 'Name:', showInDetail: true },
+  { key: 'position', label: 'Position', detailLabel: 'Position:', hideOnMobile: true, showInDetail: true },
+  { key: 'department', label: 'Department', detailLabel: 'Department:', hideOnTablet: true, showInDetail: true },
 ];
 
 export default function EmployeesListing({ employees }: EmployeesListingProps) {

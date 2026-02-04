@@ -14,6 +14,7 @@ export interface DataItem {
 export interface ColumnConfig {
   key: string;
   label: string;
+  detailLabel?: string;  // Optional label for detail panel (defaults to label)
   hideOnMobile?: boolean;
   hideOnTablet?: boolean;
   sortable?: boolean;
@@ -163,7 +164,7 @@ export default function DataListing({
                   <tbody>
                     {detailColumns.map(column => (
                       <tr key={column.key}>
-                        <td><strong>{column.label}</strong></td>
+                        <td><strong>{column.detailLabel || column.label}</strong></td>
                         <td>{String(selectedItem[column.key])}</td>
                       </tr>
                     ))}

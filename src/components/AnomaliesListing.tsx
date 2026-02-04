@@ -15,12 +15,12 @@ interface AnomaliesListingProps {
 }
 
 const columns: ColumnConfig[] = [
-  { key: 'id', label: 'ID', showInDetail: true },
-  { key: 'name', label: 'Name', showInDetail: true },
-  { key: 'classification', label: 'Classification', hideOnMobile: true, showInDetail: true },
-  { key: 'status', label: 'Status', hideOnTablet: true, showInDetail: true },
-  { key: 'discoveryDate', label: 'Discovery Date', showInTable: false, showInDetail: true },
-  { key: 'location', label: 'Location', showInTable: false, showInDetail: true },
+  { key: 'id', label: 'ID', detailLabel: 'ID:', showInDetail: true },
+  { key: 'name', label: 'Name', detailLabel: 'Name:', showInDetail: true },
+  { key: 'classification', label: 'Classification', detailLabel: 'Classification:', hideOnMobile: true, showInDetail: true },
+  { key: 'status', label: 'Status', detailLabel: 'Status:', hideOnTablet: true, showInDetail: true },
+  { key: 'discoveryDate', label: 'Discovery Date', detailLabel: 'Discovery Date:', showInTable: false, showInDetail: true },
+  { key: 'location', label: 'Location', detailLabel: 'Location:', showInTable: false, showInDetail: true },
 ];
 
 export default function AnomaliesListing({ anomalies }: AnomaliesListingProps) {

@@ -250,7 +250,7 @@ import styles from './Component.module.css';
 
 // TypeScript knows about all classes in the module
 <div class={styles.container}>  // ✅ Autocomplete works
-<div class={styles.contaner}>   // ❌ Type error: typo detected
+<div class={styles.container}>  // ❌ Type error: typo detected (if misspelled)
 ```
 
 ## When NOT to Use CSS Modules

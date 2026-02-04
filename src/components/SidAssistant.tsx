@@ -18,7 +18,9 @@ const HORROR_CHANCE = .1;
 const HELP_TEXT = `Available commands:
 <code>/help</code> - Show this help message
 <code>/search &lt;query&gt;</code> - Search all content
-<code>/goto &lt;id&gt;</code> - Navigate directly to an article by ID`;
+<code>/goto &lt;id&gt;</code> - Navigate directly to an article by ID
+
+You can use the arrow keys to navigate command history`;
 
 
 interface SidAssistantProps {

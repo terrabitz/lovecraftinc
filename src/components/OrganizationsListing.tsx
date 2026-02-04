@@ -15,12 +15,12 @@ interface OrganizationsListingProps {
 }
 
 const columns: ColumnConfig[] = [
-  { key: 'id', label: 'ID', detailLabel: 'ID:', showInDetail: true },
-  { key: 'name', label: 'Name', detailLabel: 'Name:', showInDetail: true },
-  { key: 'type', label: 'Type', detailLabel: 'Type:', hideOnMobile: true, showInDetail: true },
-  { key: 'relationship', label: 'Relationship', detailLabel: 'Relationship:', hideOnTablet: true, showInDetail: true },
-  { key: 'established', label: 'Established', detailLabel: 'Established:', showInTable: false, showInDetail: true },
-  { key: 'location', label: 'Location', detailLabel: 'Location:', showInTable: false, showInDetail: true },
+  { key: 'id', label: 'ID' },
+  { key: 'name', label: 'Name' },
+  { key: 'type', label: 'Type', hideOnMobile: true },
+  { key: 'relationship', label: 'Relationship', hideOnTablet: true },
+  { key: 'established', label: 'Established', showInTable: false },
+  { key: 'location', label: 'Location', showInTable: false },
 ];
 
 export default function OrganizationsListing({ organizations }: OrganizationsListingProps) {

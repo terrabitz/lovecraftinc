@@ -14,12 +14,11 @@ export interface DataItem {
 export interface ColumnConfig {
   key: string;
   label: string;
-  detailLabel?: string;  // Optional label for detail panel (defaults to label)
+  detailLabel?: string;  // Optional label for detail panel (defaults to label with colon)
   hideOnMobile?: boolean;
   hideOnTablet?: boolean;
   sortable?: boolean;
   showInTable?: boolean;  // Whether to show in table (default: true)
-  showInDetail?: boolean; // Whether to show in detail panel (default: false for id/name)
 }
 
 export interface DataListingProps {
@@ -51,8 +50,8 @@ export default function DataListing({
   // Filter columns for table display (default: showInTable !== false)
   const tableColumns = columns.filter(col => col.showInTable !== false);
   
-  // Filter columns for detail display (showInDetail === true)
-  const detailColumns = columns.filter(col => col.showInDetail === true);
+  // All columns are shown in detail panel
+  const detailColumns = columns;
 
   const handleSort = (field: string) => {
     if (sortField === field) {
@@ -164,7 +163,7 @@ export default function DataListing({
                   <tbody>
                     {detailColumns.map(column => (
                       <tr key={column.key}>
-                        <td><strong>{column.detailLabel || column.label}</strong></td>
+                        <td><strong>{column.detailLabel || (column.label + ':')}</strong></td>
                         <td>{String(selectedItem[column.key])}</td>
                       </tr>
                     ))}

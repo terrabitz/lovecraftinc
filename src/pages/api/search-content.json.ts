@@ -1,13 +1,6 @@
-import type { APIRoute } from 'astro';
 import { getAllSearchableContent } from '../../utils/searchContent';
 
-export const GET: APIRoute = async () => {
+export async function GET() {
   const content = await getAllSearchableContent();
-  
-  return new Response(JSON.stringify(content), {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-};
+  return new Response(JSON.stringify(content));
+}

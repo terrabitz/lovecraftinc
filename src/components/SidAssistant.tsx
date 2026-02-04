@@ -16,8 +16,8 @@ const HORROR_CHANCE = .1;
 
 const HELP_TEXT = `Available commands:
 <code>/help</code> - Show this help message
-<code>/search &lt;query&gt;</code> - Search all content (employees, anomalies, organizations)
-<code>/goto &lt;id&gt;</code> - Navigate directly to an article by ID (e.g., <code>/goto EID-EMP-001</code>)`;
+<code>/search &lt;query&gt;</code> - Search all content
+<code>/goto &lt;id&gt;</code> - Navigate directly to an article by ID`;
 
 interface SearchResult {
   id: string;
@@ -42,6 +42,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
   const [frameIndex, setFrameIndex] = useState(0);
   const [inputValue, setInputValue] = useState('');
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [panelSize, setPanelSize] = useState({ width: 320, height: 220 });
   const [isHorrorMode, setIsHorrorMode] = useState(false);
   const [searchIndex, setSearchIndex] = useState<Fuse<SearchResult> | null>(null);
   
@@ -52,7 +53,9 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
   const horrorShownRef = useRef(false);
   const pendingMessageRef = useRef<{ message: string; speed: number; useHorror: boolean } | null>(null);
   const isDraggingRef = useRef(false);
+  const isResizingRef = useRef(false);
   const dragOffsetRef = useRef({ x: 0, y: 0 });
+  const resizeStartRef = useRef({ x: 0, y: 0, width: 320, height: 220 });
   const searchContentRef = useRef<SearchResult[]>(searchContent);
 
   // Update searchContentRef when prop changes
@@ -276,14 +279,48 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
     isDraggingRef.current = false;
   }, []);
 
-  useEffect(() => {
-    document.addEventListener('mousemove', handleDragMove);
-    document.addEventListener('mouseup', handleDragEnd);
-    return () => {
-      document.removeEventListener('mousemove', handleDragMove);
-      document.removeEventListener('mouseup', handleDragEnd);
+  const handleResizeStart = useCallback((e: MouseEvent) => {
+    isResizingRef.current = true;
+    resizeStartRef.current = {
+      x: e.clientX,
+      y: e.clientY,
+      width: panelSize.width,
+      height: panelSize.height,
     };
-  }, [handleDragMove, handleDragEnd]);
+    e.preventDefault();
+    e.stopPropagation();
+  }, [panelSize]);
+
+  const handleResizeMove = useCallback((e: MouseEvent) => {
+    if (!isResizingRef.current) return;
+    const deltaX = resizeStartRef.current.x - e.clientX;
+    const deltaY = resizeStartRef.current.y - e.clientY;
+    setPanelSize({
+      width: Math.max(320, resizeStartRef.current.width + deltaX),
+      height: Math.max(220, resizeStartRef.current.height + deltaY),
+    });
+  }, []);
+
+  const handleResizeEnd = useCallback(() => {
+    isResizingRef.current = false;
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      handleDragMove(e);
+      handleResizeMove(e);
+    };
+    const handleMouseUp = () => {
+      handleDragEnd();
+      handleResizeEnd();
+    };
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [handleDragMove, handleDragEnd, handleResizeMove, handleResizeEnd]);
 
   useEffect(() => {
     return () => {
@@ -311,8 +348,11 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
           class={`${styles.panel} window`}
           style={{
             transform: `translate(${position.x}px, ${position.y}px)`,
+            width: `${panelSize.width}px`,
+            height: `${panelSize.height}px`,
           }}
         >
+          <div class={styles.resizeHandle} onMouseDown={handleResizeStart}></div>
           <div class="title-bar" onMouseDown={handleDragStart}>
             <div class="title-bar-text">SID Assistant</div>
             <div class="title-bar-controls">

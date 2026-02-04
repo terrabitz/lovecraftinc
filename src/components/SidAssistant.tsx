@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks';
 import Fuse from 'fuse.js';
+import { navigate } from 'astro:transitions/client';
 
 const GREETING = "Hello! How can I help you today? Type /help for available commands.";
 const DEFAULT_RESPONSE = "I don't know how to help you with that. Type /help for available commands.";
@@ -66,8 +67,10 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
           { name: 'title', weight: 2 },     // Higher weight for title matches
           { name: 'content', weight: 1 }    // Lower weight for content matches
         ],
-        threshold: 0.4,  // Slightly relaxed threshold for content search
+        threshold: 0.3,  // Balanced threshold for fuzzy matching
         includeScore: true,
+        ignoreLocation: true,  // Search entire text, not just beginning
+        minMatchCharLength: 3,  // Minimum match length
       });
       setSearchIndex(fuse);
     }
@@ -187,7 +190,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
       let responseText = `Found ${results.length} result(s) for "${query}":\n\n`;
       results.forEach((result, index) => {
         const item = result.item;
-        responseText += `${index + 1}. ${item.title} (${item.id})\n`;
+        responseText += `${index + 1}. ${item.title}\n   ID: ${item.id} (use /goto ${item.id})\n\n`;
       });
       
       typeText(responseText);

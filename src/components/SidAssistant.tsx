@@ -158,8 +158,8 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
         return;
       }
       
-      // Navigate to the article
-      window.location.href = item.url;
+      // Navigate to the article using Astro's client-side router
+      navigate(item.url);
       return;
     }
     

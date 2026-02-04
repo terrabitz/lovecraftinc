@@ -190,7 +190,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
       let responseText = `Found ${results.length} result(s) for "${query}":\n\n`;
       results.forEach((result, index) => {
         const item = result.item;
-        responseText += `${index + 1}. ${item.title}\n   ID: ${item.id} (use /goto ${item.id})\n\n`;
+        responseText += `${index + 1}. ${item.title}\n   ${item.url}\n\n`;
       });
       
       typeText(responseText);

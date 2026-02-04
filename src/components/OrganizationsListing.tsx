@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import DataListing, { type ColumnConfig, type DetailField } from './DataListing';
+import DataListing, { type ColumnConfig } from './DataListing';
 
 interface Organization {
   id: string;
@@ -15,18 +15,12 @@ interface OrganizationsListingProps {
 }
 
 const columns: ColumnConfig[] = [
-  { key: 'id', label: 'ID' },
-  { key: 'name', label: 'Name' },
-  { key: 'type', label: 'Type', hideOnMobile: true },
-  { key: 'relationship', label: 'Relationship', hideOnTablet: true },
-];
-
-const detailFields: DetailField[] = [
-  { key: 'id', label: 'Organization ID:' },
-  { key: 'type', label: 'Type:' },
-  { key: 'relationship', label: 'Relationship:' },
-  { key: 'established', label: 'Established:' },
-  { key: 'location', label: 'Location:' },
+  { key: 'id', label: 'ID', showInDetail: true },
+  { key: 'name', label: 'Name', showInDetail: true },
+  { key: 'type', label: 'Type', hideOnMobile: true, showInDetail: true },
+  { key: 'relationship', label: 'Relationship', hideOnTablet: true, showInDetail: true },
+  { key: 'established', label: 'Established', showInTable: false, showInDetail: true },
+  { key: 'location', label: 'Location', showInTable: false, showInDetail: true },
 ];
 
 export default function OrganizationsListing({ organizations }: OrganizationsListingProps) {
@@ -34,7 +28,6 @@ export default function OrganizationsListing({ organizations }: OrganizationsLis
     <DataListing
       data={organizations}
       columns={columns}
-      detailFields={detailFields}
       searchPlaceholder="Search organizations by name, type, relationship, location, or ID..."
       emptyMessage="No organizations found matching your search."
       detailEmptyMessage="Select an organization to view details"

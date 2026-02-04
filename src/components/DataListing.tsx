@@ -17,18 +17,13 @@ export interface ColumnConfig {
   hideOnMobile?: boolean;
   hideOnTablet?: boolean;
   sortable?: boolean;
-}
-
-// Detail field configuration for the detail panel
-export interface DetailField {
-  key: string;
-  label: string;
+  showInTable?: boolean;  // Whether to show in table (default: true)
+  showInDetail?: boolean; // Whether to show in detail panel (default: false for id/name)
 }
 
 export interface DataListingProps {
   data: DataItem[];
   columns: ColumnConfig[];
-  detailFields: DetailField[];
   searchPlaceholder: string;
   emptyMessage: string;
   detailEmptyMessage: string;
@@ -41,7 +36,6 @@ type SortDirection = 'asc' | 'desc';
 export default function DataListing({
   data,
   columns,
-  detailFields,
   searchPlaceholder,
   emptyMessage,
   detailEmptyMessage,
@@ -52,6 +46,12 @@ export default function DataListing({
   const [sortField, setSortField] = useState<string>('id');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [selectedItem, setSelectedItem] = useState<DataItem | null>(null);
+
+  // Filter columns for table display (default: showInTable !== false)
+  const tableColumns = columns.filter(col => col.showInTable !== false);
+  
+  // Filter columns for detail display (showInDetail === true)
+  const detailColumns = columns.filter(col => col.showInDetail === true);
 
   const handleSort = (field: string) => {
     if (sortField === field) {
@@ -110,7 +110,7 @@ export default function DataListing({
           <table class={styles.listingTable}>
             <thead>
               <tr>
-                {columns.map(column => (
+                {tableColumns.map(column => (
                   <th 
                     key={column.key}
                     class={`${column.hideOnMobile ? styles.hideMobile : ''} ${column.hideOnTablet ? styles.hideTablet : ''}`.trim()}
@@ -128,7 +128,7 @@ export default function DataListing({
             <tbody>
               {filteredAndSortedData.length === 0 ? (
                 <tr>
-                  <td colSpan={columns.length} style="text-align: center; padding: 20px;">
+                  <td colSpan={tableColumns.length} style="text-align: center; padding: 20px;">
                     {emptyMessage}
                   </td>
                 </tr>
@@ -140,7 +140,7 @@ export default function DataListing({
                     onClick={() => setSelectedItem(item)}
                     style="cursor: pointer;"
                   >
-                    {columns.map(column => (
+                    {tableColumns.map(column => (
                       <td 
                         key={column.key}
                         class={`${column.hideOnMobile ? styles.hideMobile : ''} ${column.hideOnTablet ? styles.hideTablet : ''}`.trim()}
@@ -161,10 +161,10 @@ export default function DataListing({
               <div class="sunken-panel">
                 <table>
                   <tbody>
-                    {detailFields.map(field => (
-                      <tr key={field.key}>
-                        <td><strong>{field.label}</strong></td>
-                        <td>{String(selectedItem[field.key])}</td>
+                    {detailColumns.map(column => (
+                      <tr key={column.key}>
+                        <td><strong>{column.label}</strong></td>
+                        <td>{String(selectedItem[column.key])}</td>
                       </tr>
                     ))}
                   </tbody>

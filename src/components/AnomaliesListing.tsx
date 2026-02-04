@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import DataListing, { type ColumnConfig, type DetailField } from './DataListing';
+import DataListing, { type ColumnConfig } from './DataListing';
 
 interface Anomaly {
   id: string;
@@ -15,18 +15,12 @@ interface AnomaliesListingProps {
 }
 
 const columns: ColumnConfig[] = [
-  { key: 'id', label: 'ID' },
-  { key: 'name', label: 'Name' },
-  { key: 'classification', label: 'Classification', hideOnMobile: true },
-  { key: 'status', label: 'Status', hideOnTablet: true },
-];
-
-const detailFields: DetailField[] = [
-  { key: 'id', label: 'Anomaly ID:' },
-  { key: 'classification', label: 'Classification:' },
-  { key: 'status', label: 'Status:' },
-  { key: 'discoveryDate', label: 'Discovery Date:' },
-  { key: 'location', label: 'Location:' },
+  { key: 'id', label: 'ID', showInDetail: true },
+  { key: 'name', label: 'Name', showInDetail: true },
+  { key: 'classification', label: 'Classification', hideOnMobile: true, showInDetail: true },
+  { key: 'status', label: 'Status', hideOnTablet: true, showInDetail: true },
+  { key: 'discoveryDate', label: 'Discovery Date', showInTable: false, showInDetail: true },
+  { key: 'location', label: 'Location', showInTable: false, showInDetail: true },
 ];
 
 export default function AnomaliesListing({ anomalies }: AnomaliesListingProps) {
@@ -34,7 +28,6 @@ export default function AnomaliesListing({ anomalies }: AnomaliesListingProps) {
     <DataListing
       data={anomalies}
       columns={columns}
-      detailFields={detailFields}
       searchPlaceholder="Search anomalies by name, classification, status, location, or ID..."
       emptyMessage="No anomalies found matching your search."
       detailEmptyMessage="Select an anomaly to view details"

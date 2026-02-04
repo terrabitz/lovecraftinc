@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import DataListing, { type ColumnConfig, type DetailField } from './DataListing';
+import DataListing, { type ColumnConfig } from './DataListing';
 
 interface Employee {
   id: string;
@@ -13,16 +13,10 @@ interface EmployeesListingProps {
 }
 
 const columns: ColumnConfig[] = [
-  { key: 'id', label: 'ID' },
-  { key: 'name', label: 'Name' },
-  { key: 'position', label: 'Position', hideOnMobile: true },
-  { key: 'department', label: 'Department', hideOnTablet: true },
-];
-
-const detailFields: DetailField[] = [
-  { key: 'id', label: 'Employee ID:' },
-  { key: 'position', label: 'Position:' },
-  { key: 'department', label: 'Department:' },
+  { key: 'id', label: 'ID', showInDetail: true },
+  { key: 'name', label: 'Name', showInDetail: true },
+  { key: 'position', label: 'Position', hideOnMobile: true, showInDetail: true },
+  { key: 'department', label: 'Department', hideOnTablet: true, showInDetail: true },
 ];
 
 export default function EmployeesListing({ employees }: EmployeesListingProps) {
@@ -30,7 +24,6 @@ export default function EmployeesListing({ employees }: EmployeesListingProps) {
     <DataListing
       data={employees}
       columns={columns}
-      detailFields={detailFields}
       searchPlaceholder="Search employees by name, position, department, or ID..."
       emptyMessage="No employees found matching your search."
       detailEmptyMessage="Select an employee to view details"

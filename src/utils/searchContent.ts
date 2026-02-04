@@ -1,10 +1,11 @@
 import { getCollection } from 'astro:content';
 
 export interface SearchResult {
+  id: string;
   title: string;
-  description: string;
   url: string;
   type: 'employee' | 'anomaly' | 'organization';
+  content: string;
 }
 
 export async function getAllSearchableContent(): Promise<SearchResult[]> {
@@ -18,31 +19,40 @@ export async function getAllSearchableContent(): Promise<SearchResult[]> {
 
   // Add employees
   for (const employee of employees) {
+    const content = employee.body || '';
+    
     results.push({
+      id: employee.data.id,
       title: employee.data.name,
-      description: `${employee.data.position} - ${employee.data.department}`,
       url: `/employees/${employee.slug}`,
       type: 'employee',
+      content,
     });
   }
 
   // Add anomalies
   for (const anomaly of anomalies) {
+    const content = anomaly.body || '';
+    
     results.push({
+      id: anomaly.data.id,
       title: anomaly.data.name,
-      description: `${anomaly.data.classification} - ${anomaly.data.status}`,
       url: `/anomalies/${anomaly.slug}`,
       type: 'anomaly',
+      content,
     });
   }
 
   // Add organizations
   for (const organization of organizations) {
+    const content = organization.body || '';
+    
     results.push({
+      id: organization.data.id,
       title: organization.data.name,
-      description: `${organization.data.type} - ${organization.data.relationship}`,
       url: `/organizations/${organization.slug}`,
       type: 'organization',
+      content,
     });
   }
 

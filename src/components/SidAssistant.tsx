@@ -13,13 +13,15 @@ const HORROR_CHANCE = .1;
 
 const HELP_TEXT = `Available commands:
 /help - Show this help message
-/search <query> - Search all content (employees, anomalies, organizations)`;
+/search <query> - Search all content (employees, anomalies, organizations)
+/goto <id> - Navigate directly to an article by ID (e.g., /goto EID-EMP-001)`;
 
 interface SearchResult {
+  id: string;
   title: string;
-  description: string;
   url: string;
   type: 'employee' | 'anomaly' | 'organization';
+  content: string;
 }
 
 interface SidAssistantProps {
@@ -49,13 +51,17 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
   const charIndexRef = useRef(0);
   const isDraggingRef = useRef(false);
   const dragOffsetRef = useRef({ x: 0, y: 0 });
+  const searchContentRef = useRef<SearchResult[]>(searchContent);
 
   // Initialize search index on mount
   useEffect(() => {
     if (searchContent && !searchIndex) {
       const fuse = new Fuse(searchContent, {
-        keys: ['title', 'description'],
-        threshold: 0.3,
+        keys: [
+          { name: 'title', weight: 2 },     // Higher weight for title
+          { name: 'content', weight: 1 }    // Lower weight for content
+        ],
+        threshold: 0.4,
         includeScore: true,
       });
       setSearchIndex(fuse);
@@ -131,6 +137,27 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
       return;
     }
     
+    // /goto command
+    if (trimmedCommand.startsWith('/goto ')) {
+      const id = trimmedCommand.replace('/goto ', '').trim().toUpperCase();
+      
+      if (!id) {
+        typeText("Please provide an ID. Example: /goto EID-EMP-001");
+        return;
+      }
+      
+      const item = searchContentRef.current.find(item => item.id === id);
+      
+      if (!item) {
+        typeText(`No article found with ID "${id}"`);
+        return;
+      }
+      
+      // Navigate to the article
+      window.location.href = item.url;
+      return;
+    }
+    
     // /search command
     if (trimmedCommand.startsWith('/search ')) {
       const query = trimmedCommand.replace('/search ', '').trim();
@@ -155,7 +182,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon, searchCon
       let responseText = `Found ${results.length} result(s) for "${query}":\n\n`;
       results.forEach((result, index) => {
         const item = result.item;
-        responseText += `${index + 1}. ${item.title}\n   ${item.description}\n   Type: ${item.type}\n\n`;
+        responseText += `${index + 1}. ${item.title} (${item.id})\n`;
       });
       
       typeText(responseText);

@@ -1,5 +1,23 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Pixelated MS Sans Serif";
+  src: url("98.css/dist/ms_sans_serif.woff2") format("woff2"),
+       url("98.css/dist/ms_sans_serif.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Pixelated MS Sans Serif";
+  src: url("98.css/dist/ms_sans_serif_bold.woff2") format("woff2"),
+       url("98.css/dist/ms_sans_serif_bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --bg-color: #018281;
   --font-family: 'MS Sans Serif', sans-serif;

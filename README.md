@@ -23,3 +23,9 @@ Each file is named with its `EID-*` ID. Each type of file has some metadata asso
 - The site should lean into the 90s UI aesthetic. This can include UI behaviors that aren't optimal for modern websites, but contribute to the overall 90s feel of the site. A prime example of this is the SID assistant, which is not as easy to use as a dedicated search page but feels like a real "clippy".
 - The site should be mobile-friendly
 - The site should be minimal and lean
+
+## License
+
+Code is licensed under the [MIT license](./LICENSE).
+
+Content under [src/content](./src/content) is licensed under the [CC-BY-SA-4.0 license](https://creativecommons.org/licenses/by-sa/4.0/)

@@ -34,17 +34,21 @@ const pathname = Astro.url.pathname;
       </div>
     </div>
     <div class="window-body flex-grow">
-      <menu role="tablist">
-        <li role="tab" aria-selected={pathname.startsWith("/dashboard")}><a href="/dashboard">Dashboard</a></li>
-        <li role="tab" aria-selected={pathname.startsWith("/employees")}><a href="/employees">Employees</a></li>
-        <li role="tab" aria-selected={pathname.startsWith("/anomalies")}><a href="/anomalies">Anomalies</a></li>
-        <li role="tab" aria-selected={pathname.startsWith("/organizations")}>
-          <a href="/organizations">Organizations</a>
-        </li>
-      </menu>
-      <slot />
+      <nav>
+        <menu role="tablist">
+          <li role="tab" aria-selected={pathname.startsWith("/dashboard")}><a href="/dashboard">Dashboard</a></li>
+          <li role="tab" aria-selected={pathname.startsWith("/employees")}><a href="/employees">Employees</a></li>
+          <li role="tab" aria-selected={pathname.startsWith("/anomalies")}><a href="/anomalies">Anomalies</a></li>
+          <li role="tab" aria-selected={pathname.startsWith("/organizations")}>
+            <a href="/organizations">Organizations</a>
+          </li>
+        </menu>
+      </nav>
+      <main>
+        <slot />
+      </main>
     </div>
-    <div class="status-bar mt-auto">
+    <div class="status-bar mt-auto" role="contentinfo">
       <div class="status-bar-field">Eidolon Capital Intranet Portal v1.0</div>
       <div class="status-bar-field">System Status: OPERATIONAL</div>
     </div>

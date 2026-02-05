@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      checks: write
+      status: write
     steps:
       - uses: actions/checkout@v6
         with:

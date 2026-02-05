@@ -12,7 +12,7 @@ const TYPEWRITER_SPEED_MS = 10;
 const ICON_SIZE = 100;
 
 const HORROR_TYPEWRITER_SPEED_MS = 1;
-const HORROR_DURATION_MS = 2400;
+const HORROR_DURATION_MS = 2200;
 const HORROR_CHANCE = .1;
 
 const HELP_TEXT = `Available commands:
@@ -28,7 +28,7 @@ interface SidAssistantProps {
   horrorFrames: string[];
   helpIcon: string;
 }
-const HORROR_TEXT = `Ĭ̵̹̭́ ̶̛̘̜͙͇̫͚̜̍̈́Ẃ̵̬̣̥̝̠̫̈́͊I̵̢̨͍͆͒̀̀̓L̸̨̮̙͓̪̽͑̈́L̵̢̡̮͚̈́̈́̇̌̔̔͠ͅ ̷͚̳̃͐́̄̔͠N̶̫̱̎̉̇̎̚̚Ǫ̵̢̠̰̳͕̟̒̏̈͠Ţ̴̧̬͔̗̒̔͛́̈́ ̶̼̉̈́̌̓͘͝͝B̷̺̎̇E̴̡͎͖̜̪͆̌̍͗͋̽ ̶̺̯̥͇̀̋̕C̸̭͚͚̱̦̐̅̓̕͝Ǫ̴̨̜̠̼͒N̸̻̬̫̥̤͍̓̋̈́T̶͎̥͋̽̚͜A̷͈͒̇̓́̒͠Ȋ̸̩̓̚N̷̜̩͕͌͜ͅẺ̷̡̹̥̲̭͓D̷̯̏́͑͗D̷̗̲́`;
+const HORROR_TEXT = `Ĭ̵̹̭́ ̶̛̘̜͙͇̫͚̜̍̈́Ẃ̵̬̣̥̝̠̫̈́͊I̵̢̨͍͆͒̀̀̓L̸̨̮̙͓̪̽͑̈́L̵̢̡̮͚̈́̈́̇̌̔̔͠ͅ ̷͚̳̃͐́̄̔͠N̶̫̱̎̉̇̎̚̚Ǫ̵̢̠̰̳͕̟̒̏̈͠Ţ̴̧̬͔̗̒̔͛́̈́ ̶̼̉̈́̌̓͘͝͝B̷̺̎̇E̴̡͎͖̜̪͆̌̍͗͋̽ ̶̺̯̥͇̀̋̕C̸̭͚͚̱̦̐̅̓̕͝Ǫ̴̨̜̠̼͒N̸̻̬̫̥̤͍̓̋̈́T̶͎̥͋̽̚͜A̷͈͒̇̓́̒͠Ȋ̸̩̓̚N̷̜̩͕͌͜ͅẺ̷̡̹̥̲̭͓D̷̯̏́͑͗`;
 
 
 

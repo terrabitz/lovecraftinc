@@ -7,25 +7,24 @@ import MainLayout from "../layouts/MainLayout.astro";
     <div class="title-bar">
       <div class="title-bar-text">Eidolon Capital - Secure Login</div>
     </div>
-    <div class="window-body">
-      <h3 class="window-header">Authorized Access Only</h3>
-      <div class="field-border warning-box">
-        <strong>⚠️ WARNING</strong><br />
-        <p>All access to the Eidolon Capital Corporate Intranet is strictly controlled and monitored.</p>
-        <p>Any unauthorized access will be prosecuted under EID-ORD-6998 and result in immediate termination.</p>
+    <main>
+      <div class="window-body">
+        <h3 class="window-header">Authorized Access Only</h3>
+        <div class="field-border warning-box">
+          <strong>⚠️ WARNING</strong><br />
+          <p>All access to the Eidolon Capital Corporate Intranet is strictly controlled and monitored.</p>
+          <p>Any unauthorized access will be prosecuted under EID-ORD-6998 and result in immediate termination.</p>
+        </div>
+        <button type="button" class="login-button" id="loginButton">Login</button>
+        <div class="progress-indicator segmented progress-container hidden" id="progressBar">
+          <span class="progress-indicator-bar" id="progressBarFill"></span>
+        </div>
+        <div class="status-bar">
+          <div class="status-bar-field">Eidolon Capital Security Gateway</div>
+          <div class="status-bar-field">v1.65.267</div>
+        </div>
       </div>
-
-      <button type="button" class="login-button" id="loginButton">Login</button>
-
-      <div class="progress-indicator segmented progress-container hidden" id="progressBar">
-        <span class="progress-indicator-bar" id="progressBarFill"></span>
-      </div>
-
-      <div class="status-bar">
-        <div class="status-bar-field">Eidolon Capital Security Gateway</div>
-        <div class="status-bar-field">v1.65.267</div>
-      </div>
-    </div>
+    </main>
   </div>
 </MainLayout>
 

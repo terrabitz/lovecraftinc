@@ -91,6 +91,7 @@
 ## Imports
 
 ### CSS/Style Imports
+- Always prefer Tailwind utility classes when possible
 - Import external CSS libraries in layout files (e.g., `import '98.css'`)
 - Import global styles in layouts: `import '../styles/global.css'`
 - Never import CSS multiple times across components

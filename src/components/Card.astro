@@ -8,7 +8,10 @@ const { title, class: className } = Astro.props;
 ---
 
 <div class:list={["card", "flex", "flex-col", className]}>
-  <h3>{title}</h3>
+  <div class="card-header">
+    <h3>{title}</h3>
+    <slot name="icon" class="card-icon" />
+  </div>
   <div class="flex-grow">
     <slot />
   </div>
@@ -18,6 +21,20 @@ const { title, class: className } = Astro.props;
 </div>
 
 <style>
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .card-header :global(img) {
+    object-fit: contain;
+  }
+  
+  .card-icon {
+    :global(img)
+  }
+
   .card {
     background: silver;
     box-shadow:

@@ -2,6 +2,8 @@
 import { getCollection, render } from 'astro:content';
 import Table from '../../components/Table.astro';
 import ContentLayout from '../../layouts/ContentLayout.astro';
+import anomalyIcon from '../../assets/Icons/Anomaly Icon.png';
+import Icon from '../../components/Icon.astro';
 
 export async function getStaticPaths() {
   const anomalies = await getCollection('anomalies');
@@ -17,7 +19,10 @@ const { Content } = await render(anomaly);
 ---
 
 <ContentLayout title={`Eidolon Capital Intranet - Anomaly - ${anomaly.data.name}`}>
-  <h2>{anomaly.data.name}</h2>
+  <h2 class="page-title">
+    {anomaly.data.name}
+   <Icon class="mr-4" src={anomalyIcon} size={96} />    
+  </h2>
 
   <Table>
     <tr>
@@ -56,3 +61,10 @@ const { Content } = await render(anomaly);
     <button class="mt-2">← Back to Reports</button>
   </a>
 </ContentLayout>
+<style>
+  .page-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+</style>

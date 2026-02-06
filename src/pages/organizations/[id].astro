@@ -2,6 +2,8 @@
 import { getCollection, render } from 'astro:content';
 import Table from '../../components/Table.astro';
 import ContentLayout from '../../layouts/ContentLayout.astro';
+import orgIcon from '../../assets/Icons/Organization Icon.png';
+import Icon from '../../components/Icon.astro';
 
 export async function getStaticPaths() {
   const organizations = await getCollection('organizations');
@@ -17,7 +19,10 @@ const { Content } = await render(organization);
 ---
 
 <ContentLayout title={`Eidolon Capital Intranet - Organization - ${organization.data.name}`}>
-  <h2>{organization.data.name}</h2>
+  <h2 class="page-title">
+    {organization.data.name}
+    <Icon class="mr-4" src={orgIcon} size={96} />  
+  </h2>
 
   <Table>
     <tr>
@@ -56,3 +61,10 @@ const { Content } = await render(organization);
     <button class="mt-2">← Back to Organizations</button>
   </a>
 </ContentLayout>
+<style>
+  .page-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+</style>

@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import ContentLayout from '../layouts/ContentLayout.astro';
 import EmployeesListing from '../components/EmployeesListing';
+import hrIcon from '../assets/Icons/Employees Icon.png';
+import Icon from '../components/Icon.astro';
 
 const employees = await getCollection('employees');
 const employeesData = employees.map(emp => ({
@@ -13,7 +15,18 @@ const employeesData = employees.map(emp => ({
 ---
 
 <ContentLayout title="Eidolon Capital Intranet - Employees">
-  <h1 style="font-size: clamp(24px, 8vw, 48px);">Employee Directory</h1>
+  <h1 class="page-title" style="font-size: clamp(24px, 8vw, 48px);">
+    Employee Directory
+    <Icon class="mr-4" src={hrIcon} size={96} />
+  </h1>
 
   <EmployeesListing employees={employeesData} client:load />
 </ContentLayout>
+
+<style>
+  .page-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+</style>

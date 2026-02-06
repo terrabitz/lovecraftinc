@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import ContentLayout from '../layouts/ContentLayout.astro';
 import AnomaliesListing from '../components/AnomaliesListing';
+import anomalyIcon from '../assets/Icons/Anomaly Icon.png';
+import Icon from '../components/Icon.astro';
 
 const anomalies = await getCollection('anomalies');
 const anomaliesData = anomalies.map(anomaly => ({
@@ -15,9 +17,20 @@ const anomaliesData = anomalies.map(anomaly => ({
 ---
 
 <ContentLayout title="Eidolon Capital Intranet - Anomalies">
-  <h1 style="font-size: clamp(24px, 8vw, 48px);">Anomaly Reports</h1>
+  <h1 class="page-title" style="font-size: clamp(24px, 8vw, 48px);">
+    Anomaly Reports
+   <Icon class="mr-4" src={anomalyIcon} size={96} />    
+  </h1>
 
   <AnomaliesListing anomalies={anomaliesData} client:load />
 
   <hr>
 </ContentLayout>
+
+<style>
+  .page-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+</style>

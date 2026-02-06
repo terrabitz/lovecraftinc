@@ -1,0 +1,13 @@
+---
+import {Picture} from 'astro:assets'
+
+interface Props {
+  src: ImageMetadata
+  size: number
+  [key: string]: any
+}
+
+const {src, size, ...rest } = Astro.props;
+---  
+
+<Picture src={src} alt="" width={size} height={size} densities={[1,2]} formats={["avif", "webp"]} {...rest} />

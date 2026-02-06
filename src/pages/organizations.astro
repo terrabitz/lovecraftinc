@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import ContentLayout from '../layouts/ContentLayout.astro';
 import OrganizationsListing from '../components/OrganizationsListing';
+import orgIcon from '../assets/Icons/Organization Icon.png';
+import Icon from '../components/Icon.astro';
 
 const organizations = await getCollection('organizations');
 const organizationsData = organizations.map(org => ({
@@ -15,9 +17,20 @@ const organizationsData = organizations.map(org => ({
 ---
 
 <ContentLayout title="Eidolon Capital Intranet - Organizations">
-  <h1 style="font-size: clamp(24px, 8vw, 48px);">Partner Organizations</h1>
+  <h1 class="page-title" style="font-size: clamp(24px, 8vw, 48px);">
+    Partner Organizations
+    <Icon src={orgIcon} size={96} />
+  </h1>
 
   <OrganizationsListing organizations={organizationsData} client:load />
 
   <hr>
 </ContentLayout>
+
+<style>
+  .page-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+</style>

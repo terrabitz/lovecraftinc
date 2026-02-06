@@ -1,5 +1,8 @@
 ---
+import Icon from "../components/Icon.astro";
 import MainLayout from "../layouts/MainLayout.astro";
+
+import logo from "../assets/Logo/Logo.png"
 ---
 
 <MainLayout title="Eidolon Capital Intranet - Login">
@@ -9,6 +12,7 @@ import MainLayout from "../layouts/MainLayout.astro";
     </div>
     <main>
       <div class="window-body">
+        <Icon src={logo} size={160} class="mx-auto block"/>
         <h3 class="window-header">Authorized Access Only</h3>
         <div class="field-border warning-box">
           <strong>⚠️ WARNING</strong><br />

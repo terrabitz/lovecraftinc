@@ -17,7 +17,7 @@ const organizationsData = organizations.map(org => ({
 ---
 
 <ContentLayout title="Eidolon Capital Intranet - Organizations">
-  <h1 class="page-title" style="font-size: clamp(24px, 8vw, 48px);">
+  <h1 class="flex items-center justify-between" style="font-size: clamp(24px, 8vw, 48px);">
     Partner Organizations
     <Icon src={orgIcon} size={96} />
   </h1>
@@ -27,10 +27,3 @@ const organizationsData = organizations.map(org => ({
   <hr>
 </ContentLayout>
 
-<style>
-  .page-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-</style>

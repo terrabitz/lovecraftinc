@@ -17,7 +17,7 @@ const anomaliesData = anomalies.map(anomaly => ({
 ---
 
 <ContentLayout title="Eidolon Capital Intranet - Anomalies">
-  <h1 class="page-title" style="font-size: clamp(24px, 8vw, 48px);">
+  <h1 class="flex items-center justify-between" style="font-size: clamp(24px, 8vw, 48px);">
     Anomaly Reports
    <Icon class="mr-4" src={anomalyIcon} size={96} />    
   </h1>
@@ -27,10 +27,3 @@ const anomaliesData = anomalies.map(anomaly => ({
   <hr>
 </ContentLayout>
 
-<style>
-  .page-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-</style>

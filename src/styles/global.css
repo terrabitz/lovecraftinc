@@ -238,16 +238,6 @@ button, table, .window{
   font-size: var(--base-font-size)
 }
 
-
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 12px;
-  margin: 12px 0;
-}
-
-
 article {
   padding: 20px;
 }

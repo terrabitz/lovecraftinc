@@ -7,12 +7,12 @@ interface Props {
 const { title, class: className } = Astro.props;
 ---
 
-<div class:list={["card", "flex", "flex-col", className]}>
-  <div class="card-header">
+<div class:list={["card", "flex", "flex-col", "mt-0", "p-3", className]}>
+  <div class="flex justify-between items-start">
     <h3>{title}</h3>
     <slot name="icon" class="card-icon" />
   </div>
-  <div class="flex-grow">
+  <div class="grow">
     <slot />
   </div>
   <div class="mt-2">
@@ -21,32 +21,7 @@ const { title, class: className } = Astro.props;
 </div>
 
 <style>
-  .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-
-  .card-header :global(img) {
-    object-fit: contain;
-  }
-  
-  .card-icon {
-    :global(img)
-  }
-
   .card {
-    background: silver;
-    box-shadow:
-      inset -1px -1px #0a0a0a,
-      inset 1px 1px #dfdfdf,
-      inset -2px -2px grey,
-      inset 2px 2px #fff;
-    padding: 12px;
-    margin: 0;
-  }
-
-  :global(html.dark) .card {
     background: var(--surface);
     box-shadow:
       inset -1px -1px var(--border-dark),

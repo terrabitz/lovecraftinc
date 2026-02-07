@@ -247,13 +247,6 @@ button, table, .window{
   margin: 12px 0;
 }
 
-.info-box {
-  background: var(--info-box-bg);
-  border: 1px solid var(--info-box-border);
-  padding: 8px;
-  margin: 8px 0;
-  font-size: 11px;
-}
 
 article {
   padding: 20px;

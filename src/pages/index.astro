@@ -1,7 +1,6 @@
 ---
 import Icon from "../components/Icon.astro";
 import MainLayout from "../layouts/MainLayout.astro";
-
 import logo from "../assets/Logo.png"
 ---
 
@@ -20,7 +19,7 @@ import logo from "../assets/Logo.png"
           <p>Any unauthorized access will be prosecuted under EID-ORD-6998 and result in immediate termination.</p>
         </div>
         <button type="button" class="block mx-auto my-3 h-10 text-xl! w-[70%]" id="loginButton">Login</button>
-        <div class="segmented hidden w-[70%] mx-auto my-1" id="progressBar">
+        <div class="progress-indicator segmented hidden w-[70%] mx-auto my-1 h-4" id="progressBar">
           <span class="progress-indicator-bar" id="progressBarFill"></span>
         </div>
         <div class="status-bar">
@@ -33,6 +32,8 @@ import logo from "../assets/Logo.png"
 </MainLayout>
 
 <script>
+  import { navigate } from "astro:transitions/client";
+
   const loginButton = document.getElementById("loginButton") as HTMLButtonElement;
   const progressBar = document.getElementById("progressBar") as HTMLDivElement;
   const progressBarFill = document.getElementById("progressBarFill") as HTMLSpanElement;
@@ -57,7 +58,7 @@ import logo from "../assets/Logo.png"
       if (elapsed < duration) {
         requestAnimationFrame(animate);
       } else {
-        window.location.href = "/dashboard";
+        navigate("/dashboard")
       }
     };
 

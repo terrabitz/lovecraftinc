@@ -13,7 +13,7 @@ export default defineConfig({
   site: 'https://eidolon.hackandsla.sh',
   output: 'static',
   trailingSlash: 'never',
-  integrations: [cloudflare(), preact(), cleanupUnoptimizedImages()],
+  integrations: [preact(), cleanupUnoptimizedImages()],
   build: {
     format: 'file'
   },
@@ -53,6 +53,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    imageService: 'compile',
+  }),
 });

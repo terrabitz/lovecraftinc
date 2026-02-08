@@ -133,7 +133,7 @@ export default function DataListing({
                 filteredAndSortedData.map(item => (
                   <tr 
                     key={item.id}
-                    class={selectedItem?.id === item.id ? 'selected' : ''}
+                    class={selectedItem?.id === item.id ? styles.highlighted : ''}
                     onClick={() => setSelectedItem(item)}
                     style="cursor: pointer;"
                   >

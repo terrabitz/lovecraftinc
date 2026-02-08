@@ -6,12 +6,14 @@ import remarkToc from 'remark-toc';
 import { remarkArticleLinks } from './src/plugins/remark-article-links/index.ts';
 import rehypeTooltip from './src/plugins/rehype-tooltip/index.ts';
 
+import cloudflare from '@astrojs/cloudflare';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://eidolon.hackandsla.sh',
   output: 'static',
   trailingSlash: 'never',
-  integrations: [preact()],
+  integrations: [cloudflare(), preact()],
   build: {
     format: 'file'
   },
@@ -51,4 +53,6 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+
+  adapter: cloudflare(),
 });

@@ -11,7 +11,10 @@
 ## Styling Best Practices
 
 ### General Principles
-- **Always prefer component-scoped styles over global styles**
+
+- Always prefer Tailwind classes over component-scoped classes
+  - If we make use of a new Tailwind class, update the doc/tailwind-reference.md to include it
+- Always prefer component-scoped styles over global styles
 - Only use global styles for truly global concerns (CSS variables, resets, base element styles)
 - Component-specific styles should be colocated with the component
 
@@ -29,14 +32,16 @@
 ### Component Styles
 
 #### For .astro files
-- Use inline `<style>` tags in `.astro` files for component-specific styles
+- Use standard Tailwind classes wherever possible over custom classes
+- If we need custom classes, use inline `<style>` tags in `.astro` files for component-specific styles
 - Place `<style>` blocks at the root level (after HTML, not inside `<head>`)
 - Astro automatically scopes component styles
 - Use `<style is:global>` only when you need to override scoped styles
 - **Never** add component-specific styles to `global.css`
 
 #### For React/Preact/Vue/Svelte components (.tsx, .jsx, .vue, .svelte)
-- Use CSS Modules for component-scoped styles (e.g., `ComponentName.module.css`)
+- Always prefer standard Tailwind classes where possible
+- If custom classes are needed, use CSS Modules for component-scoped styles (e.g., `ComponentName.module.css`)
 - Import the module: `import styles from './ComponentName.module.css'`
 - Apply styles: `<div className={styles.myClass}>...</div>`
 - Use `:global()` in CSS modules only when targeting elements from external libraries

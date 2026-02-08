@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "98.css/dist/98.css" layer(win98);
 
 @font-face {
   font-family: "Pixelated MS Sans Serif";
@@ -238,23 +239,10 @@ button, table, .window{
   font-size: var(--base-font-size)
 }
 
-
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 12px;
-  margin: 12px 0;
-}
-
-.info-box {
-  background: var(--info-box-bg);
-  border: 1px solid var(--info-box-border);
-  padding: 8px;
-  margin: 8px 0;
-  font-size: 11px;
-}
-
 article {
   padding: 20px;
+}
+
+h1 {
+  font-size: clamp(24px, 8vw, 48px);
 }

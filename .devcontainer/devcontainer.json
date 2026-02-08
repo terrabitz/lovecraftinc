@@ -26,7 +26,9 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"astro-build.astro-vscode"
+				"astro-build.astro-vscode",
+				"bradlc.vscode-tailwindcss",
+				"pucelle.vscode-css-navigation"
 			]
 		}
 	}

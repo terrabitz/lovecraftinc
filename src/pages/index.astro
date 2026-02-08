@@ -1,7 +1,6 @@
 ---
 import Icon from "../components/Icon.astro";
 import MainLayout from "../layouts/MainLayout.astro";
-
 import logo from "../assets/Logo.png"
 ---
 
@@ -13,14 +12,14 @@ import logo from "../assets/Logo.png"
     <main>
       <div class="window-body">
         <Icon src={logo} size={160} class="mx-auto block"/>
-        <h3 class="window-header">Authorized Access Only</h3>
-        <div class="field-border warning-box">
-          <strong>⚠️ WARNING</strong><br />
+        <h1 class="text-center">Authorized Access Only</h1>
+        <div class="field-border p-2!">
+          <strong>⚠️ WARNING</strong>
           <p>All access to the Eidolon Capital Corporate Intranet is strictly controlled and monitored.</p>
           <p>Any unauthorized access will be prosecuted under EID-ORD-6998 and result in immediate termination.</p>
         </div>
-        <button type="button" class="login-button" id="loginButton">Login</button>
-        <div class="progress-indicator segmented progress-container hidden" id="progressBar">
+        <button type="button" class="block mx-auto my-3 h-10 text-xl! w-[70%]" id="loginButton">Login</button>
+        <div class="progress-indicator segmented hidden w-[70%] mx-auto my-1 h-4" id="progressBar">
           <span class="progress-indicator-bar" id="progressBarFill"></span>
         </div>
         <div class="status-bar">
@@ -32,35 +31,9 @@ import logo from "../assets/Logo.png"
   </div>
 </MainLayout>
 
-<style>
-  .window-header {
-    text-align: center;
-  }
-  .login-window {
-    width: 300px;
-    margin: 0 auto;
-  }
-  .warning-box {
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  .login-button {
-    font-size: 20px;
-    width: 70%;
-    height: 40px;
-    margin: 20px auto 30px auto;
-    display: block;
-  }
-  .progress-container {
-    margin: 10px auto;
-    width: 70%;
-  }
-  .hidden {
-    display: none;
-  }
-</style>
-
 <script>
+  import { navigate } from "astro:transitions/client";
+
   const loginButton = document.getElementById("loginButton") as HTMLButtonElement;
   const progressBar = document.getElementById("progressBar") as HTMLDivElement;
   const progressBarFill = document.getElementById("progressBarFill") as HTMLSpanElement;
@@ -85,7 +58,7 @@ import logo from "../assets/Logo.png"
       if (elapsed < duration) {
         requestAnimationFrame(animate);
       } else {
-        window.location.href = "/dashboard";
+        navigate("/dashboard")
       }
     };
 

@@ -19,10 +19,10 @@ const { Content } = await render(anomaly);
 ---
 
 <ContentLayout title={`Eidolon Capital Intranet - Anomaly - ${anomaly.data.name}`}>
-  <h2 class="page-title">
+  <h1 class="flex items-center justify-between">
     {anomaly.data.name}
    <Icon class="mr-4" src={anomalyIcon} size={96} />    
-  </h2>
+  </h1>
 
   <Table>
     <tr>
@@ -61,10 +61,3 @@ const { Content } = await render(anomaly);
     <button class="mt-2">← Back to Reports</button>
   </a>
 </ContentLayout>
-<style>
-  .page-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-</style>

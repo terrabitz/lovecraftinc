@@ -19,7 +19,7 @@ const { Content } = await render(organization);
 ---
 
 <ContentLayout title={`Eidolon Capital Intranet - Organization - ${organization.data.name}`}>
-  <h2 class="page-title">
+  <h2 class="flex items-center justify-between">
     {organization.data.name}
     <Icon class="mr-4" src={orgIcon} size={96} />  
   </h2>
@@ -61,10 +61,3 @@ const { Content } = await render(organization);
     <button class="mt-2">← Back to Organizations</button>
   </a>
 </ContentLayout>
-<style>
-  .page-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-</style>

@@ -33,7 +33,7 @@ const pathname = Astro.url.pathname;
         <DarkModeToggle />
       </div>
     </div>
-    <div class="window-body flex-grow">
+    <div class="window-body grow">
       <nav>
         <menu role="tablist">
           <li role="tab" aria-selected={pathname.startsWith("/dashboard")}><a href="/dashboard">Dashboard</a></li>
@@ -68,7 +68,7 @@ const pathname = Astro.url.pathname;
     min-height: 80vh;
   }
 
-  @media (min-width: 768px) {
+  @media (width >= 768px) {
     .window {
       width: 80vw;
       max-width: 1400px;

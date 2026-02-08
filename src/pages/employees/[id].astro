@@ -19,10 +19,10 @@ const { Content } = await render(employee);
 ---
 
 <ContentLayout title={`Eidolon Capital Intranet - Employee - ${employee.data.name}`}>
-  <h2 class="page-title">
+  <h1 class="flex items-center justify-between">
     {employee.data.name}
-    <Icon class="mr-4"src={hrIcon} size={96} />
-  </h2>
+    <Icon class="mr-4" src={hrIcon} size={96} />
+  </h1>
 
   <Table>
     <tr>
@@ -57,10 +57,3 @@ const { Content } = await render(employee);
     <button class="mt-2">← Back to Directory</button>
   </a>
 </ContentLayout>
-<style>
-  .page-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-</style>

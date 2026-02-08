@@ -15,7 +15,7 @@ const employeesData = employees.map(emp => ({
 ---
 
 <ContentLayout title="Eidolon Capital Intranet - Employees">
-  <h1 class="page-title" style="font-size: clamp(24px, 8vw, 48px);">
+  <h1 class="flex items-center justify-between">
     Employee Directory
     <Icon class="mr-4" src={hrIcon} size={96} />
   </h1>
@@ -23,10 +23,3 @@ const employeesData = employees.map(emp => ({
   <EmployeesListing employees={employeesData} client:load />
 </ContentLayout>
 
-<style>
-  .page-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-</style>

@@ -12,7 +12,8 @@
     "wrangler:login": "wrangler login --callback-host 0.0.0.0 --callback-port 8976",
     "wrangler:deploy": "npm run build && npm run wrangler:login && wrangler deploy",
     "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "lint:css": "stylelint 'src/**/*.{css,astro}'"
   },
   "keywords": [
     "astro",
@@ -39,7 +40,11 @@
     "@lhci/cli": "^0.15.1",
     "@types/mdast": "^4.0.4",
     "@types/node": "^25.2.0",
+    "postcss-html": "^1.8.1",
     "remark-frontmatter": "^5.0.0",
+    "stylelint": "^17.1.1",
+    "stylelint-config-html": "^1.1.0",
+    "stylelint-config-standard": "^40.0.0",
     "tsx": "^4.21.0",
     "vitest": "^4.0.18",
     "wrangler": "^4.61.1"

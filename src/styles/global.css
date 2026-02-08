@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "98.css/dist/98.css" layer(win98);
 
 @font-face {
   font-family: "Pixelated MS Sans Serif";

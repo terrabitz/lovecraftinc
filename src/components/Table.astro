@@ -6,19 +6,8 @@ interface Props {
 const { class: className } = Astro.props;
 ---
 
-<div class:list={["sunken-panel", className]}>
-  <table>
+<div class:list={["sunken-panel", "w-auto", "inline-block", className]}>
+  <table class="w-auto">
     <slot />
   </table>
 </div>
-
-<style>
-  .sunken-panel {
-    width: auto;
-    display: inline-block;
-  }
-
-  table {
-    width: auto;
-  }
-</style>

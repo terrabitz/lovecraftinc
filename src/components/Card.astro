@@ -10,7 +10,7 @@ const { title, class: className } = Astro.props;
 <div class:list={["card", "flex", "flex-col", "mt-0", "p-3", className]}>
   <div class="flex justify-between items-start">
     <h3>{title}</h3>
-    <slot name="icon" class="card-icon" />
+    <slot name="icon" />
   </div>
   <div class="grow">
     <slot />

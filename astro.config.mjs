@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 import remarkToc from 'remark-toc';
 import { remarkArticleLinks } from './src/plugins/remark-article-links/index.ts';
 import rehypeTooltip from './src/plugins/rehype-tooltip/index.ts';
-
+import cleanupUnoptimizedImages from './src/integrations/cleanup-unoptimized-images.ts';
 import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
@@ -13,7 +13,7 @@ export default defineConfig({
   site: 'https://eidolon.hackandsla.sh',
   output: 'static',
   trailingSlash: 'never',
-  integrations: [cloudflare(), preact()],
+  integrations: [cloudflare(), preact(), cleanupUnoptimizedImages()],
   build: {
     format: 'file'
   },

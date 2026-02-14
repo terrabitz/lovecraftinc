@@ -54,10 +54,18 @@ function comparePngs(actual: PNG, expected: PNG): { diffPixels: number; totalPix
 function loadTestAssets(): OgImageAssets {
   const fontRegular = readFileSync(join(process.cwd(), 'node_modules/98.css/dist/ms_sans_serif.woff'));
   const fontBold = readFileSync(join(process.cwd(), 'node_modules/98.css/dist/ms_sans_serif_bold.woff'));
+  const fallbackFontRegular = readFileSync(
+    join(process.cwd(), 'node_modules/@fontsource/noto-sans/files/noto-sans-latin-400-normal.woff'),
+  );
+  const fallbackFontBold = readFileSync(
+    join(process.cwd(), 'node_modules/@fontsource/noto-sans/files/noto-sans-latin-700-normal.woff'),
+  );
   const logoData = readFileSync(join(process.cwd(), 'src/assets/Logo.png'));
   return {
     fontRegular,
     fontBold,
+    fallbackFontRegular,
+    fallbackFontBold,
     logoDataUri: `data:image/png;base64,${logoData.toString('base64')}`,
   };
 }

@@ -1,6 +1,8 @@
 import type { APIRoute } from 'astro';
 import fontRegularData from '98.css/dist/ms_sans_serif.woff?arraybuffer';
 import fontBoldData from '98.css/dist/ms_sans_serif_bold.woff?arraybuffer';
+import fallbackFontRegularData from '@fontsource/noto-sans/files/noto-sans-latin-400-normal.woff?arraybuffer';
+import fallbackFontBoldData from '@fontsource/noto-sans/files/noto-sans-latin-700-normal.woff?arraybuffer';
 import logoDataUri from '../../assets/Logo.png?w=180&format=png&inline';
 import { generateOgImage } from '../../utils/og-image';
 
@@ -25,6 +27,8 @@ export const GET: APIRoute = async ({ request }) => {
   const png = await generateOgImage(title, {
     fontRegular: fontRegularData,
     fontBold: fontBoldData,
+    fallbackFontRegular: fallbackFontRegularData,
+    fallbackFontBold: fallbackFontBoldData,
     logoDataUri,
   });
 

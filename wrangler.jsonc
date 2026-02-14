@@ -10,6 +10,14 @@
     "binding": "ASSETS",
     "directory": "./dist"
   },
+  "env": {
+    "prod": {
+      "name": "lovecraftinc"
+    },
+    "stage": {
+      "name": "lovecraftinc-stage"
+    }
+  },
   "observability": {
     "enabled": true
   }

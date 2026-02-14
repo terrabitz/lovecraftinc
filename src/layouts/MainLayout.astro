@@ -10,10 +10,9 @@ const {
   title = 'Dashboard',
   description = 'The wiki for Lovecraft Inc., a mid-90s cosmic horror RPG.',
 } = Astro.props;
-const baseUrl = Astro.site ?? Astro.url;
 const ogImageUrl = new URL(
   `/api/og-card.png?title=${encodeURIComponent(title)}`,
-  baseUrl
+  Astro.site,
 ).toString();
 ---
 
@@ -31,6 +30,7 @@ const ogImageUrl = new URL(
         title,
         type: 'website',
         image: ogImageUrl,
+        url: Astro.site,
       },
       image: {
         url: ogImageUrl,

@@ -9,10 +9,56 @@ import cleanupUnoptimizedImages from './src/integrations/cleanup-unoptimized-ima
 import cloudflare from '@astrojs/cloudflare';
 import arraybuffer from "vite-plugin-arraybuffer";
 import { imagetools } from 'vite-imagetools';
+import { loadEnv } from "vite";
+
+const DEFAULT_BRANCH = 'main';
+const WORKER_NAME = 'lovecraftinc';
+const WORKERS_DEV_ACCOUNT_DOMAIN = 'tjtaubit.workers.dev';
+
+function getModeFromArgs() {
+  const modeFlagIndex = process.argv.indexOf('--mode');
+  if (modeFlagIndex !== -1 && process.argv[modeFlagIndex + 1]) {
+    return process.argv[modeFlagIndex + 1];
+  }
+
+  return process.env.NODE_ENV || 'development';
+}
+
+const mode = getModeFromArgs();
+const { WORKERS_CI_BRANCH, PUBLIC_SITE_URL } = loadEnv(mode, process.cwd(), "");
+
+function toBranchSlug(branchName = '') {
+  return branchName
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function getSiteUrl() {
+  // When running in Cloudflare workers, we should use the branch-specific 
+  // URLs instead. This helps ensure that each branch gets its own unique
+  // links to the site in places where we need to use absolute URLs, like 
+  // Open Graph image links.
+  if (WORKERS_CI_BRANCH && WORKERS_CI_BRANCH !== DEFAULT_BRANCH) {
+    const branchSlug = toBranchSlug(WORKERS_CI_BRANCH);
+    if (branchSlug) {
+      return `https://${branchSlug}-${WORKER_NAME}.${WORKERS_DEV_ACCOUNT_DOMAIN}`;
+    }
+  }
+
+  if (PUBLIC_SITE_URL) {
+    return PUBLIC_SITE_URL;
+  };
+  
+  throw new Error("Couldn't find site config. Set PUBLIC_SITE_URL or use a correct env file.")
+}
+
+const site = getSiteUrl();
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://eidolon.hackandsla.sh',
+  site,
   output: 'static',
   trailingSlash: 'never',
   integrations: [preact(), cleanupUnoptimizedImages()],

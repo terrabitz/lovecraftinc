@@ -1,10 +1,16 @@
-import satori from 'satori';
-import sharp from 'sharp';
+import { Resvg } from '@cf-wasm/resvg';
+import { satori } from '@cf-wasm/satori';
 import fs from 'node:fs';
 import path from 'node:path';
 
 const CARD_WIDTH = 1200;
 const CARD_HEIGHT = 630;
+
+interface OgImageAssets {
+  fontRegular: ArrayBuffer | Buffer;
+  fontBold: ArrayBuffer | Buffer;
+  logoDataUri: string;
+}
 
 function buildElementTree(title: string, logoBase64: string) {
   return {
@@ -118,22 +124,36 @@ function buildStatusBar() {
   };
 }
 
-export async function generateOgImage(title: string, projectRoot = process.cwd()): Promise<Uint8Array> {
+function loadNodeAssets(projectRoot: string): OgImageAssets {
   const resolve = (rel: string) => fs.readFileSync(path.resolve(projectRoot, rel));
   const fontRegular = resolve('node_modules/98.css/dist/ms_sans_serif.woff');
   const fontBold = resolve('node_modules/98.css/dist/ms_sans_serif_bold.woff');
   const logoData = resolve('src/assets/Logo.png');
-  const logoBase64 = `data:image/png;base64,${logoData.toString('base64')}`;
+  return {
+    fontRegular,
+    fontBold,
+    logoDataUri: `data:image/png;base64,${logoData.toString('base64')}`,
+  };
+}
 
-  const svg = await satori(buildElementTree(title, logoBase64) as any, {
+export async function generateOgImage(
+  title: string,
+  options: { projectRoot?: string; assets?: OgImageAssets } = {},
+): Promise<Uint8Array> {
+  const assets = options.assets ?? loadNodeAssets(options.projectRoot ?? process.cwd());
+
+  const svg = await satori(buildElementTree(title, assets.logoDataUri) as any, {
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
     fonts: [
-      { name: 'MS Sans Serif', data: fontRegular, weight: 400, style: 'normal' as const },
-      { name: 'MS Sans Serif', data: fontBold, weight: 700, style: 'normal' as const },
+      { name: 'MS Sans Serif', data: assets.fontRegular, weight: 400, style: 'normal' as const },
+      { name: 'MS Sans Serif', data: assets.fontBold, weight: 700, style: 'normal' as const },
     ],
   });
 
-  const buffer = await sharp(Buffer.from(svg)).png().toBuffer();
-  return new Uint8Array(buffer.buffer, buffer.byteOffset, buffer.byteLength);
+  const resvgInstance = await Resvg.async(svg, {});
+  const pngData = resvgInstance.render();
+  const pngBuffer = pngData.asPng();
+
+  return new Uint8Array(pngBuffer);
 }

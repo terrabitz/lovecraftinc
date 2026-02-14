@@ -18,7 +18,7 @@ const { anomaly } = Astro.props;
 const { Content } = await render(anomaly);
 ---
 
-<ContentLayout title={`Eidolon Capital Intranet - Anomaly - ${anomaly.data.name}`}>
+<ContentLayout title={`Anomaly - ${anomaly.data.name}`}>
   <h1 class="flex items-center justify-between">
     {anomaly.data.name}
    <Icon class="mr-4" src={anomalyIcon} size={96} />    

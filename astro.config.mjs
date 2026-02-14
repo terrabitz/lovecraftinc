@@ -7,6 +7,7 @@ import { remarkArticleLinks } from './src/plugins/remark-article-links/index.ts'
 import rehypeTooltip from './src/plugins/rehype-tooltip/index.ts';
 import cleanupUnoptimizedImages from './src/integrations/cleanup-unoptimized-images.ts';
 import cloudflare from '@astrojs/cloudflare';
+import arraybuffer from "vite-plugin-arraybuffer";
 
 // https://astro.build/config
 export default defineConfig({
@@ -51,7 +52,7 @@ export default defineConfig({
   },
 
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss(), arraybuffer()],
   },
   adapter: cloudflare({
     imageService: 'compile',

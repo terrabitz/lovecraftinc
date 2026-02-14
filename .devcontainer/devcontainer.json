@@ -19,6 +19,9 @@
 		"4321": {
 			"label": "Astro Page"
 		},
+		"8787": {
+			"label": "Wrangler Dev Server"
+		},
 		"8976": {
 			"label": "Wrangler Login Callback"
 		}

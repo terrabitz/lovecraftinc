@@ -3,6 +3,8 @@ import { satori } from '@cf-wasm/satori';
 
 const CARD_WIDTH = 1200;
 const CARD_HEIGHT = 630;
+const WINDOW_TITLE = 'Lovecraft, Inc.';
+const SITE_TITLE = 'Eidolon Capital Intranet';
 
 export interface OgImageAssets {
   fontRegular: ArrayBuffer | Buffer;
@@ -57,13 +59,61 @@ function buildTitleBar() {
       style: {
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'space-between',
         background: 'linear-gradient(90deg, #000080, #1084d0)',
         padding: '6px 12px',
         color: 'white',
         fontWeight: 700,
         fontSize: '24px',
       },
-      children: 'Eidolon Capital Intranet',
+      children: [
+        {
+          type: 'div',
+          props: {
+            style: {
+              flex: 1,
+              textAlign: 'left',
+            },
+            children: WINDOW_TITLE,
+          },
+        },
+        {
+          type: 'div',
+          props: {
+            style: {
+              display: 'flex',
+              gap: '4px',
+            },
+            children: [
+              buildWindowButton('×'),
+            ],
+          },
+        },
+      ],
+    },
+  };
+}
+
+function buildWindowButton(symbol: string) {
+  return {
+    type: 'div',
+    props: {
+      style: {
+        width: '28px',
+        height: '24px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#c0c0c0',
+        color: '#000',
+        fontSize: '18px',
+        lineHeight: 1,
+        borderTop: '2px solid #fff',
+        borderLeft: '2px solid #fff',
+        borderRight: '2px solid #0a0a0a',
+        borderBottom: '2px solid #0a0a0a',
+      },
+      children: symbol,
     },
   };
 }
@@ -76,12 +126,34 @@ function buildBody(title: string, logoBase64: string) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         flex: 1,
-        padding: '24px',
-        gap: '24px',
+        padding: '24px 24px 32px',
+        gap: '16px',
       },
       children: [
+        {
+          type: 'div',
+          props: {
+            style: {
+              display: 'flex',
+              justifyContent: 'center',
+              width: '100%',
+            },
+            children: {
+              type: 'div',
+              props: {
+                style: {
+                  fontSize: '58px',
+                  fontWeight: 700,
+                  textAlign: 'center',
+                  color: '#222',
+                },
+                children: SITE_TITLE,
+              },
+            },
+          },
+        },
         {
           type: 'img',
           props: {
@@ -94,13 +166,25 @@ function buildBody(title: string, logoBase64: string) {
           type: 'div',
           props: {
             style: {
-              fontSize: '52px',
-              fontWeight: 700,
-              textAlign: 'center',
-              color: '#222',
-              maxWidth: '900px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flex: 1,
+              width: '100%',
             },
-            children: title,
+            children: {
+              type: 'div',
+              props: {
+                style: {
+                  fontSize: '42px',
+                  fontWeight: 700,
+                  textAlign: 'center',
+                  color: '#222',
+                  maxWidth: '900px',
+                },
+                children: title,
+              },
+            },
           },
         },
       ],
@@ -119,7 +203,7 @@ function buildStatusBar() {
         color: '#222',
         borderTop: '2px solid #808080',
       },
-      children: 'Eidolon Capital Intranet Portal v1.0',
+      children: 'v1.65.267',
     },
   };
 }

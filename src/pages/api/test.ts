@@ -9,11 +9,9 @@ export const prerender = false;
 export const GET: APIRoute = async ({ request }) => {
   const title = new URL(request.url).searchParams.get('title') ?? 'Hello';
   const png = await generateOgImage(title, {
-    assets: {
-      fontRegular: fontRegularData,
-      fontBold: fontBoldData,
-      logoDataUri,
-    },
+    fontRegular: fontRegularData,
+    fontBold: fontBoldData,
+    logoDataUri,
   });
 
   return new Response(Buffer.from(png), {

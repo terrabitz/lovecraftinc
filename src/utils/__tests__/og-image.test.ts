@@ -4,7 +4,7 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { PNG } from 'pngjs';
 import pixelmatch from 'pixelmatch';
-import { generateOgImage } from '../og-image';
+import { generateOgImage, type OgImageAssets } from '../og-image';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const fixturesDir = join(__dirname, 'fixtures', 'og-image');
@@ -51,11 +51,23 @@ function comparePngs(actual: PNG, expected: PNG): { diffPixels: number; totalPix
   return { diffPixels, totalPixels, diffPercent: (diffPixels / totalPixels) * 100 };
 }
 
+function loadTestAssets(): OgImageAssets {
+  const fontRegular = readFileSync(join(process.cwd(), 'node_modules/98.css/dist/ms_sans_serif.woff'));
+  const fontBold = readFileSync(join(process.cwd(), 'node_modules/98.css/dist/ms_sans_serif_bold.woff'));
+  const logoData = readFileSync(join(process.cwd(), 'src/assets/Logo.png'));
+  return {
+    fontRegular,
+    fontBold,
+    logoDataUri: `data:image/png;base64,${logoData.toString('base64')}`,
+  };
+}
+
 describe('generateOgImage', () => {
   const fixtures = loadFixtures();
+  const assets = loadTestAssets();
 
   it.each(fixtures)('$name', async ({ name, title }) => {
-    const result = await generateOgImage(title);
+    const result = await generateOgImage(title, assets);
 
     if (UPDATE_FIXTURES) {
       writeExpected(name, result);
@@ -73,7 +85,7 @@ describe('generateOgImage', () => {
   });
 
   it('produces a valid PNG signature', async () => {
-    const result = await generateOgImage('Test');
+    const result = await generateOgImage('Test', assets);
     const pngSignature = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
     expect([...result.slice(0, 8)]).toEqual(pngSignature);
   });

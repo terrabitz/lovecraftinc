@@ -1,12 +1,10 @@
 import { Resvg } from '@cf-wasm/resvg';
 import { satori } from '@cf-wasm/satori';
-import fs from 'node:fs';
-import path from 'node:path';
 
 const CARD_WIDTH = 1200;
 const CARD_HEIGHT = 630;
 
-interface OgImageAssets {
+export interface OgImageAssets {
   fontRegular: ArrayBuffer | Buffer;
   fontBold: ArrayBuffer | Buffer;
   logoDataUri: string;
@@ -124,24 +122,10 @@ function buildStatusBar() {
   };
 }
 
-function loadNodeAssets(projectRoot: string): OgImageAssets {
-  const resolve = (rel: string) => fs.readFileSync(path.resolve(projectRoot, rel));
-  const fontRegular = resolve('node_modules/98.css/dist/ms_sans_serif.woff');
-  const fontBold = resolve('node_modules/98.css/dist/ms_sans_serif_bold.woff');
-  const logoData = resolve('src/assets/Logo.png');
-  return {
-    fontRegular,
-    fontBold,
-    logoDataUri: `data:image/png;base64,${logoData.toString('base64')}`,
-  };
-}
-
 export async function generateOgImage(
   title: string,
-  options: { projectRoot?: string; assets?: OgImageAssets } = {},
+  assets: OgImageAssets,
 ): Promise<Uint8Array> {
-  const assets = options.assets ?? loadNodeAssets(options.projectRoot ?? process.cwd());
-
   const svg = await satori(buildElementTree(title, assets.logoDataUri) as any, {
     width: CARD_WIDTH,
     height: CARD_HEIGHT,

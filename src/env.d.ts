@@ -1,7 +1,7 @@
 /// <reference types="astro/client" />
 /// <reference types="vite-plugin-arraybuffer/types" />
 
-declare module '*?inline' {
+declare module '*&inline' {
   const src: string;
   export default src;
 }

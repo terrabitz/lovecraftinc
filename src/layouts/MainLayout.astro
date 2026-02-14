@@ -2,6 +2,7 @@
 import { ClientRouter } from "astro:transitions";
 import { SEO } from 'astro-seo';
 import Tooltip from '../components/Tooltip.astro';
+import version from '../../version.json';
 
 import '../styles/global.css';
 
@@ -11,7 +12,7 @@ const {
   description = 'The wiki for Lovecraft Inc., a mid-90s cosmic horror RPG.',
 } = Astro.props;
 const ogImageUrl = new URL(
-  `/api/og-card.png?title=${encodeURIComponent(title)}`,
+  `/api/og-card.png?title=${encodeURIComponent(title)}&v=${version.openGraphImageVersion}`,
   Astro.site,
 ).toString();
 ---

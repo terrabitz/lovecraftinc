@@ -1,8 +1,8 @@
 import type { APIRoute } from 'astro';
 import { Resvg } from '@cf-wasm/resvg';
 import { satori } from '@cf-wasm/satori';
-import { html } from 'satori-html';
 import fontData from '98.css/dist/ms_sans_serif.woff?arraybuffer';
+import logoDataUri from '../../assets/Logo.png?w=180&format=png&inline';
 
 export const prerender = false;
 
@@ -11,35 +11,40 @@ function getRandomHexColor(): string {
   return `#${value.toString(16).padStart(6, '0')}`;
 }
 
-export const GET: APIRoute = async ({params, request}) => {
-  const shapeColor = getRandomHexColor();
-  
-  const markup = html(`
-    <div style="
-      width: 600px;
-      height: 400px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: #1a1a1a;
-      font-family: 'MS Sans Serif';
-      color: #ffffff;
-      font-size: 32px;
-    ">
-      <div style="
-        width: 120px;
-        height: 120px;
-        display: flex;
-        border-radius: 50%;
-        background: ${shapeColor};
-        margin-bottom: 24px;
-      "></div>
-      Hello
-    </div>
-  `);
+function buildMarkup() {
+  return {
+    type: 'div',
+    props: {
+      style: {
+        width: 600,
+        height: 400,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: '#1a1a1a',
+        fontFamily: 'MS Sans Serif',
+        color: getRandomHexColor(),
+        fontSize: 32,
+      },
+      children: [
+        {
+          type: 'img',
+          props: {
+            src: logoDataUri,
+            width: 180,
+            height: 174,
+            style: { marginBottom: 24 },
+          },
+        },
+        'Hello',
+      ],
+    },
+  };
+}
 
-  const svg = await satori(markup, {
+export const GET: APIRoute = async () => {
+  const svg = await satori(buildMarkup() as any, {
     width: 600,
     height: 400,
     fonts: [

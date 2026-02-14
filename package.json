@@ -43,7 +43,8 @@
     "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18",
     "typed.js": "^3.0.0",
-    "unist-util-visit": "^5.1.0"
+    "unist-util-visit": "^5.1.0",
+    "vite-imagetools": "^9.0.3"
   },
   "devDependencies": {
     "@lhci/cli": "^0.15.1",

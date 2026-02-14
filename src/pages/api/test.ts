@@ -1,10 +1,10 @@
 import type { APIRoute } from 'astro';
-import { initWasm, Resvg } from '@resvg/resvg-wasm';
-import resvgWasm from '@resvg/resvg-wasm/index_bg.wasm';
+import { Resvg } from '@cf-wasm/resvg';
+import { satori } from '@cf-wasm/satori';
+import { html } from 'satori-html';
+import fontData from '98.css/dist/ms_sans_serif.woff?arraybuffer';
 
 export const prerender = false;
-
-let initialized = false;
 
 function getRandomHexColor(): string {
   const value = Math.floor(Math.random() * 0xffffff);
@@ -12,30 +12,48 @@ function getRandomHexColor(): string {
 }
 
 export const GET: APIRoute = async ({params, request}) => {
-  if (!initialized) {
-    try {
-      await initWasm(resvgWasm);
-      initialized = true;
-    } catch (e) {
-    }
-  }
   const shapeColor = getRandomHexColor();
   
-  // Create a basic SVG with a random colored shape
-  const svg = `
-    <svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
-      <rect width="600" height="400" fill="#1a1a1a"/>
-      <circle cx="300" cy="200" r="120" fill="${shapeColor}"/>
-    </svg>
-  `;
+  const markup = html(`
+    <div style="
+      width: 600px;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #1a1a1a;
+      font-family: 'MS Sans Serif';
+      color: #ffffff;
+      font-size: 32px;
+    ">
+      <div style="
+        width: 120px;
+        height: 120px;
+        display: flex;
+        border-radius: 50%;
+        background: ${shapeColor};
+        margin-bottom: 24px;
+      "></div>
+      Hello
+    </div>
+  `);
 
-  // Convert SVG to PNG using resvg
-  const resvg = new Resvg(svg, {
-    font: {
-      loadSystemFonts: false,
-    },
+  const svg = await satori(markup, {
+    width: 600,
+    height: 400,
+    fonts: [
+      {
+        name: 'MS Sans Serif',
+        data: fontData,
+        weight: 400,
+        style: 'normal',
+      },
+    ],
   });
-  const pngData = resvg.render();
+
+  const resvgInstance = await Resvg.async(svg, {});
+  const pngData = resvgInstance.render();
   const pngBuffer = pngData.asPng();
   
   return new Response(new Uint8Array(pngBuffer), {

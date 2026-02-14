@@ -129,10 +129,10 @@ export async function generateOgImage(
   assets: OgImageAssets,
 ): Promise<Uint8Array> {
   const fonts = [
-    { name: 'MS Sans Serif', data: assets.fontRegular, weight: 400, style: 'normal' as const },
-    { name: 'MS Sans Serif', data: assets.fontBold, weight: 700, style: 'normal' as const },
-    { name: 'Noto Sans', data: assets.fallbackFontRegular, weight: 400, style: 'normal' as const },
-    { name: 'Noto Sans', data: assets.fallbackFontBold, weight: 700, style: 'normal' as const },
+    { name: 'MS Sans Serif', data: assets.fontRegular, weight: 400 as const, style: 'normal' as const },
+    { name: 'MS Sans Serif', data: assets.fontBold, weight: 700 as const, style: 'normal' as const },
+    { name: 'Noto Sans', data: assets.fallbackFontRegular, weight: 400 as const, style: 'normal' as const },
+    { name: 'Noto Sans', data: assets.fallbackFontBold, weight: 700 as const, style: 'normal' as const },
   ];
 
   const svg = await satori(buildElementTree(title, assets.logoDataUri) as any, {

@@ -29,6 +29,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+        with:
+          lfs: true
+
       - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
@@ -38,7 +41,7 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: npm test -- --run
+        run: npm test
 
   lighthouse:
     name: Lighthouse tests

@@ -26,7 +26,7 @@
   background-color: var(--surface-dark);
 }
 
-.listingTable tbody tr.selected {
+.listingTable tbody tr.highlighted {
   background-color: var(--selection-bg);
   color: var(--selection-text);
 }

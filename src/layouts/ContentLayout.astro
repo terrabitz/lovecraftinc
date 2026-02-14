@@ -21,14 +21,16 @@ const sidFrames = await Promise.all([sidFrame1Src, sidFrame2Src].map(getOptimize
 const sidHorrorFrames = await Promise.all([sidHorror1Src, sidHorror2Src].map(getOptimizedImage));
 const sidHelpIcon = await getOptimizedImage(helpIconSrc);
 
-const { title = "Eidolon Capital Intranet" } = Astro.props;
+const SITE_TITLE = 'Eidolon Capital Intranet';
+const { title = 'Dashboard' } = Astro.props;
+const windowTitle = `${SITE_TITLE} - ${title}`;
 const pathname = Astro.url.pathname;
 ---
 
 <MainLayout title={title}>
   <div class="window flex flex-col">
     <div class="title-bar">
-      <div class="title-bar-text">{title}</div>
+      <div class="title-bar-text">{windowTitle}</div>
       <div class="title-bar-controls">
         <DarkModeToggle />
       </div>
@@ -49,7 +51,7 @@ const pathname = Astro.url.pathname;
       </main>
     </div>
     <div class="status-bar mt-auto" role="contentinfo">
-      <div class="status-bar-field">Eidolon Capital Intranet Portal v1.0</div>
+      <div class="status-bar-field">Eidolon Capital Intranet Portal v1.65.267</div>
       <div class="status-bar-field">System Status: OPERATIONAL</div>
     </div>
   </div>

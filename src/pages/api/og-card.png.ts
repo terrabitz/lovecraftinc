@@ -5,9 +5,23 @@ import logoDataUri from '../../assets/Logo.png?w=180&format=png&inline';
 import { generateOgImage } from '../../utils/og-image';
 
 export const prerender = false;
+const MAX_TITLE_LENGTH = 140;
 
 export const GET: APIRoute = async ({ request }) => {
-  const title = new URL(request.url).searchParams.get('title') ?? 'Hello';
+  const title = new URL(request.url).searchParams.get('title');
+  if (!title) {
+    return Response.json({ error: 'must specify title' }, { status: 400 });
+  }
+  if (title.length > MAX_TITLE_LENGTH) {
+    return Response.json(
+      {
+        error: 'title exceeds maximum length',
+        maxLength: MAX_TITLE_LENGTH,
+      },
+      { status: 422 }
+    );
+  }
+  
   const png = await generateOgImage(title, {
     fontRegular: fontRegularData,
     fontBold: fontBoldData,

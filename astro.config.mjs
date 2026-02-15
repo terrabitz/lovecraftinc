@@ -14,10 +14,6 @@ import react from '@astrojs/react';
 import markdoc from '@astrojs/markdoc';
 import keystatic from '@keystatic/astro'
 
-const DEFAULT_BRANCH = 'main';
-const WORKER_NAME = 'lovecraftinc';
-const WORKERS_DEV_ACCOUNT_DOMAIN = 'tjtaubit.workers.dev';
-
 function getModeFromArgs() {
   const modeFlagIndex = process.argv.indexOf('--mode');
   if (modeFlagIndex !== -1 && process.argv[modeFlagIndex + 1]) {
@@ -28,7 +24,7 @@ function getModeFromArgs() {
 }
 
 const mode = getModeFromArgs();
-const { WORKERS_CI_BRANCH, PUBLIC_SITE_URL } = loadEnv(mode, process.cwd(), "");
+const { DEFAULT_BRANCH, WORKER_NAME, WORKERS_DEV_ACCOUNT_DOMAIN, WORKERS_CI_BRANCH, PUBLIC_SITE_URL } = loadEnv(mode, process.cwd(), "");
 
 function toBranchSlug(branchName = '') {
   return branchName
@@ -38,7 +34,7 @@ function toBranchSlug(branchName = '') {
     .replace(/^-+|-+$/g, '');
 }
 
-function getSiteUrl() {
+function getSiteUrl(WORKERS_CI_BRANCH, DEFAULT_BRANCH, WORKER_NAME, WORKERS_DEV_ACCOUNT_DOMAIN, PUBLIC_SITE_URL) {
   // When running in Cloudflare workers, we should use the branch-specific 
   // URLs instead. This helps ensure that each branch gets its own unique
   // links to the site in places where we need to use absolute URLs, like 
@@ -57,11 +53,21 @@ function getSiteUrl() {
   throw new Error("Couldn't find site config. Set PUBLIC_SITE_URL or use a correct env file.")
 }
 
-const site = getSiteUrl();
+const site = getSiteUrl(WORKERS_CI_BRANCH, DEFAULT_BRANCH, WORKER_NAME, WORKERS_DEV_ACCOUNT_DOMAIN, PUBLIC_SITE_URL)
+
+console.log('Environment variables:', {
+  MODE: mode,
+  DEFAULT_BRANCH,
+  WORKER_NAME,
+  WORKERS_DEV_ACCOUNT_DOMAIN,
+  WORKERS_CI_BRANCH,
+  PUBLIC_SITE_URL,
+  ASTRO_SITE: site,
+});
 
 // https://astro.build/config
 export default defineConfig({
-  site,
+  site: site,
   output: 'static',
   trailingSlash: 'never',
   integrations: [

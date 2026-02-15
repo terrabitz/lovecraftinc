@@ -3,6 +3,8 @@
 
 interface ImportMetaEnv {
   readonly PUBLIC_SITE_URL?: string;
+  readonly PUBLIC_GITHUB_OWNER?: string;
+  readonly PUBLIC_GITHUB_REPO?: string;
 }
 
 declare module '*&inline' {

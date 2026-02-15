@@ -4,8 +4,8 @@ export default config({
   storage: {
     kind: 'github',
     repo: {
-      owner: 'terrabitz',
-      name: 'lovecraftinc'
+      owner: import.meta.env.PUBLIC_GITHUB_OWNER || '',
+      name: import.meta.env.PUBLIC_GITHUB_REPO || '',
     }
   },
 

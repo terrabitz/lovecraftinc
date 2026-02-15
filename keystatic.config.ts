@@ -1,13 +1,17 @@
 import { config, fields, collection } from '@keystatic/core';
 
-export default config({
-  storage: {
-    kind: 'github',
+const storage = import.meta.env.PUBLIC_KEYSTATIC_MODE === 'github' ? {
+    kind: 'github' as const,
     repo: {
       owner: import.meta.env.PUBLIC_GITHUB_OWNER || '',
       name: import.meta.env.PUBLIC_GITHUB_REPO || '',
     }
-  },
+  } : {
+    kind: 'local' as const
+  }
+
+export default config({
+  storage: storage,
 
   collections: {
     anomalies: collection({

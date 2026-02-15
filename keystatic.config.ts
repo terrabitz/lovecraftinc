@@ -19,7 +19,7 @@ export default config({
       slugField: 'id',
       path: 'src/content/anomalies/*',
       format: { contentField: 'content' },
-      columns: ['id', 'name', 'classification', 'status'],
+      columns: ['name', 'classification', 'status'],
       schema: {
         id: fields.slug({
           name: {
@@ -61,7 +61,7 @@ export default config({
       slugField: 'id',
       path: 'src/content/employees/*',
       format: { contentField: 'content' },
-      columns: ['id', 'name', 'position', 'department'],
+      columns: ['name', 'position', 'department'],
       schema: {
         id: fields.slug({
           name: {
@@ -90,7 +90,7 @@ export default config({
       slugField: 'id',
       path: 'src/content/organizations/*',
       format: { contentField: 'content' },
-      columns: ['id', 'name', 'type', 'relationship'],
+      columns: ['name', 'type', 'relationship'],
       schema: {
         id: fields.slug({
           name: {

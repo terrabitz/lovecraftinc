@@ -104,6 +104,7 @@
 ### Content Collections
 - **Always use Content Collections API with Content Layer loaders** for markdown content in `src/content/`
 - Define schemas in `src/content.config.ts` using Zod for type safety
+- Also keep `keystatic.config.ts` in sync with the schemas in `src/content.config.ts` so that the CMS interface matches the data structure.
 - Use the `glob()` loader to load content from the file system
 - Use `getCollection()` to fetch content: `const posts = await getCollection('posts')`
 - Access frontmatter via `.data` property: `entry.data.title`

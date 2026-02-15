@@ -19,7 +19,7 @@ const anomalies = defineCollection({
     name: z.string(),
     classification: z.string(),
     status: z.string(),
-    discoveryDate: z.string(),
+    discoveryDate: z.date(),
     location: z.string(),
   }),
 });

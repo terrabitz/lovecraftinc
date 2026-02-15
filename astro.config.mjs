@@ -10,6 +10,9 @@ import cloudflare from '@astrojs/cloudflare';
 import arraybuffer from "vite-plugin-arraybuffer";
 import { imagetools } from 'vite-imagetools';
 import { loadEnv } from "vite";
+import react from '@astrojs/react';
+import markdoc from '@astrojs/markdoc';
+import keystatic from '@keystatic/astro'
 
 const DEFAULT_BRANCH = 'main';
 const WORKER_NAME = 'lovecraftinc';
@@ -61,7 +64,17 @@ export default defineConfig({
   site,
   output: 'static',
   trailingSlash: 'never',
-  integrations: [preact(), cleanupUnoptimizedImages()],
+  integrations: [
+    preact({
+      include: ["**/preact/*.tsx"],
+    }), 
+    cleanupUnoptimizedImages(), 
+    react({
+      include: ["**/react/**.tsx"],
+    }), 
+    markdoc(), 
+    keystatic(),
+  ],
   build: {
     format: 'file'
   },

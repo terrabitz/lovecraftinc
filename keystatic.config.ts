@@ -6,8 +6,8 @@ function contentField(collectionName: string) {
     extension: 'md',
     options: {
       image: {
-        directory: `src/assets/${collectionName}`,
-        publicPath: `@assets/${collectionName}/`,
+        directory: `src/assets/content/${collectionName}`,
+        publicPath: `@assets/content/${collectionName}/`,
         transformFilename: (originalFilename: string) => {
           const sanitized = originalFilename
             .toLowerCase()

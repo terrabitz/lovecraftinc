@@ -1,5 +1,25 @@
 import { config, fields, collection } from '@keystatic/core';
 
+function contentField(collectionName: string) {
+  return fields.markdoc({
+    label: 'Content',
+    extension: 'md',
+    options: {
+      image: {
+        directory: `src/assets/${collectionName}`,
+        publicPath: `@assets/${collectionName}/`,
+        transformFilename: (originalFilename: string) => {
+          const sanitized = originalFilename
+            .toLowerCase()
+            .replace(/[^a-z0-9._-]/g, '-')
+            .replace(/-+/g, '-');
+          return `${Date.now()}-${sanitized}`;
+        },
+      },
+    },
+  });
+}
+
 const storage = import.meta.env.PUBLIC_KEYSTATIC_MODE === 'github' ? {
     kind: 'github' as const,
     repo: {
@@ -41,19 +61,7 @@ export default config({
         status: fields.text({ label: 'Status', validation: { isRequired: true } }),
         discoveryDate: fields.date({ label: 'Discovery Date', validation: { isRequired: true } }),
         location: fields.text({ label: 'Location', validation: { isRequired: true } }),
-        content: fields.markdoc({
-          label: 'Content',
-          extension: 'md',
-          options: {
-            image: {
-              directory: 'src/assets/anomalies',
-              publicPath: '@assets/anomalies/',
-              transformFilename(originalFilename): string {
-                return `${Date.now()}-${originalFilename}`
-              },
-            },
-          },
-        }),
+        content: contentField('anomalies'),
       },
     }),
     employees: collection({
@@ -82,7 +90,7 @@ export default config({
         position: fields.text({ label: 'Position', validation: { isRequired: true } }),
         department: fields.text({ label: 'Department', validation: { isRequired: true } }),
         clearanceLevel: fields.text({ label: 'Clearance Level', validation: { isRequired: true } }),
-        content: fields.markdoc({ label: 'Content', extension: 'md' }),
+        content: contentField('employees'),
       },
     }),
     organizations: collection({
@@ -112,7 +120,7 @@ export default config({
         relationship: fields.text({ label: 'Relationship', validation: { isRequired: true } }),
         established: fields.text({ label: 'Established', validation: { isRequired: true } }),
         location: fields.text({ label: 'Location', validation: { isRequired: true } }),
-        content: fields.markdoc({ label: 'Content', extension: 'md' }),
+        content: contentField('organizations'),
       },
     }),
   },

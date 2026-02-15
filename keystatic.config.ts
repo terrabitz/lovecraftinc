@@ -22,16 +22,25 @@ export default config({
       columns: ['id', 'name', 'classification', 'status'],
       schema: {
         id: fields.slug({
-          name: { label: 'ID' },
+          name: {
+            label: 'ID',
+            validation: {
+              isRequired: true,
+              pattern: {
+                regex: /^EID-\d+$/,
+                message: 'ID must start with "EID-" followed by numbers (e.g. EID-123)',
+              },
+            },
+          },
           slug: {
             generate: (text) => text.toUpperCase().replace(/\s+/g, '-'),
           },
         }),
-        name: fields.text({ label: 'Name' }),
-        classification: fields.text({ label: 'Classification' }),
-        status: fields.text({ label: 'Status' }),
-        discoveryDate: fields.date({ label: 'Discovery Date' }),
-        location: fields.text({ label: 'Location' }),
+        name: fields.text({ label: 'Name', validation: { isRequired: true } }),
+        classification: fields.text({ label: 'Classification', validation: { isRequired: true } }),
+        status: fields.text({ label: 'Status', validation: { isRequired: true } }),
+        discoveryDate: fields.date({ label: 'Discovery Date', validation: { isRequired: true } }),
+        location: fields.text({ label: 'Location', validation: { isRequired: true } }),
         content: fields.markdoc({
           label: 'Content',
           extension: 'md',
@@ -55,15 +64,24 @@ export default config({
       columns: ['id', 'name', 'position', 'department'],
       schema: {
         id: fields.slug({
-          name: { label: 'ID' },
+          name: {
+            label: 'ID',
+            validation: {
+              isRequired: true,
+              pattern: {
+                regex: /^EID-EMP-\d+$/,
+                message: 'ID must start with "EID-EMP-" followed by numbers',
+              },
+            },
+          },
           slug: {
             generate: (text) => text.toUpperCase().replace(/\s+/g, '-'),
           },
         }),
-        name: fields.text({ label: 'Name' }),
-        position: fields.text({ label: 'Position' }),
-        department: fields.text({ label: 'Department' }),
-        clearanceLevel: fields.text({ label: 'Clearance Level' }),
+        name: fields.text({ label: 'Name', validation: { isRequired: true } }),
+        position: fields.text({ label: 'Position', validation: { isRequired: true } }),
+        department: fields.text({ label: 'Department', validation: { isRequired: true } }),
+        clearanceLevel: fields.text({ label: 'Clearance Level', validation: { isRequired: true } }),
         content: fields.markdoc({ label: 'Content', extension: 'md' }),
       },
     }),
@@ -75,16 +93,25 @@ export default config({
       columns: ['id', 'name', 'type', 'relationship'],
       schema: {
         id: fields.slug({
-          name: { label: 'ID' },
+          name: {
+            label: 'ID',
+            validation: {
+              isRequired: true,
+              pattern: {
+                regex: /^EID-ORG-\d+$/,
+                message: 'ID must start with "EID-ORG-" followed by numbers',
+              },
+            },
+          },
           slug: {
             generate: (text) => text.toUpperCase().replace(/\s+/g, '-'),
           },
         }),
-        name: fields.text({ label: 'Name' }),
-        type: fields.text({ label: 'Type' }),
-        relationship: fields.text({ label: 'Relationship' }),
-        established: fields.text({ label: 'Established' }),
-        location: fields.text({ label: 'Location' }),
+        name: fields.text({ label: 'Name', validation: { isRequired: true } }),
+        type: fields.text({ label: 'Type', validation: { isRequired: true } }),
+        relationship: fields.text({ label: 'Relationship', validation: { isRequired: true } }),
+        established: fields.text({ label: 'Established', validation: { isRequired: true } }),
+        location: fields.text({ label: 'Location', validation: { isRequired: true } }),
         content: fields.markdoc({ label: 'Content', extension: 'md' }),
       },
     }),

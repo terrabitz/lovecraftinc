@@ -11,7 +11,7 @@
     "build": "npm run build:prod",
     "preview": "npm run build:prod && astro preview --host",
     "wrangler:dev": "npm run build:dev && wrangler dev --ip 0.0.0.0",
-    "wrangler:login": "wrangler auth token || wrangler login --callback-host 0.0.0.0 --callback-port 8976",
+    "wrangler:login": "wrangler auth token > /dev/null || wrangler login --callback-host 0.0.0.0 --callback-port 8976",
     "wrangler:deploy:stage": "npm run build:stage && npm run wrangler:login && wrangler deploy --env stage",
     "wrangler:deploy:prod": "npm run build:prod && npm run wrangler:login && wrangler deploy",
     "test": "vitest --run",

@@ -34,7 +34,7 @@ export default config({
           options: {
             image: {
               directory: 'src/assets/anomalies',
-              publicPath: '../../assets/anomalies/',
+              publicPath: '@assets/anomalies/',
               transformFilename(originalFilename): string {
                 return `${Date.now()}-${originalFilename}`
               },

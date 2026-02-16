@@ -2,8 +2,7 @@
 import { getCollection } from 'astro:content';
 import ContentLayout from '../layouts/ContentLayout.astro';
 import OrganizationsListing from '../components/preact/OrganizationsListing';
-import orgIcon from '../assets/Icons/Organization Icon.png';
-import Icon from '../components/Icon.astro';
+import OrganizationIcon from '../components/Icons/OrganizationIcon.astro';
 
 const organizations = await getCollection('organizations');
 const organizationsData = organizations.map(org => ({
@@ -19,7 +18,7 @@ const organizationsData = organizations.map(org => ({
 <ContentLayout title="Organizations">
   <h1 class="flex items-center justify-between">
     Partner Organizations
-    <Icon src={orgIcon} size={96} />
+    <OrganizationIcon size={96} />
   </h1>
 
   <OrganizationsListing organizations={organizationsData} client:load />

@@ -2,12 +2,43 @@
 import {Picture} from 'astro:assets'
 
 interface Props {
-  src: ImageMetadata
+  lightSrc: ImageMetadata
+  darkSrc: ImageMetadata
   size: number
   [key: string]: any
 }
 
-const {src, size, ...rest } = Astro.props;
+const {lightSrc, darkSrc, size, ...rest } = Astro.props;
 ---  
 
-<Picture src={src} alt="" width={size} height={size} densities={[1,2]} formats={["avif", "webp"]} {...rest} />
+<div class="inline-block relative">
+  <Picture 
+    src={lightSrc} 
+    alt="" 
+    class:list={"light-icon"}
+    width={size} 
+    height={size} 
+    densities={[1,2]} 
+    formats={["avif", "webp"]} 
+    {...rest} 
+  />
+  
+  <Picture 
+    src={darkSrc} 
+    alt="" 
+    class:list={"dark-icon"}
+    width={size} 
+    height={size} 
+    densities={[1,2]} 
+    formats={["avif", "webp"]} 
+    {...rest} 
+  />
+</div>
+
+<style>
+  .light-icon { display: block; }
+  .dark-icon { display: none; }
+
+  :global(.dark) .light-icon { display: none; }
+  :global(.dark) .dark-icon { display: block; }
+</style>

@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Table from '../../components/Table.astro';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 import EmployeeIcon from '../../components/Icons/EmployeeIcon.astro';
+import Article from '../../components/Article.astro';
 
 export async function getStaticPaths() {
   const employees = await getCollection('employees');
@@ -45,9 +46,9 @@ const { Content } = await render(employee);
   <hr class="mt-1">
 
   <div class="field-border mt-2">
-    <article>
+    <Article>
       <Content />
-    </article>
+    </Article>
   </div>
 
   <hr>

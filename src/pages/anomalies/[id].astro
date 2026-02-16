@@ -5,6 +5,8 @@ import ContentLayout from '../../layouts/ContentLayout.astro';
 import AnomalyIcon from '../../components/Icons/AnomalyIcon.astro';
 import { formatDate } from 'src/utils/time';
 
+import Article from '../../components/Article.astro';
+
 export async function getStaticPaths() {
   const anomalies = await getCollection('anomalies');
 
@@ -50,9 +52,9 @@ const { Content } = await render(anomaly);
   <hr class="mt-1">
 
   <div class="field-border mt-2">
-    <article>
+    <Article>
       <Content />
-    </article>
+    </Article>
   </div>
 
   <hr>

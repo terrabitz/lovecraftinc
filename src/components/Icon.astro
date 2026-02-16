@@ -1,13 +1,42 @@
 ---
 import {Picture} from 'astro:assets'
+import type { HTMLAttributes } from 'astro/types';
 
-interface Props {
+interface Props extends HTMLAttributes<'div'> {
   src: ImageMetadata
+  darkSrc?: ImageMetadata
   size: number
-  [key: string]: any
 }
 
-const {src, size, ...rest } = Astro.props;
+const {src: src, darkSrc, size, class: className, ...props } = Astro.props;
 ---  
 
-<Picture src={src} alt="" width={size} height={size} densities={[1,2]} formats={["avif", "webp"]} {...rest} />
+<div class:list={[className]} style={`width:${size}px; height:${size}px`} {...props}>
+  <Picture 
+    src={src}  
+    alt="" 
+    class:list={"light-icon"}
+    width={size} 
+    height={size} 
+    densities={[1,2]} 
+    formats={["avif", "webp"]} 
+  />
+  
+  <Picture 
+    src={darkSrc ? darkSrc : src} 
+    alt="" 
+    class:list={"dark-icon"}
+    width={size} 
+    height={size} 
+    densities={[1,2]} 
+    formats={["avif", "webp"]} 
+  />
+</div>
+
+<style>
+  .light-icon { display: block; }
+  .dark-icon { display: none; }
+
+  :global(.dark) .light-icon { display: none; }
+  :global(.dark) .dark-icon { display: block; }
+</style>

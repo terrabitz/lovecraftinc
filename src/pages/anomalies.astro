@@ -2,8 +2,8 @@
 import { getCollection } from 'astro:content';
 import ContentLayout from '../layouts/ContentLayout.astro';
 import AnomaliesListing from '../components/preact/AnomaliesListing';
-import anomalyIcon from '../assets/Icons/Anomaly Icon.png';
-import Icon from '../components/Icon.astro';
+import AnomalyIcon from '../components/Icons/AnomalyIcon.astro';
+import { formatDate } from 'src/utils/time';
 
 const anomalies = await getCollection('anomalies');
 const anomaliesData = anomalies.map(anomaly => ({
@@ -11,7 +11,7 @@ const anomaliesData = anomalies.map(anomaly => ({
   name: anomaly.data.name,
   classification: anomaly.data.classification,
   status: anomaly.data.status,
-  discoveryDate: anomaly.data.discoveryDate,
+  discoveryDate: formatDate(anomaly.data.discoveryDate),
   location: anomaly.data.location,
 }));
 ---
@@ -19,7 +19,7 @@ const anomaliesData = anomalies.map(anomaly => ({
 <ContentLayout title="Anomalies">
   <h1 class="flex items-center justify-between">
     Anomaly Reports
-   <Icon class="mr-4" src={anomalyIcon} size={96} />    
+   <AnomalyIcon class="mr-4" size={96} />    
   </h1>
 
   <AnomaliesListing anomalies={anomaliesData} client:load />

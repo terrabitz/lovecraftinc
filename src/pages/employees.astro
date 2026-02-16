@@ -2,8 +2,7 @@
 import { getCollection } from 'astro:content';
 import ContentLayout from '../layouts/ContentLayout.astro';
 import EmployeesListing from '../components/preact/EmployeesListing';
-import hrIcon from '../assets/Icons/Employees Icon.png';
-import Icon from '../components/Icon.astro';
+import EmployeeIcon from '../components/Icons/EmployeeIcon.astro';
 
 const employees = await getCollection('employees');
 const employeesData = employees.map(emp => ({
@@ -17,7 +16,7 @@ const employeesData = employees.map(emp => ({
 <ContentLayout title="Employees">
   <h1 class="flex items-center justify-between">
     Employee Directory
-    <Icon class="mr-4" src={hrIcon} size={96} />
+    <EmployeeIcon class="mr-4" size={96} />
   </h1>
 
   <EmployeesListing employees={employeesData} client:load />

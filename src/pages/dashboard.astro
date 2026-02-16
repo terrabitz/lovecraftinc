@@ -3,10 +3,9 @@ import { getCollection } from 'astro:content';
 import Card from "../components/Card.astro";
 import Table from "../components/Table.astro";
 import ContentLayout from "../layouts/ContentLayout.astro";
-import hrIcon from '../assets/Icons/Employees Icon.png';
-import anomalyIcon from '../assets/Icons/Anomaly Icon.png';
-import orgIcon from '../assets/Icons/Organization Icon.png';
-import Icon from '../components/Icon.astro';
+import EmployeeIcon from '../components/Icons/EmployeeIcon.astro';
+import AnomalyIcon from '../components/Icons/AnomalyIcon.astro';
+import OrganizationIcon from '../components/Icons/OrganizationIcon.astro';
 
 const employees = await getCollection('employees');
 const anomalies = await getCollection('anomalies');
@@ -30,7 +29,7 @@ const ICON_SIZE=40;
   <h2 class="mt-3">Quick Access</h2>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-3">
     <Card title="Employee Directory">
-      <Icon src={hrIcon} size={ICON_SIZE} slot="icon" />
+      <EmployeeIcon size={ICON_SIZE} slot="icon" />
       <p>Access employee profiles, contact information, and organizational assignments.</p>
       <a href="/employees" slot="bottom">
         <button>View Employees</button>
@@ -38,7 +37,7 @@ const ICON_SIZE=40;
     </Card>
 
     <Card title="Anomaly Reports">
-      <Icon src={anomalyIcon} size={ICON_SIZE} slot="icon" />
+      <AnomalyIcon size={ICON_SIZE} slot="icon" />
       <p>Review documented anomalous events and phenomena requiring investigation.</p>
       <a href="/anomalies" slot="bottom">
         <button>View Anomalies</button>
@@ -46,7 +45,7 @@ const ICON_SIZE=40;
     </Card>
 
     <Card title="Organizations">
-      <Icon src={orgIcon} size={ICON_SIZE} slot="icon" />
+      <OrganizationIcon size={ICON_SIZE} slot="icon" />
       <p>Access profiles of partner organizations and affiliated entities.</p>
       <a href="/organizations" slot="bottom">
         <button>View Organizations</button>

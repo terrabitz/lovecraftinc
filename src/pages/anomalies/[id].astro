@@ -2,8 +2,10 @@
 import { getCollection, render } from 'astro:content';
 import Table from '../../components/Table.astro';
 import ContentLayout from '../../layouts/ContentLayout.astro';
-import anomalyIcon from '../../assets/Icons/Anomaly Icon.png';
-import Icon from '../../components/Icon.astro';
+import AnomalyIcon from '../../components/Icons/AnomalyIcon.astro';
+import { formatDate } from 'src/utils/time';
+
+import Article from '../../components/Article.astro';
 
 export async function getStaticPaths() {
   const anomalies = await getCollection('anomalies');
@@ -21,7 +23,7 @@ const { Content } = await render(anomaly);
 <ContentLayout title={`Anomaly - ${anomaly.data.name}`}>
   <h1 class="flex items-center justify-between">
     {anomaly.data.name}
-   <Icon class="mr-4" src={anomalyIcon} size={96} />    
+    <AnomalyIcon class="mr-4" size={96} />
   </h1>
 
   <Table>
@@ -39,7 +41,7 @@ const { Content } = await render(anomaly);
     </tr>
     <tr>
       <td><strong>Discovery Date:</strong></td>
-      <td>{anomaly.data.discoveryDate}</td>
+      <td>{formatDate(anomaly.data.discoveryDate)}</td>
     </tr>
     <tr>
       <td><strong>Location:</strong></td>
@@ -50,9 +52,9 @@ const { Content } = await render(anomaly);
   <hr class="mt-1">
 
   <div class="field-border mt-2">
-    <article>
+    <Article>
       <Content />
-    </article>
+    </Article>
   </div>
 
   <hr>

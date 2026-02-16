@@ -1,0 +1,15 @@
+---
+import Icon from '../Icon.astro';
+import lightSrc from '../../assets/Icons/Organization Icon Light.png';
+import darkSrc from '../../assets/Icons/Organization Icon Dark.png';
+
+interface Props {
+  size?: number;
+  class?: string;
+  [key: string]: any;
+}
+
+const { size = 32, ...rest } = Astro.props;
+---
+
+<Icon src={lightSrc} darkSrc={darkSrc} size={size} {...rest} />

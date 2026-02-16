@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import ContentLayout from '../layouts/ContentLayout.astro';
 import AnomaliesListing from '../components/preact/AnomaliesListing';
 import AnomalyIcon from '../components/Icons/AnomalyIcon.astro';
+import { formatDate } from 'src/utils/time';
 
 const anomalies = await getCollection('anomalies');
 const anomaliesData = anomalies.map(anomaly => ({
@@ -10,7 +11,7 @@ const anomaliesData = anomalies.map(anomaly => ({
   name: anomaly.data.name,
   classification: anomaly.data.classification,
   status: anomaly.data.status,
-  discoveryDate: anomaly.data.discoveryDate,
+  discoveryDate: formatDate(anomaly.data.discoveryDate),
   location: anomaly.data.location,
 }));
 ---

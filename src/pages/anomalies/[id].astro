@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Table from '../../components/Table.astro';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 import AnomalyIcon from '../../components/Icons/AnomalyIcon.astro';
+import { formatDate } from 'src/utils/time';
 
 export async function getStaticPaths() {
   const anomalies = await getCollection('anomalies');
@@ -38,7 +39,7 @@ const { Content } = await render(anomaly);
     </tr>
     <tr>
       <td><strong>Discovery Date:</strong></td>
-      <td>{anomaly.data.discoveryDate}</td>
+      <td>{formatDate(anomaly.data.discoveryDate)}</td>
     </tr>
     <tr>
       <td><strong>Location:</strong></td>

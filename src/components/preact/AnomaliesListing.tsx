@@ -6,7 +6,7 @@ interface Anomaly {
   name: string;
   classification: string;
   status: string;
-  discoveryDate: string;
+  discoveryDate: Date;
   location: string;
 }
 

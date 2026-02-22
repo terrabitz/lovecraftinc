@@ -1,4 +1,4 @@
-import { config, fields, collection } from '@keystatic/core';
+import { config, fields, collection } from '@terrabitz/keystatic-core';
 
 function contentField(collectionName: string) {
   return fields.markdoc({
@@ -25,7 +25,8 @@ const storage = import.meta.env.PUBLIC_KEYSTATIC_MODE === 'github' ? {
     repo: {
       owner: import.meta.env.PUBLIC_GITHUB_OWNER || '',
       name: import.meta.env.PUBLIC_GITHUB_REPO || '',
-    }
+    },
+    lfs: true,
   } : {
     kind: 'local' as const
   }

@@ -108,6 +108,11 @@ export default defineConfig({
   },
 
   vite: {
+    resolve: {
+      alias: {
+        '@keystatic/core': '@terrabitz/keystatic-core',
+      },
+    },
     plugins: [tailwindcss(), arraybuffer(), imagetools()],
   },
   adapter: cloudflare({

@@ -1,4 +1,4 @@
-import { config, fields, collection } from '@keystatic/core';
+import { config, fields, collection } from '@terrabitz/keystatic-core';
 
 function contentField(collectionName: string) {
   return fields.markdoc({

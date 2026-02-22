@@ -24,6 +24,8 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - run: npm run lint:css
 
@@ -43,6 +45,8 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run tests
         run: npm test
@@ -65,6 +69,8 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: build
         run: npm run build

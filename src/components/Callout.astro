@@ -1,0 +1,32 @@
+---
+interface Props {
+  type: "info" | "warning" | "error";
+  title: string;
+}
+const { type = "info", title } = Astro.props;
+---
+
+<div class={`field-border p-4! ${type}`}>
+  <h3 class="font-bold mb-2">{title}</h3>
+  <slot />
+</div>
+
+<style>
+  .info {
+    border-color: #2563eb;
+    background-color: #eff6ff;
+    color: #1e3a8a;
+  }
+
+  .warning {
+    border-color: #d97706;
+    background-color: #fffbeb;
+    color: #92400e;
+  }
+
+  .error {
+    border-color: #dc2626;
+    background-color: #fef2f2;
+    color: #991b1b;
+  }
+</style>

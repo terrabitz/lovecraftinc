@@ -31,7 +31,8 @@
 			"extensions": [
 				"astro-build.astro-vscode",
 				"bradlc.vscode-tailwindcss",
-				"pucelle.vscode-css-navigation"
+				"pucelle.vscode-css-navigation",
+				"stripe.markdoc-language-support"
 			]
 		}
 	}

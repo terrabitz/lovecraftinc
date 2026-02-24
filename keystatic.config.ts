@@ -3,7 +3,7 @@ import { config, fields, collection } from '@terrabitz/keystatic-core';
 function contentField(collectionName: string) {
   return fields.markdoc({
     label: 'Content',
-    extension: 'md',
+    extension: 'mdoc',
     options: {
       image: {
         directory: `src/assets/content/${collectionName}`,

@@ -1,9 +1,40 @@
 import { config, fields, collection } from '@terrabitz/keystatic-core';
+import { wrapper, inline } from '@terrabitz/keystatic-core/content-components';
+import { createElement } from 'react';
+import DiceRoller from './src/components/preact/DiceRoller';
+import { withPreact } from 'src/utils/withPreact';
+
+const DiceRollerPreact = withPreact(DiceRoller)
 
 function contentField(collectionName: string) {
   return fields.markdoc({
     label: 'Content',
-    extension: 'md',
+    extension: 'mdoc',
+    components: {
+      callout: wrapper({
+        label: 'Callout',
+        schema: {
+          type: fields.select({
+            label: "Type", 
+            options: [
+              {label: "Info", value: "info"}, 
+              {label: "Warning", value: "warning"}, 
+              {label: "Error", value: "error"}
+            ],
+            defaultValue: "info"
+          }),
+          title: fields.text({ label: 'Title', validation: { isRequired: true } }),
+        },
+      }),
+      "dice-roller": inline({
+        label: 'Dice Roller',
+        schema: {
+          sides: fields.integer({ label: 'Sides', defaultValue: 20 }),
+        },
+        ContentView: (props) =>
+          createElement(DiceRollerPreact, { sides: props.value.sides }),
+      }),
+    },
     options: {
       image: {
         directory: `src/assets/content/${collectionName}`,
@@ -56,6 +87,7 @@ export default config({
           slug: {
             generate: (text) => text.toUpperCase().replace(/\s+/g, '-'),
           },
+          
         }),
         name: fields.text({ label: 'Name', validation: { isRequired: true } }),
         classification: fields.text({ label: 'Classification', validation: { isRequired: true } }),

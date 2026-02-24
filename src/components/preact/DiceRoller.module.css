@@ -1,0 +1,36 @@
+.diceButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border: none;
+  border-radius: 3px;
+  background-color: var(--button-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: var(--base-font-size);
+}
+
+.diceButton:hover {
+  background-color: var(--button-bg-hover);
+}
+
+.diceButton:active {
+  background-color: var(--button-bg-active);
+}
+
+.diceIcon {
+  width: 16px;
+  height: 16px;
+  stroke: var(--text-color);
+  fill: none;
+}
+
+.dieDot {
+  fill: var(--text-color);
+}
+
+.rolling {
+  font-variant-numeric: tabular-nums;
+}

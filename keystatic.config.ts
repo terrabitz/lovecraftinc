@@ -1,10 +1,6 @@
 import { config, fields, collection } from '@terrabitz/keystatic-core';
 import { wrapper, inline } from '@terrabitz/keystatic-core/content-components';
-import { createElement } from 'react';
-import DiceRoller from './src/components/preact/DiceRoller';
-import { withPreact } from 'src/utils/withPreact';
 
-const DiceRollerPreact = withPreact(DiceRoller)
 
 function contentField(collectionName: string) {
   return fields.markdoc({
@@ -31,8 +27,6 @@ function contentField(collectionName: string) {
         schema: {
           sides: fields.integer({ label: 'Sides', defaultValue: 20 }),
         },
-        ContentView: (props) =>
-          createElement(DiceRollerPreact, { sides: props.value.sides }),
       }),
     },
     options: {

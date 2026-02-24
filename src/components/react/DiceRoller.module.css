@@ -30,3 +30,7 @@
 .dieDot {
   fill: var(--text-color);
 }
+
+.rolling {
+  font-variant-numeric: tabular-nums;
+}

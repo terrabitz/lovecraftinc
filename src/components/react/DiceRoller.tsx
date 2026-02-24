@@ -1,13 +1,34 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import styles from './DiceRoller.module.css';
 
 export default function DiceRoller({ initialDie = 'd20' }: { initialDie?: string }) {
-  const [result, setResult] = useState<number | null>(null);
+  const [display, setDisplay] = useState<number | null>(null);
+  const [rolling, setRolling] = useState(false);
+  const animationRef = useRef<number | null>(null);
 
-  const roll = () => {
+  const roll = useCallback(() => {
+    if (rolling) return;
+
     const max = parseInt(initialDie.substring(1));
-    setResult(Math.floor(Math.random() * max) + 1);
-  };
+    const finalResult = Math.floor(Math.random() * max) + 1;
+    const duration = 500;
+    const start = performance.now();
+
+    setRolling(true);
+
+    const animate = (now: number) => {
+      const elapsed = now - start;
+      if (elapsed < duration) {
+        setDisplay(Math.floor(Math.random() * max) + 1);
+        animationRef.current = requestAnimationFrame(animate);
+      } else {
+        setDisplay(finalResult);
+        setRolling(false);
+      }
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+  }, [rolling, initialDie]);
 
   return (
     <button
@@ -31,7 +52,7 @@ export default function DiceRoller({ initialDie = 'd20' }: { initialDie?: string
         <circle cx="16" cy="16" r="1.5" className={styles.dieDot} />
       </svg>
       <span>{initialDie}</span>
-      {result !== null && <span>: {result}</span> || <span>: _</span>}
+      {display !== null ? <span className={rolling ? styles.rolling : ''}>: {display}</span> : <span>: _</span>}
     </button>
   );
 }

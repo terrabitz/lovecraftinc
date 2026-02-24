@@ -1,10 +1,18 @@
-import { useState, useRef, useCallback } from 'preact/hooks';
+import { useState, useRef, useCallback, useEffect } from 'preact/hooks';
 import styles from './DiceRoller.module.css';
 
 export default function DiceRoller({ sides = 20 }: { sides?: number }) {
   const [display, setDisplay] = useState<number | null>(null);
   const [rolling, setRolling] = useState(false);
   const animationRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (animationRef.current !== null) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
 
   const roll = useCallback(() => {
     if (rolling) return;

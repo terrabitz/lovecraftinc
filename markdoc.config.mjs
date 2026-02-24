@@ -9,5 +9,11 @@ export default defineMarkdocConfig({
         title: { type: String, required: true },
       },
     },
+    "dice-roller": {
+      render: component('./src/components/ClientDiceRoller.astro'),
+      attributes: {
+        initialDie: { type: String, default: 'd20' }
+      }
+    }
   },
 });

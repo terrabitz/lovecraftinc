@@ -41,6 +41,9 @@
   --tooltip-font-family: 'Pixelated MS Sans Serif', Arial;
   --info-box-bg: #ffffe1;
   --info-box-border: #000000;
+  --button-bg: silver;
+  --button-bg-hover: #a0a0a0;
+  --button-bg-active: grey;
 }
 
 html.dark {
@@ -61,6 +64,9 @@ html.dark {
   --tooltip-text: #fff;
   --info-box-bg: #2d1a1a;
   --info-box-border: #4d2a2a;
+  --button-bg: #8b3a3a;
+  --button-bg-hover: #a04848;
+  --button-bg-active: #7a3030;
 }
 
 body {

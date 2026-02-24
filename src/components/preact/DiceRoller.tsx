@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'preact/hooks';
 import styles from './DiceRoller.module.css';
 
 export default function DiceRoller({ initialDie = 'd20' }: { initialDie?: string }) {

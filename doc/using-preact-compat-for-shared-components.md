@@ -96,7 +96,8 @@ Wrap the component on-the-fly right inside your config file!
 
 ```typescript
 /* keystatic.config.ts */
-// 1. Import the helper
+// 1. Import createElement and the helper
+import { createElement } from 'react';
 import { withPreact } from './src/utils/withPreact';
 
 // 2. Import your Preact component
@@ -106,9 +107,9 @@ import DiceRoller from './src/components/preact/DiceRoller';
 const DiceRollerReact = withPreact(DiceRoller);
 
 // ... inside your schema ...
-  ContentView: (props) => (
-    <DiceRollerReact initialDie={props.value.initialDie} />
-  ),
+  // Use createElement since keystatic.config.ts cannot use JSX
+  ContentView: (props) =>
+    createElement(DiceRollerReact, { initialDie: props.value.initialDie }),
 // ...
 ```
 

@@ -1,7 +1,8 @@
 import { config, fields, collection } from '@terrabitz/keystatic-core';
 import { wrapper, inline } from '@terrabitz/keystatic-core/content-components';
 import { createElement } from 'react';
-import DiceRoller from './src/components/react/DiceRoller';
+import DiceRoller from './src/components/preact/DiceRoller';
+import { withPreact } from 'src/utils/withPreact';
 
 function contentField(collectionName: string) {
   return fields.markdoc({
@@ -29,7 +30,7 @@ function contentField(collectionName: string) {
           initialDie: fields.text({ label: 'Die Type', defaultValue: 'd20' }),
         },
         ContentView: (props) =>
-          createElement(DiceRoller, { initialDie: props.value.initialDie }),
+          createElement(withPreact(DiceRoller), { initialDie: props.value.initialDie }),
       }),
     },
     options: {

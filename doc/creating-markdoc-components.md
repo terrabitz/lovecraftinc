@@ -128,6 +128,7 @@ Import the component directly into the config to use it as the preview.
 
 ```typescript
 // Import the component (ensure tsconfig allows this import)
+import { createElement } from 'react';
 import DiceRoller from './src/components/react/DiceRoller';
 
 // ... inside schema.components
@@ -144,9 +145,9 @@ import DiceRoller from './src/components/react/DiceRoller';
       }),
   },
   // The 'ContentView' prop enables the live preview
-  ContentView: (props) => (
-    <DiceRoller initialDie={props.value.initialDie} />
-  ),
+  // Use createElement since keystatic.config.ts cannot use JSX
+  ContentView: (props) =>
+    createElement(DiceRoller, { initialDie: props.value.initialDie }),
 }),
 ```
 

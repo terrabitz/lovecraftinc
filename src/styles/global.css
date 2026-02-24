@@ -44,6 +44,16 @@
   --button-bg: silver;
   --button-bg-hover: #a0a0a0;
   --button-bg-active: grey;
+
+  --callout-info-border: #0000aa;
+  --callout-info-bg: #d0d0ff;
+  --callout-info-text: #00007b;
+  --callout-warning-border: #aa8800;
+  --callout-warning-bg: #ffffe1;
+  --callout-warning-text: #554400;
+  --callout-error-border: #aa0000;
+  --callout-error-bg: #ffd0d0;
+  --callout-error-text: #7b0000;
 }
 
 html.dark {
@@ -67,6 +77,16 @@ html.dark {
   --button-bg: #8b3a3a;
   --button-bg-hover: #a04848;
   --button-bg-active: #7a3030;
+
+  --callout-info-border: #4a6a9a;
+  --callout-info-bg: #1a2a3a;
+  --callout-info-text: #a0c0e0;
+  --callout-warning-border: #8a7a3a;
+  --callout-warning-bg: #2d2a1a;
+  --callout-warning-text: #e0d0a0;
+  --callout-error-border: #8b3a3a;
+  --callout-error-bg: #2d1a1a;
+  --callout-error-text: #e0a0a0;
 }
 
 body {

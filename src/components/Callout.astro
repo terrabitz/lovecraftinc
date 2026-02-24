@@ -13,20 +13,20 @@ const { type = "info", title } = Astro.props;
 
 <style>
   .info {
-    border-color: #2563eb;
-    background-color: #eff6ff;
-    color: #1e3a8a;
+    border-color: var(--callout-info-border);
+    background-color: var(--callout-info-bg);
+    color: var(--callout-info-text);
   }
 
   .warning {
-    border-color: #d97706;
-    background-color: #fffbeb;
-    color: #92400e;
+    border-color: var(--callout-warning-border);
+    background-color: var(--callout-warning-bg);
+    color: var(--callout-warning-text);
   }
 
   .error {
-    border-color: #dc2626;
-    background-color: #fef2f2;
-    color: #991b1b;
+    border-color: var(--callout-error-border);
+    background-color: var(--callout-error-bg);
+    color: var(--callout-error-text);
   }
 </style>

@@ -12,7 +12,7 @@ export default defineMarkdocConfig({
     "dice-roller": {
       render: component('./src/components/ClientDiceRoller.astro'),
       attributes: {
-        initialDie: { type: String, default: 'd20' }
+        sides: { type: Number, default: 20 }
       }
     }
   },

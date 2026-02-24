@@ -15,23 +15,34 @@ export function withPreact(PreactComponent: any) {
     const ref = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
 
+  
     useEffect(() => {
-      if (!ref.current) return;
-
-      if (!containerRef.current) {
-        containerRef.current = document.createElement('div');
-        containerRef.current.style.display = 'contents';
-        ref.current.appendChild(containerRef.current);
+      if (!ref.current || containerRef.current) {
+        return;
       }
-
-      // Use Preact's h() to create a Preact VNode, NOT React's JSX
-      render(h(PreactComponent, props), containerRef.current);
-
+      const container = document.createElement('div');
+      container.style.display = 'contents';
+      ref.current.appendChild(container);
+      containerRef.current = container;
       return () => {
         if (containerRef.current) {
+          // Unmount Preact tree on unmount
           render(null, containerRef.current);
+          if (ref.current && ref.current.contains(containerRef.current)) {
+            ref.current.removeChild(containerRef.current);
+          }
+          containerRef.current = null;
         }
       };
+    }, []);
+    
+    // Updates: re-render Preact component when props change without unmounting
+    useEffect(() => {
+      if (!containerRef.current) {
+        return;
+      }
+      // Use Preact's h() to create a Preact VNode, NOT React's JSX
+      render(h(PreactComponent, props), containerRef.current);
     }, [props]);
 
     return <div ref={ref} style={{ display: 'contents' }} />;

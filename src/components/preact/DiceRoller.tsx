@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback } from 'preact/hooks';
 import styles from './DiceRoller.module.css';
 
-export default function DiceRoller({ initialDie = 'd20' }: { initialDie?: string }) {
+export default function DiceRoller({ sides = 20 }: { sides?: number }) {
   const [display, setDisplay] = useState<number | null>(null);
   const [rolling, setRolling] = useState(false);
   const animationRef = useRef<number | null>(null);
@@ -9,8 +9,7 @@ export default function DiceRoller({ initialDie = 'd20' }: { initialDie?: string
   const roll = useCallback(() => {
     if (rolling) return;
 
-    const max = parseInt(initialDie.substring(1));
-    const finalResult = Math.floor(Math.random() * max) + 1;
+    const finalResult = Math.floor(Math.random() * sides) + 1;
     const duration = 500;
     const start = performance.now();
 
@@ -19,7 +18,7 @@ export default function DiceRoller({ initialDie = 'd20' }: { initialDie?: string
     const animate = (now: number) => {
       const elapsed = now - start;
       if (elapsed < duration) {
-        setDisplay(Math.floor(Math.random() * max) + 1);
+        setDisplay(Math.floor(Math.random() * sides) + 1);
         animationRef.current = requestAnimationFrame(animate);
       } else {
         setDisplay(finalResult);
@@ -28,13 +27,13 @@ export default function DiceRoller({ initialDie = 'd20' }: { initialDie?: string
     };
 
     animationRef.current = requestAnimationFrame(animate);
-  }, [rolling, initialDie]);
+  }, [rolling, sides]);
 
   return (
     <button
       onClick={roll}
       className={styles.diceButton}
-      title={`Roll ${initialDie}`}
+      title={`Roll d${sides}`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +50,7 @@ export default function DiceRoller({ initialDie = 'd20' }: { initialDie?: string
         <circle cx="8" cy="16" r="1.5" className={styles.dieDot} />
         <circle cx="16" cy="16" r="1.5" className={styles.dieDot} />
       </svg>
-      <span>{initialDie}</span>
+      <span>d{sides}</span>
       {display !== null ? <span className={rolling ? styles.rolling : ''}>: {display}</span> : <span>: _</span>}
     </button>
   );

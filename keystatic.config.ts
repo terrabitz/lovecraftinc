@@ -4,6 +4,8 @@ import { createElement } from 'react';
 import DiceRoller from './src/components/preact/DiceRoller';
 import { withPreact } from 'src/utils/withPreact';
 
+const DiceRollerPreact = withPreact(DiceRoller)
+
 function contentField(collectionName: string) {
   return fields.markdoc({
     label: 'Content',
@@ -21,16 +23,16 @@ function contentField(collectionName: string) {
             ],
             defaultValue: "info"
           }),
-          title: fields.text({ label: 'Title' }),
+          title: fields.text({ label: 'Title', validation: { isRequired: true } }),
         },
       }),
       "dice-roller": inline({
         label: 'Dice Roller',
         schema: {
-          initialDie: fields.text({ label: 'Die Type', defaultValue: 'd20' }),
+          sides: fields.integer({ label: 'Sides', defaultValue: 20 }),
         },
         ContentView: (props) =>
-          createElement(withPreact(DiceRoller), { initialDie: props.value.initialDie }),
+          createElement(DiceRollerPreact, { sides: props.value.sides }),
       }),
     },
     options: {

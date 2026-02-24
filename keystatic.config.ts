@@ -1,9 +1,27 @@
 import { config, fields, collection } from '@terrabitz/keystatic-core';
+import { wrapper } from '@terrabitz/keystatic-core/content-components';
 
 function contentField(collectionName: string) {
   return fields.markdoc({
     label: 'Content',
     extension: 'mdoc',
+    components: {
+      callout: wrapper({
+        label: 'Callout',
+        schema: {
+          type: fields.select({
+            label: "Type", 
+            options: [
+              {label: "Info", value: "info"}, 
+              {label: "Warning", value: "warning"}, 
+              {label: "Error", value: "error"}
+            ],
+            defaultValue: "info"
+          }),
+          title: fields.text({ label: 'Title' }),
+        }
+      })
+    },
     options: {
       image: {
         directory: `src/assets/content/${collectionName}`,
@@ -56,6 +74,7 @@ export default config({
           slug: {
             generate: (text) => text.toUpperCase().replace(/\s+/g, '-'),
           },
+          
         }),
         name: fields.text({ label: 'Name', validation: { isRequired: true } }),
         classification: fields.text({ label: 'Classification', validation: { isRequired: true } }),

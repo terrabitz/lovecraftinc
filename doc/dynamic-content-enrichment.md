@@ -1,151 +1,88 @@
-# Guide: Dynamic Content Enrichment (Auto-linking & Inline Components)
+# Auto-replacing Text Patterns with Markdoc Components
 
-This guide explores how to enrich your content by automatically turning text patterns (like dice notation `1d6`) into interactive components, or manually inserting inline components.
+Markdoc processes content in two stages: **parse** (text to AST) and **transform** (AST to renderable tree). We can override the `text` node's transform to scan for regex patterns and replace matches with component tags.
 
-## Scenario
-You want text like `1d6` or `2d20` to automatically become an interactive clickable roller, without manually typing `{% dice-roller /%}` every time.
+This is the Markdoc equivalent of the text-node visitor pattern used in remark plugins like `remark-article-links`.
 
-## Approach Comparison
+## Example: Auto-converting Dice Notation
 
-| Feature | Custom Remark Plugin | Markdoc Inline Component |
-| :--- | :--- | :--- |
-| **Trigger** | Automatic (Regex pattern like `\d+d\d+`) | Manual (Explicit tag `{% dice %}`) |
-| **Syntax** | Just write text: `I roll 1d6 damage.` | Write tag: `I roll {% dice "1d6" /%} damage.` |
-| **Complexity** | High (Requires AST manipulation) | Low (Standard Markdoc feature) |
-| **Best For** | "Magic" replacements, reducing friction | Explicit control, complex props |
+Given content like:
 
----
+```markdown
+The monster deals 2d6 slashing damage plus 1d4 fire damage.
+```
 
-## Option 1: The "Magic" Route (Remark Plugin)
-**Best for:** Automatically converting simple text patterns into components.
+We want `2d6` and `1d4` to automatically render as interactive dice roller components, without the author needing to write `{% dice-roller /%}` tags.
 
-We can create a Remark plugin that scans for regex matches (e.g., `/\b\d+d\d+\b/`) and transforms them into Markdoc tag nodes.
+### 1. Create the Transform
 
-### 1. Create the Plugin
-`src/plugins/remark-smart-dice.ts`
+`src/plugins/markdoc-dice-transform.ts`
 
 ```typescript
-import { visit } from 'unist-util-visit';
+import Markdoc from '@markdoc/markdoc';
 
-export function remarkSmartDice() {
-  return (tree) => {
-    visit(tree, 'text', (node, index, parent) => {
-      const regex = /\b(\d+)d(\d+)\b/g;
-      const value = node.value;
-      
-      if (!regex.test(value)) return;
+const DICE_PATTERN = /\b(\d+d\d+)\b/g;
 
-      const children = [];
-      let lastIndex = 0;
-      let match;
+export function diceTextTransform(node: any) {
+  const content: string = node.attributes.content;
 
-      while ((match = regex.exec(value)) !== null) {
-        // Push preceding text
-        if (match.index > lastIndex) {
-          children.push({ type: 'text', value: value.slice(lastIndex, match.index) });
-        }
+  if (!DICE_PATTERN.test(content)) return content;
+  DICE_PATTERN.lastIndex = 0;
 
-        // Push the Markdoc tag node
-        // Note: This output format depends on how Markdoc integration parses it.
-        // Often it's easier to simply convert to a Markdoc tag structure if the integration supports it, 
-        // OR transform to an HTML node that Astro/Markdoc will treat as a component.
-        children.push({
-          type: 'markdocTag', // Pseudo-type for conceptual understanding
-          name: 'dice-roller',
-          attributes: { initialDie: match[0] }
-        });
+  const parts: (string | InstanceType<typeof Markdoc.Tag>)[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
 
-        lastIndex = regex.lastIndex;
-      }
+  while ((match = DICE_PATTERN.exec(content)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(content.slice(lastIndex, match.index));
+    }
+    parts.push(new Markdoc.Tag('dice-roller', { initialDie: match[1] }));
+    lastIndex = DICE_PATTERN.lastIndex;
+  }
 
-      // Push remaining text
-      if (lastIndex < value.length) {
-        children.push({ type: 'text', value: value.slice(lastIndex) });
-      }
+  if (lastIndex < content.length) {
+    parts.push(content.slice(lastIndex));
+  }
 
-      parent.children.splice(index, 1, ...children);
-    });
-  };
+  return parts;
 }
 ```
 
-*Note: Writing robust AST transforms can be tricky. A simpler alternative is to transform the text to a Markdoc tag string directly if your pipeline runs before Markdoc parsing.*
+### 2. Wire It Up
 
----
-
-## Option 2: The Inline Markdoc Component (Recommended)
-**Best for:** Explicit control and simplicity. Markdoc supports inline tags natively!
-
-You can define a tag as `inline` in the schema. This allows it to sit inside a paragraph without breaking the block.
-
-### 1. Configure Markdoc
-`markdoc.config.mjs`
+Register both the node transform and the corresponding tag in `markdoc.config.mjs`:
 
 ```javascript
-tags: {
-  'dice': {
-    render: component('./src/components/preact/InlineDice.tsx'),
-    attributes: {
-      notation: { type: String, required: true }
+import { defineMarkdocConfig, component } from '@astrojs/markdoc/config';
+import { diceTextTransform } from './src/plugins/markdoc-dice-transform';
+
+export default defineMarkdocConfig({
+  nodes: {
+    text: {
+      transform: diceTextTransform,
     },
-    // Markdoc treats tags as inline if they appear in inline context, 
-    // but ensuring your component renders as <span> or inline-block is key.
-  }
-}
+  },
+  tags: {
+    'dice-roller': {
+      render: component('./src/components/ClientDiceRoller.astro'),
+      attributes: {
+        initialDie: { type: String, default: 'd20' },
+      },
+    },
+  },
+});
 ```
 
-### 2. Create the Inline Component
-`src/components/preact/InlineDice.tsx`
+Now `2d6` in any `.mdoc` file automatically renders as `<DiceRoller initialDie="2d6" />`.
 
-```tsx
-/** @jsxImportSource preact */
-import { useState } from 'preact/hooks';
+## The General Pattern
 
-export default function InlineDice({ notation }) {
-  const [result, setResult] = useState(null);
+To auto-replace any text pattern with a component:
 
-  const roll = () => { /* ... parse notation and roll ... */ };
+1. Write a transform function that receives a Markdoc text node (`node.attributes.content`)
+2. Scan for your regex pattern
+3. Return an array of plain strings (unchanged text) and `new Markdoc.Tag(tagName, attributes)` (for matches)
+4. Register the transform on the `text` node and define the corresponding tag in `markdoc.config.mjs`
 
-  return (
-    <span className="inline-flex items-center gap-1 mx-1">
-      <button 
-        onClick={roll}
-        className="px-1.5 py-0.5 text-xs bg-gray-200 hover:bg-gray-300 rounded border border-gray-400"
-      >
-        {notation}
-      </button>
-      {result && <span className="font-bold text-blue-600">[{result}]</span>}
-    </span>
-  );
-}
-```
-
-### 3. Usage
-In your markdown:
-```markdown
-The monster attacks for {% dice notation="2d6" /%} slashing damage.
-```
-
-### 4. Keystatic Setup
-Use `inline` from content-components for the schema.
-
-```typescript
-import { inline } from '@terrabitz/keystatic-core/content-components';
-
-components: {
-  dice: inline({
-    label: 'Inline Dice',
-    schema: {
-      notation: fields.text({ label: 'Notation' }),
-    }
-  })
-}
-```
-
----
-
-## Recommendation
-
-For your specific case of `1d6` conversion:
-1.  **Start with Option 2 (Inline Components)**. It is robust, explicit, and easy to build.
-2.  If typing `{% dice ... %}` becomes annoying, treat Option 1 as an enhancement later. You can write a script or plugin that pre-processes your content to find `1d6` and replace it with `{% dice notation="1d6" /%}` automatically!
+This follows the same split-and-splice approach as `remark-article-links`, but operates on Markdoc's AST instead of mdast.

@@ -1,0 +1,35 @@
+---
+import Icon from './Icon.astro';
+import iconLight from '../assets/Icons/Add Icon Light.png';
+import iconDark from '../assets/Icons/Add Icon Dark.png';
+
+interface Props {
+  collection: string;
+}
+
+const { collection } = Astro.props;
+const href = `/keystatic/collection/${collection}/create`;
+---
+
+<a href={href} class="keystatic-link" title="Add new entry">
+  <button type="button" class="keystatic-btn">
+    <Icon src={iconLight} darkSrc={iconDark} size={14} />
+    Add
+  </button>
+</a>
+
+<style>
+  .keystatic-link {
+    text-decoration: none;
+  }
+
+  .keystatic-btn {
+    min-height: 23px;
+    padding: 2px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+</style>

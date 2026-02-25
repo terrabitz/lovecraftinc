@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import ContentLayout from '../layouts/ContentLayout.astro';
+import KeystaticAddButton from '../components/KeystaticAddButton.astro';
 import OrganizationsListing from '../components/preact/OrganizationsListing';
 import OrganizationIcon from '../components/Icons/OrganizationIcon.astro';
 
@@ -16,6 +17,7 @@ const organizationsData = organizations.map(org => ({
 ---
 
 <ContentLayout title="Organizations">
+  <KeystaticAddButton slot="title-bar-extra" collection="organizations" />
   <h1 class="flex items-center justify-between">
     Partner Organizations
     <OrganizationIcon size={96} />

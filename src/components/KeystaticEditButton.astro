@@ -1,0 +1,36 @@
+---
+import Icon from './Icon.astro';
+import iconLight from '../assets/Icons/Edit Icon Light.png';
+import iconDark from '../assets/Icons/Edit Icon Dark.png';
+
+interface Props {
+  collection: string;
+  itemId: string;
+}
+
+const { collection, itemId } = Astro.props;
+const href = `/keystatic/collection/${collection}/item/${itemId}`;
+---
+
+<a href={href} class="keystatic-link" title="Edit entry">
+  <button type="button" class="keystatic-btn">
+    <Icon src={iconLight} darkSrc={iconDark} size={14} />
+    Edit
+  </button>
+</a>
+
+<style>
+  .keystatic-link {
+    text-decoration: none;
+  }
+
+  .keystatic-btn {
+    min-height: 23px;
+    padding: 2px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+</style>

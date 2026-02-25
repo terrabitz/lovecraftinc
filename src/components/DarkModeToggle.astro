@@ -1,13 +1,14 @@
 ---
-
+const { class: className, ...restProps } = Astro.props;
 ---
 
 <button
   id="dark-mode-toggle"
   type="button"
-  class="dark-mode-toggle"
+  class:list={['dark-mode-toggle', className]}
   aria-label="Toggle dark mode"
   title="Toggle dark mode"
+  {...restProps}
 >
   <span class="icon icon-light">&#9728;</span>
   <span class="icon icon-dark">&#9790;</span>

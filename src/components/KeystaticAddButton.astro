@@ -8,7 +8,9 @@ interface Props {
 }
 
 const { collection } = Astro.props;
-const href = `/keystatic/collection/${collection}/create`;
+const defaultBranch = import.meta.env.PUBLIC_DEFAULT_BRANCH || 'main';
+const branchPrefix = import.meta.env.PUBLIC_KEYSTATIC_MODE === 'github' ? `/branch/${defaultBranch}` : '';
+const href = `/keystatic${branchPrefix}/collection/${collection}/create`;
 ---
 
 <a href={href} class="keystatic-link" title="Add new entry">

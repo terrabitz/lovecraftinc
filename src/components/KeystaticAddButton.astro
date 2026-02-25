@@ -1,4 +1,7 @@
 ---
+import Icon from './Icon.astro';
+import addIcon from '../assets/Icons/Add Icon.png';
+
 interface Props {
   collection: string;
 }
@@ -7,8 +10,11 @@ const { collection } = Astro.props;
 const href = `/keystatic/collection/${collection}/create`;
 ---
 
-<a href={href} class="keystatic-link">
-  <button type="button" class="keystatic-btn">Add</button>
+<a href={href} class="keystatic-link" title="Add new entry">
+  <button type="button" class="keystatic-btn">
+    <Icon src={addIcon} size={14} />
+    Add
+  </button>
 </a>
 
 <style>
@@ -17,10 +23,12 @@ const href = `/keystatic/collection/${collection}/create`;
   }
 
   .keystatic-btn {
-    min-width: 32px;
     min-height: 23px;
-    padding: 0 8px;
+    padding: 2px 8px;
     font-size: 12px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
 </style>

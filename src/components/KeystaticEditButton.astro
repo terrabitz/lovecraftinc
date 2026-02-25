@@ -1,4 +1,7 @@
 ---
+import Icon from './Icon.astro';
+import editIcon from '../assets/Icons/Edit Icon.png';
+
 interface Props {
   collection: string;
   itemId: string;
@@ -8,8 +11,11 @@ const { collection, itemId } = Astro.props;
 const href = `/keystatic/collection/${collection}/item/${itemId}`;
 ---
 
-<a href={href} class="keystatic-link">
-  <button type="button" class="keystatic-btn">Edit</button>
+<a href={href} class="keystatic-link" title="Edit entry">
+  <button type="button" class="keystatic-btn">
+    <Icon src={editIcon} size={14} />
+    Edit
+  </button>
 </a>
 
 <style>
@@ -18,10 +24,12 @@ const href = `/keystatic/collection/${collection}/item/${itemId}`;
   }
 
   .keystatic-btn {
-    min-width: 32px;
     min-height: 23px;
-    padding: 0 8px;
+    padding: 2px 8px;
     font-size: 12px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
 </style>

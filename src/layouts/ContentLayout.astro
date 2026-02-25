@@ -32,6 +32,7 @@ const pathname = Astro.url.pathname;
     <div class="title-bar">
       <div class="title-bar-text">{windowTitle}</div>
       <div class="title-bar-controls">
+        <slot name="title-bar-extra" />
         <DarkModeToggle />
       </div>
     </div>
@@ -77,4 +78,5 @@ const pathname = Astro.url.pathname;
       margin: 0 auto;
     }
   }
+
 </style>

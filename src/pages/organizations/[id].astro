@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Table from '../../components/Table.astro';
 import ContentLayout from '../../layouts/ContentLayout.astro';
+import KeystaticEditButton from '../../components/KeystaticEditButton.astro';
 import OrganizationIcon from '../../components/Icons/OrganizationIcon.astro';
 import Article from '../../components/Article.astro';
 
@@ -19,6 +20,7 @@ const { Content } = await render(organization);
 ---
 
 <ContentLayout title={`Organization - ${organization.data.name}`}>
+  <KeystaticEditButton slot="title-bar-extra" collection="organizations" itemId={organization.data.id} />
   <h2 class="flex items-center justify-between">
     {organization.data.name}
     <OrganizationIcon class="mr-4" size={96} />  

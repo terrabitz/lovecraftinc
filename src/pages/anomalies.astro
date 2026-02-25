@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import ContentLayout from '../layouts/ContentLayout.astro';
+import KeystaticAddButton from '../components/KeystaticAddButton.astro';
 import AnomaliesListing from '../components/preact/AnomaliesListing';
 import AnomalyIcon from '../components/Icons/AnomalyIcon.astro';
 import { formatDate } from 'src/utils/time';
@@ -17,6 +18,7 @@ const anomaliesData = anomalies.map(anomaly => ({
 ---
 
 <ContentLayout title="Anomalies">
+  <KeystaticAddButton slot="title-bar-extra" collection="anomalies" />
   <h1 class="flex items-center justify-between">
     Anomaly Reports
    <AnomalyIcon class="mr-4" size={96} />    

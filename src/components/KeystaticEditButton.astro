@@ -1,0 +1,27 @@
+---
+interface Props {
+  collection: string;
+  itemId: string;
+}
+
+const { collection, itemId } = Astro.props;
+const href = `/keystatic/collection/${collection}/item/${itemId}`;
+---
+
+<a href={href} class="keystatic-link">
+  <button type="button" class="keystatic-btn">Edit</button>
+</a>
+
+<style>
+  .keystatic-link {
+    text-decoration: none;
+  }
+
+  .keystatic-btn {
+    min-width: 32px;
+    min-height: 23px;
+    padding: 0 8px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+</style>

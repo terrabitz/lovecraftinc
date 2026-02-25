@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
-import editIcon from '../assets/Icons/Edit Icon.png';
+import iconLight from '../assets/Icons/Edit Icon Light.png';
+import iconDark from '../assets/Icons/Edit Icon Dark.png';
 
 interface Props {
   collection: string;
@@ -13,7 +14,7 @@ const href = `/keystatic/collection/${collection}/item/${itemId}`;
 
 <a href={href} class="keystatic-link" title="Edit entry">
   <button type="button" class="keystatic-btn">
-    <Icon src={editIcon} size={14} />
+    <Icon src={iconLight} darkSrc={iconDark} size={14} />
     Edit
   </button>
 </a>

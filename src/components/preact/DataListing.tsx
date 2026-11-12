@@ -1,20 +1,17 @@
+/** @jsxImportSource preact */
 import { h } from 'preact';
 import { useState, useMemo } from 'preact/hooks';
 import SearchBox from './SearchBox';
 import styles from './DataListing.module.css';
+import { matchesContent, metadataLabel, type ContentData } from '../../utils/content-data';
 
-// Generic type for any data item with at least an id and name
-export interface DataItem {
-  id: string;
-  name: string;
-  [key: string]: any;
-}
+export type DataItem = ContentData;
 
 // Column configuration
 export interface ColumnConfig {
   key: string;
   label: string;
-  detailLabel?: string;  // Optional label for detail panel (defaults to label with colon)
+  metadata?: boolean;
   hideOnMobile?: boolean;
   hideOnTablet?: boolean;
   sortable?: boolean;
@@ -48,9 +45,6 @@ export default function DataListing({
   // Filter columns for table display (default: showInTable !== false)
   const tableColumns = columns.filter(col => col.showInTable !== false);
   
-  // All columns are shown in detail panel
-  const detailColumns = columns;
-
   const handleSort = (field: string) => {
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -65,24 +59,20 @@ export default function DataListing({
 
     // Apply search filter - search across all fields
     if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      result = result.filter(item => 
-        Object.values(item).some(value => 
-          String(value).toLowerCase().includes(query)
-        )
-      );
+      result = result.filter(item => matchesContent(item, searchQuery));
     }
 
     // Apply sorting
+    const column = columns.find(column => columnId(column) === sortField);
     result = [...result].sort((a, b) => {
-      const aValue = String(a[sortField]).toLowerCase();
-      const bValue = String(b[sortField]).toLowerCase();
+      const aValue = column ? columnValue(a, column).toLowerCase() : '';
+      const bValue = column ? columnValue(b, column).toLowerCase() : '';
       const comparison = aValue.localeCompare(bValue);
       return sortDirection === 'asc' ? comparison : -comparison;
     });
 
     return result;
-  }, [data, searchQuery, sortField, sortDirection]);
+  }, [data, columns, searchQuery, sortField, sortDirection]);
 
   const getSortIndicator = (field: string) => {
     if (sortField !== field) return ' ↕';
@@ -109,15 +99,15 @@ export default function DataListing({
               <tr>
                 {tableColumns.map(column => (
                   <th 
-                    key={column.key}
+                    key={columnId(column)}
                     class={`${column.hideOnMobile ? styles.hideMobile : ''} ${column.hideOnTablet ? styles.hideTablet : ''}`.trim()}
                     style={column.sortable !== false ? "cursor: pointer;" : undefined}
-                    onClick={column.sortable !== false ? () => handleSort(column.key) : undefined}
-                    onKeyDown={column.sortable !== false ? (e) => handleKeyDown(e, column.key) : undefined}
+                    onClick={column.sortable !== false ? () => handleSort(columnId(column)) : undefined}
+                    onKeyDown={column.sortable !== false ? (e) => handleKeyDown(e, columnId(column)) : undefined}
                     role={column.sortable !== false ? "button" : undefined}
                     tabIndex={column.sortable !== false ? 0 : undefined}
                   >
-                    {column.label}{column.sortable !== false ? getSortIndicator(column.key) : ''}
+                    {column.label}{column.sortable !== false ? getSortIndicator(columnId(column)) : ''}
                   </th>
                 ))}
               </tr>
@@ -139,10 +129,10 @@ export default function DataListing({
                   >
                     {tableColumns.map(column => (
                       <td 
-                        key={column.key}
+                        key={columnId(column)}
                         class={`${column.hideOnMobile ? styles.hideMobile : ''} ${column.hideOnTablet ? styles.hideTablet : ''}`.trim()}
                       >
-                        {String(item[column.key])}
+                        {columnValue(item, column)}
                       </td>
                     ))}
                   </tr>
@@ -158,10 +148,18 @@ export default function DataListing({
               <div class="sunken-panel">
                 <table>
                   <tbody>
-                    {detailColumns.map(column => (
-                      <tr key={column.key}>
-                        <td><strong>{column.detailLabel || (column.label + ':')}</strong></td>
-                        <td>{String(selectedItem[column.key])}</td>
+                    <tr>
+                      <td><strong>ID:</strong></td>
+                      <td>{selectedItem.id}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Name:</strong></td>
+                      <td>{selectedItem.name}</td>
+                    </tr>
+                    {Object.entries(selectedItem.metadata).map(([key, value]) => (
+                      <tr key={key}>
+                        <td><strong>{metadataLabel(key)}:</strong></td>
+                        <td>{value}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -184,3 +182,11 @@ export default function DataListing({
   );
 }
 
+function columnValue(item: DataItem, column: ColumnConfig): string {
+  if (column.metadata) return Object.hasOwn(item.metadata, column.key) ? item.metadata[column.key] : '';
+  return column.key === 'id' ? item.id : item.name;
+}
+
+function columnId(column: ColumnConfig): string {
+  return column.metadata ? `metadata:${column.key}` : column.key;
+}

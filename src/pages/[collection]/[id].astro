@@ -1,0 +1,52 @@
+---
+import { getCollection, render } from 'astro:content';
+import { contentTypes } from '../../content-types';
+import { metadataLabel } from '../../utils/content-data';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import Table from '../../components/Table.astro';
+import Article from '../../components/Article.astro';
+import KeystaticEditButton from '../../components/KeystaticEditButton.astro';
+import ContentTypeIcon from '../../components/content-type-icon.astro';
+
+export async function getStaticPaths() {
+  const paths = await Promise.all(contentTypes.map(async type => {
+    const entries = await getCollection(type.slug);
+    return entries.map(entry => ({
+      params: { collection: type.slug, id: entry.data.id.toUpperCase() },
+      props: { type, entry },
+    }));
+  }));
+  return paths.flat();
+}
+
+const { type, entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ContentLayout title={`${type.singular} - ${entry.data.name}`}>
+  <KeystaticEditButton slot="title-bar-extra" collection={type.slug} itemId={entry.data.id} />
+  <h1 class="flex items-center justify-between">
+    {entry.data.name}
+    <ContentTypeIcon icon={type.icon} class="mr-4" size={96} />
+  </h1>
+  <Table>
+    <tr>
+      <td><strong>{type.singular} ID:</strong></td>
+      <td>{entry.data.id}</td>
+    </tr>
+    {Object.entries(entry.data.metadata).map(([key, value]) => (
+      <tr>
+        <td><strong>{metadataLabel(key)}:</strong></td>
+        <td>{value}</td>
+      </tr>
+    ))}
+  </Table>
+  <hr class="mt-1">
+  <div class="field-border mt-2">
+    <Article><Content /></Article>
+  </div>
+  <hr>
+  <a href={`/${type.slug}`}>
+    <button class="mt-2">← Back to {type.label}</button>
+  </a>
+</ContentLayout>

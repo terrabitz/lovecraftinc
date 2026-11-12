@@ -1,0 +1,35 @@
+.field {
+  border: 1px solid currentcolor;
+  border-radius: 6px;
+  padding: 12px;
+  min-width: 0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 12px;
+}
+
+.row label {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 120px;
+}
+
+.row input,
+.row textarea {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid currentcolor;
+  border-radius: 4px;
+  padding: 6px;
+}
+
+.field [role="alert"] {
+  color: #c00;
+}

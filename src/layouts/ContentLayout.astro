@@ -4,6 +4,7 @@ import SidAssistant from '../components/preact/SidAssistant.tsx';
 import DarkModeToggle from '../components/DarkModeToggle.astro';
 import { getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import { contentTypes } from '../content-types';
 
 import sidFrame1Src from '../assets/SID/SID - Frame 1.png';
 import sidFrame2Src from '../assets/SID/SID - Frame 2.png';
@@ -40,11 +41,11 @@ const pathname = Astro.url.pathname;
       <nav>
         <menu role="tablist">
           <li role="tab" aria-selected={pathname.startsWith("/dashboard")}><a href="/dashboard">Dashboard</a></li>
-          <li role="tab" aria-selected={pathname.startsWith("/employees")}><a href="/employees">Employees</a></li>
-          <li role="tab" aria-selected={pathname.startsWith("/anomalies")}><a href="/anomalies">Anomalies</a></li>
-          <li role="tab" aria-selected={pathname.startsWith("/organizations")}>
-            <a href="/organizations">Organizations</a>
-          </li>
+          {contentTypes.map(type => (
+            <li role="tab" aria-selected={pathname === `/${type.slug}` || pathname.startsWith(`/${type.slug}/`)}>
+              <a href={`/${type.slug}`}>{type.label}</a>
+            </li>
+          ))}
         </menu>
       </nav>
       <main>

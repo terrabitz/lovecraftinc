@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import { contentTypes } from '../content-types';
+import ContentLayout from '../layouts/ContentLayout.astro';
+import KeystaticAddButton from '../components/KeystaticAddButton.astro';
+import ContentTypeIcon from '../components/content-type-icon.astro';
+import DataListing from '../components/preact/DataListing';
+
+export function getStaticPaths() {
+  return contentTypes.map(type => ({
+    params: { collection: type.slug },
+    props: { type },
+  }));
+}
+
+const { type } = Astro.props;
+const entries = await getCollection(type.slug);
+const columns = [
+  { key: 'id', label: 'ID' },
+  { key: 'name', label: 'Name' },
+  ...(type.columns ?? []).map(column => ({ ...column, metadata: true })),
+];
+---
+
+<ContentLayout title={type.label}>
+  <KeystaticAddButton slot="title-bar-extra" collection={type.slug} />
+  <h1 class="flex items-center justify-between">
+    {type.heading}
+    <ContentTypeIcon icon={type.icon} class="mr-4" size={96} />
+  </h1>
+  <DataListing
+    data={entries.map(entry => entry.data)}
+    columns={columns}
+    emptyMessage={`No ${type.label.toLowerCase()} found matching your search.`}
+    detailEmptyMessage={`Select a record to view details`}
+    detailPath={`/${type.slug}`}
+    detailButtonLabel="View Full Record"
+    client:load
+  />
+</ContentLayout>

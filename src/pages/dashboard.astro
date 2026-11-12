@@ -3,13 +3,13 @@ import { getCollection } from 'astro:content';
 import Card from "../components/Card.astro";
 import Table from "../components/Table.astro";
 import ContentLayout from "../layouts/ContentLayout.astro";
-import EmployeeIcon from '../components/Icons/EmployeeIcon.astro';
-import AnomalyIcon from '../components/Icons/AnomalyIcon.astro';
-import OrganizationIcon from '../components/Icons/OrganizationIcon.astro';
+import ContentTypeIcon from '../components/content-type-icon.astro';
+import { contentTypes } from '../content-types';
 
-const employees = await getCollection('employees');
-const anomalies = await getCollection('anomalies');
-const organizations = await getCollection('organizations');
+const totals = await Promise.all(contentTypes.map(async type => ({
+  ...type,
+  count: (await getCollection(type.slug)).length,
+})));
 
 const ICON_SIZE=40;
 ---
@@ -28,29 +28,15 @@ const ICON_SIZE=40;
 
   <h2 class="mt-3">Quick Access</h2>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-3">
-    <Card title="Employee Directory">
-      <EmployeeIcon size={ICON_SIZE} slot="icon" />
-      <p>Access employee profiles, contact information, and organizational assignments.</p>
-      <a href="/employees" slot="bottom">
-        <button>View Employees</button>
-      </a>
-    </Card>
-
-    <Card title="Anomaly Reports">
-      <AnomalyIcon size={ICON_SIZE} slot="icon" />
-      <p>Review documented anomalous events and phenomena requiring investigation.</p>
-      <a href="/anomalies" slot="bottom">
-        <button>View Anomalies</button>
-      </a>
-    </Card>
-
-    <Card title="Organizations">
-      <OrganizationIcon size={ICON_SIZE} slot="icon" />
-      <p>Access profiles of partner organizations and affiliated entities.</p>
-      <a href="/organizations" slot="bottom">
-        <button>View Organizations</button>
-      </a>
-    </Card>
+    {contentTypes.map(type => (
+      <Card title={type.heading}>
+        <ContentTypeIcon icon={type.icon} size={ICON_SIZE} slot="icon" />
+        <p>{type.description}</p>
+        <a href={`/${type.slug}`} slot="bottom">
+          <button>View {type.label}</button>
+        </a>
+      </Card>
+    ))}
   </div>
 
   <hr class="mt-4"/>
@@ -63,18 +49,12 @@ const ICON_SIZE=40;
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Total Employees</td>
-        <td>{employees.length}</td>
-      </tr>
-      <tr>
-        <td>Active Anomalies</td>
-        <td>{anomalies.length}</td>
-      </tr>
-      <tr>
-        <td>Partner Organizations</td>
-        <td>{organizations.length}</td>
-      </tr>
+      {totals.map(type => (
+        <tr>
+          <td>Total {type.label}</td>
+          <td>{type.count}</td>
+        </tr>
+      ))}
       <tr>
         <td>Last Update</td>
         <td>1995-04-28</td>

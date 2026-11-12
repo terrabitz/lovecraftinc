@@ -2,8 +2,9 @@ import { config, fields, collection } from '@terrabitz/keystatic-core';
 import { wrapper, inline } from '@terrabitz/keystatic-core/content-components';
 import { mapContentTypes } from './src/content-types';
 import { metadataField } from './src/components/react/metadata-field';
+import { useGitHubStorage } from './src/utils/keystatic-mode';
 
-const storage = import.meta.env.PUBLIC_KEYSTATIC_MODE === 'github' ? {
+const storage = useGitHubStorage ? {
   kind: 'github' as const,
   repo: {
     owner: import.meta.env.PUBLIC_GITHUB_OWNER || '',

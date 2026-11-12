@@ -13,6 +13,7 @@ import react from '@astrojs/react';
 import markdoc from '@astrojs/markdoc';
 import keystatic from '@keystatic/astro'
 import { loadModeEnv } from './src/utils/loadEnv.ts';
+import { getArticleTypes } from './src/content-types.ts';
 
 const { DEFAULT_BRANCH, WORKER_NAME, WORKERS_DEV_ACCOUNT_DOMAIN, WORKERS_CI_BRANCH, PUBLIC_SITE_URL, MODE } = loadModeEnv();
 
@@ -84,23 +85,7 @@ export default defineConfig({
       [ remarkArticleLinks,
         {
           contentDir: './src/content',
-          articleTypes: [
-            {
-              pattern: /EID-EMP-\d+/,
-              urlPrefix: '/employees',
-              contentPath: 'employees',
-            },
-            {
-              pattern: /EID-ORG-\d+/,
-              urlPrefix: '/organizations',
-              contentPath: 'organizations',
-            },
-            {
-              pattern: /EID-\d+/,
-              urlPrefix: '/anomalies',
-              contentPath: 'anomalies',
-            },
-          ],
+          articleTypes: getArticleTypes(),
         },
       ]
     ],

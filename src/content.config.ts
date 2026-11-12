@@ -1,43 +1,12 @@
 import { glob } from 'astro/loaders';
 import { defineCollection, z } from 'astro:content';
+import { mapContentTypes } from './content-types';
 
-const employees = defineCollection({
-  loader: glob({ pattern: '**/*.mdoc', base: './src/content/employees' }),
+export const collections = mapContentTypes(type => defineCollection({
+  loader: glob({ pattern: '**/*.mdoc', base: `./src/content/${type.slug}` }),
   schema: z.object({
-    id: z.string(),
-    name: z.string(),
-    position: z.string(),
-    department: z.string(),
-    clearanceLevel: z.string(),
-  }),
-});
-
-const anomalies = defineCollection({
-  loader: glob({ pattern: '**/*.mdoc', base: './src/content/anomalies' }),
-  schema: z.object({
-    id: z.string(),
-    name: z.string(),
-    classification: z.string(),
-    status: z.string(),
-    discoveryDate: z.date(),
-    location: z.string(),
-  }),
-});
-
-const organizations = defineCollection({
-  loader: glob({ pattern: '**/*.mdoc', base: './src/content/organizations' }),
-  schema: z.object({
-    id: z.string(),
-    name: z.string(),
-    type: z.string(),
-    relationship: z.string(),
-    established: z.string(),
-    location: z.string(),
-  }),
-});
-
-export const collections = {
-  employees,
-  anomalies,
-  organizations,
-};
+    id: z.string().regex(new RegExp(`^(?:${type.idPattern.source})$`)),
+    name: z.string().min(1),
+    metadata: z.record(z.string().refine(key => key.trim().length > 0, 'Metadata keys must not be blank.'), z.string()).default({}),
+  }).strict(),
+}));

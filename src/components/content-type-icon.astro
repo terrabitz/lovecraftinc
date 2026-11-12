@@ -1,0 +1,20 @@
+---
+import type { ImageMetadata } from 'astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  icon?: string;
+  size: number;
+  class?: string;
+}
+
+const { icon, size, class: className } = Astro.props;
+const images = import.meta.glob<{ default: ImageMetadata }>('../assets/Icons/*.png', { eager: true });
+const light = icon ? images[`../assets/Icons/${icon} Icon Light.png`]?.default : undefined;
+const dark = icon ? images[`../assets/Icons/${icon} Icon Dark.png`]?.default : undefined;
+if (icon && (!light || !dark)) {
+  throw new Error(`Missing light or dark content icon: ${icon}`);
+}
+---
+
+{light && <Icon src={light} darkSrc={dark} size={size} class={className} />}

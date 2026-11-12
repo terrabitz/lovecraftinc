@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { useGitHubStorage } from '../utils/keystatic-mode';
 import iconLight from '../assets/Icons/Edit Icon Light.png';
 import iconDark from '../assets/Icons/Edit Icon Dark.png';
 
@@ -10,7 +11,7 @@ interface Props {
 
 const { collection, itemId } = Astro.props;
 const defaultBranch = import.meta.env.PUBLIC_DEFAULT_BRANCH || 'main';
-const branchPrefix = import.meta.env.PUBLIC_KEYSTATIC_MODE === 'github' ? `/branch/${defaultBranch}` : '';
+const branchPrefix = useGitHubStorage ? `/branch/${defaultBranch}` : '';
 const href = `/keystatic${branchPrefix}/collection/${collection}/item/${itemId}`;
 ---
 

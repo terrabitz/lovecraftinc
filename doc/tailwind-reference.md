@@ -11,7 +11,10 @@ This document serves as a reference for the Tailwind CSS utility classes current
 - `justify-between`: Distributes items evenly; the first item at the start, the last at the end.
 - `items-center`: Aligns items along the center of the container's cross axis.
 - `items-start`: Aligns items to the start of the container's cross axis.
+- `justify-center`: Centers items along the container's main axis.
+- `flex!`: Forces flex layout where retro control styles set `display: block`.
 - `gap-*`: Controls gutters between grid and flex items.
+  - `gap-1`: Adds spacing between title-bar controls.
 
 ### Grid
 - `grid`: Creates a grid container.
@@ -36,12 +39,14 @@ This document serves as a reference for the Tailwind CSS utility classes current
 ### Padding
 - `p-*`: Controls padding.
   - Examples: `p-2`, `p-3`
+- `px-2!`: Sets horizontal padding, overriding retro control defaults.
 
 ## Sizing
 
 - `h-*`: Controls element height.
 - `w-*`: Controls element width.
   - Example: `w-[70%]` for 70% width   
+- `min-w-8!`, `min-h-[23px]!`: Size the icon-only sound toggle to match the dark mode toggle, overriding retro title-bar defaults.
 
 ## Typography
 
@@ -52,6 +57,8 @@ This document serves as a reference for the Tailwind CSS utility classes current
 ## Modifiers
 
 - `md:*`, `lg:*`: Responsive modifiers for different screen sizes.
+- `group` / `group-aria-pressed:*`: Styles children based on the parent's `aria-pressed="true"` state (e.g., swapping sound toggle icons).
+- `fill-(--text-color)`, `stroke-(--text-color)`: Color SVG icons from the theme text variable (98.css buttons use transparent text, so `currentColor` is invisible).
 - `!`: Important modifier (e.g., `text-xl!` found in `index.astro`).
 
 ## Note on Non-Tailwind Classes

@@ -1,6 +1,7 @@
 ---
 import Icon from "../components/Icon.astro";
 import MainLayout from "../layouts/MainLayout.astro";
+import SoundToggle from "../components/sound-toggle.astro";
 import logo from "../assets/Logo.png"
 ---
 
@@ -8,6 +9,9 @@ import logo from "../assets/Logo.png"
   <div class="window">
     <div class="title-bar">
       <div class="title-bar-text">Eidolon Capital - Secure Login</div>
+      <div class="title-bar-controls">
+        <SoundToggle />
+      </div>
     </div>
     <main>
       <div class="window-body">
@@ -33,35 +37,44 @@ import logo from "../assets/Logo.png"
 
 <script>
   import { navigate } from "astro:transitions/client";
+  import { startLoadingHum, stopLoadingHum } from "../utils/interface-audio";
 
-  const loginButton = document.getElementById("loginButton") as HTMLButtonElement;
-  const progressBar = document.getElementById("progressBar") as HTMLDivElement;
-  const progressBarFill = document.getElementById("progressBarFill") as HTMLSpanElement;
+  function initLogin() {
+    const loginButton = document.getElementById("loginButton") as HTMLButtonElement | null;
+    const progressBar = document.getElementById("progressBar") as HTMLDivElement | null;
+    const progressBarFill = document.getElementById("progressBarFill") as HTMLSpanElement | null;
+    if (!loginButton || !progressBar || !progressBarFill) return;
 
-  loginButton.addEventListener("click", () => {
-    // Disable button and show progress bar
-    loginButton.disabled = true;
-    loginButton.innerText = "Logging In";
-    progressBar.classList.remove("hidden");
+    loginButton.addEventListener("click", () => {
+      startLoadingHum();
+      // Disable button and show progress bar
+      loginButton.disabled = true;
+      loginButton.innerText = "Logging In";
+      progressBar.classList.remove("hidden");
 
-    // Animate progress bar over 1.5 seconds
-    const duration = 1500;
-    const startTime = Date.now();
+      // Animate progress bar over 1.5 seconds
+      const duration = 1500;
+      const startTime = Date.now();
 
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      let progress = Math.min((elapsed / duration) * 100, 100);
-      progress = progress - (progress % 10)
-      
-      progressBarFill.style.width = `${progress}%`;
+      const animate = () => {
+        const elapsed = Date.now() - startTime;
+        let progress = Math.min((elapsed / duration) * 100, 100);
+        progress = progress - (progress % 10);
 
-      if (elapsed < duration) {
-        requestAnimationFrame(animate);
-      } else {
-        navigate("/dashboard")
-      }
-    };
+        progressBarFill.style.width = `${progress}%`;
 
-    requestAnimationFrame(animate);
-  });
+        if (elapsed < duration) {
+          requestAnimationFrame(animate);
+        } else {
+          stopLoadingHum();
+          void navigate("/dashboard");
+        }
+      };
+
+      requestAnimationFrame(animate);
+    });
+  }
+
+  initLogin();
+  document.addEventListener('astro:after-swap', initLogin);
 </script>

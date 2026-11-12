@@ -1,0 +1,20 @@
+<button
+  type="button"
+  class="group flex! min-w-8! min-h-[23px]! items-center justify-center px-2!"
+  data-sound-toggle
+  aria-pressed="true"
+  aria-label="Mute sound effects"
+  title="Mute sound effects"
+>
+  <svg class="hidden group-aria-pressed:block fill-(--text-color)" width="14" height="12" viewBox="0 0 14 12" shape-rendering="crispEdges" aria-hidden="true">
+    <rect x="1" y="4" width="3" height="4" />
+    <polygon points="4,4 7,1 7,11 4,8" />
+    <rect x="9" y="4" width="1" height="4" />
+    <rect x="11" y="2" width="1" height="8" />
+  </svg>
+  <svg class="block group-aria-pressed:hidden fill-(--text-color)" width="14" height="12" viewBox="0 0 14 12" shape-rendering="crispEdges" aria-hidden="true">
+    <rect x="1" y="4" width="3" height="4" />
+    <polygon points="4,4 7,1 7,11 4,8" />
+    <path d="M9 4 L13 8 M13 4 L9 8" class="stroke-(--text-color)" stroke-width="1.5" />
+  </svg>
+</button>

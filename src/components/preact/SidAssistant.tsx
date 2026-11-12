@@ -4,6 +4,7 @@ import Typed from 'typed.js';
 import { navigate } from 'astro:transitions/client';
 import styles from './SidAssistant.module.css';
 import type { SearchResult } from '../../types/search';
+import { startDialogBlips, stopDialogBlips } from '../../utils/interface-audio';
 
 const GREETING = "Hello! How can I help you today? Type <code>/help</code> for available commands.";
 const DEFAULT_RESPONSE = "I don't know how to help you with that. Type <code>/help</code> for available commands.";
@@ -100,6 +101,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
   }, [frames, horrorFrames]);
 
   const typeText = useCallback((message: string, speed = TYPEWRITER_SPEED_MS, useHorror = false) => {
+    stopDialogBlips();
     if (typedInstanceRef.current) {
       typedInstanceRef.current.destroy();
       typedInstanceRef.current = null;
@@ -120,9 +122,11 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
       contentType: 'html',
       onBegin: () => {
         startFrameAnimation(useHorror);
+        startDialogBlips(useHorror);
       },
       onComplete: () => {
         stopFrameAnimation();
+        stopDialogBlips();
       },
     });
   }, [startFrameAnimation, stopFrameAnimation]);
@@ -239,6 +243,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
       horrorTimeoutRef.current = null;
     }
     stopFrameAnimation();
+    stopDialogBlips();
     setIsHorrorMode(false);
   }, [stopFrameAnimation]);
 
@@ -357,6 +362,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
     return () => {
       if (typedInstanceRef.current) typedInstanceRef.current.destroy();
       if (frameIntervalRef.current) clearInterval(frameIntervalRef.current);
+      stopDialogBlips();
     };
   }, []);
 
@@ -370,6 +376,7 @@ export default function SidAssistant({ frames, horrorFrames, helpIcon }: SidAssi
           width={ICON_SIZE} 
           height={ICON_SIZE}
           onClick={showPanel}
+          data-sound-click
           draggable={false}
         />
       )}
